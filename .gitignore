@@ -1,0 +1,10 @@
+.DS_STORE
+.buildpath
+.project
+.settings
+LICENSE.txt
+sftp-config.json
+tamkang-im.sublime-project
+tamkang-im.sublime-workspace
+Model
+sqlconnection.config.php
