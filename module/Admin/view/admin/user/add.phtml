@@ -1,0 +1,56 @@
+<form action="<?php echo $this->url("admin/default", array("controller" => "user", "action" => "add")) ?>" method="post">
+    <table class="table table-hover">
+        <tr>
+            <td>帳號</td>
+            <td><input id="username" name="username" type="text" /></td>
+        </tr>
+        <tr>
+            <td>使用者姓名</td>
+            <td><input id="name" name="name" type="text" /></td>
+        </tr>
+        <tr>
+            <td>初始密碼</td>
+            <td>
+                <input id="password" name="password" type="password" />
+                <p>
+                    <a class="btn" id="random-password">隨機產生</a>
+                    <label id="show-password" style="display: inline-block"></label>
+                </p>
+            </td>
+        </tr>
+        <tr>
+            <td>E-mail</td>
+            <td><input id="email" name="email" type="email" /></td>
+        </tr>
+        <tr>
+            <td>帳號權限</td>
+            <td>
+                <select id="role" name="role">
+                    <?php foreach ($this->roleList as $key => $value) : ?>
+                        <option value="<?php echo $value["id"]; ?>"><?php echo $value["zh_TW"]; ?></option>
+                    <?php endforeach; ?>
+                </select>
+            </td>
+        </tr>
+    </table>
+    <input id="t" name="t" type="hidden" value="<?php echo $this->token; ?>" />
+</form>
+<script>
+$('#random-password').on('click', function(){
+    var password = getRandomString(5);
+    $('#password').val(password);
+    $('#show-password').text(password);
+});
+
+
+function getRandomString(length){
+    var settingString = 'abcdefghijklmnopqrstuvwxyz1234567890';
+    var returnString = '';
+
+    for (var i = 0; i < length; i++) {
+        returnString += settingString.substr(Math.round(Math.random() * settingString.length), 1);
+    }
+
+    return returnString;
+}
+</script>

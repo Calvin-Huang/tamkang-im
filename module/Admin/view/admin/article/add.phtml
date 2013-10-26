@@ -1,0 +1,65 @@
+<style>
+.modal {
+	width: 800px;
+	margin-left: -400px;
+}
+.modal.fade.in {
+	top: 5%;
+}
+.modal-body {
+	max-height: 525px;
+}
+</style>
+<form action="<?php echo $this->url("admin/default", array("controller" => "article", "action" => "add")); ?>" method="post">
+    <table class="table table-hover">
+        <tr>
+            <td style="width:80px;">標題</td>
+            <td><input id="title" name="title" type="text" style="width:85%;" /></td>
+        </tr>
+        <tr>
+            <td>文章類別</td>
+            <td>
+                <select id="type" name="type">
+                    <?php foreach ($this->typeList as $key => $value) : ?>
+                        <option value="<?php echo $value["id"]; ?>"><?php echo $value["type_name"]; ?></option>
+                    <?php endforeach; ?>
+                </select>
+            </td>
+        </tr>
+        <tr>
+            <td>內容</td>
+            <td><textarea id="addEditor" name="content" class="ckeditor"></textarea></td>
+        </tr>
+        <tr>
+            <td><i class="icon-picture"></i>&nbsp;附加圖片<span class="label label-warning">jpg jpeg png</span><span class="label label-info">第一張附圖為文章預覽</span></td>
+            <td>
+                <p><input class="image ignore" name="image[]" type="file" /></p>
+                <a id="append-image" class="btn">添加欄位</a>
+            </td>
+        </tr>
+        <tr>
+            <td><i class="icon-file"></i>&nbsp;附加檔案<span class="label label-warning">doc docx xls</span><span class="label label-warning">xlsx pdf txt</span><span class="label label-warning">zip 7z</span></td>
+            <td>
+                <p><input class="file ignore" name="document[]" type="file" /></p>
+                <a id="append-file" class="btn">添加欄位</a>
+            </td>
+        </tr>
+    </table>
+    <input name="t" type="hidden" value="<?php echo $this->token; ?>" />
+</form>
+<script>
+CKEDITOR.replace('addEditor');
+timer = setInterval('updateAddEditor()',100);
+function updateAddEditor(){
+    var editorText = CKEDITOR.instances.addEditor.getData();
+    $('#addEditor').text(editorText);
+}
+
+$('#append-image').on('click', function(){
+    $('.image:last').parent('p').after('<p><input type="file" class="image" name="image[]" /><a class="close" data-dismiss="alert">&times;</a></p>');
+});
+
+$('#append-file').on('click', function(){
+    $('.file:last').parent('p').after('<p><input type="file" class="file" name="document[]" /><a class="close" data-dismiss="alert">&times;</a></p>');
+});
+</script>

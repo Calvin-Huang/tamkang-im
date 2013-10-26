@@ -1,0 +1,17 @@
+<div class="row">
+    <?php foreach($this->bookTypeList as $key => $value) : ?>
+    <div class="span12">
+        <div class="btn-toolbar">
+            <a class="btn btn-primary" href="<?php echo $this->url("admin/default", array("controller" => "teacher-profile", "action" => "edit-book")) . "?type_id=" . $value["id"]; ?>">編輯<?php echo $value["type_name"]; ?></a>
+        </div>
+        <table class="table table-striped">
+            <?php foreach ($this->bookList[$value["id"]] as $childkey => $childvalue) : ?>
+            <tr>
+                <td><?php echo $childvalue["title"]; ?></td>
+            </tr>
+            <?php endforeach; ?>
+        </table>
+        <hr>
+    </div>
+    <?php endforeach; ?>
+</div>

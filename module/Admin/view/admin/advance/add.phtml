@@ -1,0 +1,42 @@
+<style>
+.modal {
+	width: 800px;
+	margin-left: -400px;
+}
+.modal.fade.in {
+	top: 5%;
+}
+.modal-body {
+	max-height: 525px;
+}
+</style>
+<form action="<?php echo $this->url("admin/default", array("controller" => "advance", "action" => "add")); ?>" method="post">
+    <table class="table table-hover">
+        <tr>
+            <td>介紹類別</td>
+            <td>
+                <select id="type" name="type">
+                    <?php foreach ($this->types as $i => $type) : ?>
+                        <option value="<?php echo $type["id"]; ?>"><?php echo $type["type_name"]; ?></option>
+                    <?php endforeach; ?>
+                </select>
+            </td>
+        </tr>
+        <tr>
+            <td style="width:60px;">內文</td>
+            <td><textarea id="addEditor" name="content" class="ckeditor"></textarea></td>
+        </tr>
+    </table>
+    <input name="t" type="hidden" value="<?php echo $this->token; ?>" />
+</form>
+<script>
+CKEDITOR.replace('addEditor', {
+    height: '600px'
+});
+timer = setInterval('updateAddEditor()',100);
+function updateAddEditor(){
+    var editorText = CKEDITOR.instances.addEditor.getData();
+    $('#addEditor').text(editorText);
+}
+
+</script>

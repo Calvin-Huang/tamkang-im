@@ -1,0 +1,30 @@
+<div class="row">
+    <div class="btn-toolbar span12">
+        <a class="btn btn-primary" href="<?php echo $this->url("admin/default", array("controller" => "profile", "action" => "edit")); ?>">修改個人資料</a>
+    </div>
+    <div class="span4">
+        <div class="thumbnail">
+            <img src="<?php echo (isset($this->avatar)) ? $this->url("application/default", array("controller" => "image")) . "?" . $this->avatar : ""; ?>" data-src="holder.js/400x400" />
+        </div>
+    </div>
+    <div class="span8">
+        <table class="table">
+            <tr>
+                <td style="width:40%">帳號</td>
+                <td><?php echo $this->username; ?></td>
+            </tr>
+            <tr>
+                <td>姓名</td>
+                <td><?php echo $this->name; ?></td>
+            </tr>
+            <tr>
+                <td>電子信箱</td>
+                <td><?php echo $this->email; ?></td>
+            </tr>
+            <tr>
+                <td>帳號權限等級</td>
+                <td><?php echo $this->role; ?></td>
+            </tr>
+        </table>
+    </div>
+</div>

@@ -1,0 +1,62 @@
+<?php echo $this->doctype(); ?>
+
+<html lang="zh_TW">
+    <head>
+        <meta charset="utf-8">
+        <?php echo $this->headTitle('ZF2 '. $this->translate('Skeleton Application'))->setSeparator(' - ')->setAutoEscape(false) ?>
+
+        <?php echo $this->headMeta()->appendName('viewport', 'width=device-width, initial-scale=1.0') ?>
+
+        <!-- Le styles -->
+        <?php echo $this->headLink(array('rel' => 'shortcut icon', 'type' => 'image/vnd.microsoft.icon', 'href' => $this->basePath() . '/images/favicon.ico'))
+                        ->prependStylesheet($this->basePath() . '/css/style.css')
+                        ->prependStylesheet($this->basePath() . '/css/bootstrap.min.css') ?>
+    </head>
+    <body class="font">
+        <div class="navbar navbar-fixed-top">
+            <div class="navbar-inner navbar-inverse main-nav">
+                <div class="container">
+                    <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </a>
+                    <a class="main-brand brand" href="<?php echo $this->url('home'); ?>"></a>
+                    <div class="nav-collapse collapse navigation">
+                        <?php echo $this->navigation('navigation/default')->menu()->setPartial($partial = array('template/navigation', 'default')) ?>
+                    </div><!--/.nav-collapse -->
+                </div>
+            </div>
+        </div>
+        <div>
+            <?php echo $this->content; ?>
+            <hr>
+        </div>
+        <div class="container">
+            <footer class="row">
+                <div class="span3">
+                    電話: 26215656轉2645或2648<br/>
+                    傳真: （02）26209737<br/>
+                    E-Mail：tlmx@oa.tku.edu.tw
+                </div>
+                <div class="span9 content">
+                    <a href="#">關於我們</a> &middot; 
+                    <a href="#">網站地圖</a> &middot;
+                    <a href="http://www.tku.edu.tw/">淡江大學首頁</a> &middot;
+                    <a href="<?php echo $this->url("admin"); ?>">管理後台</a>
+                    <br/>
+                    &copy; 2013 Tamkang IM, Calvin &amp; Sam.
+                </div>
+            </footer>
+        </div> <!-- /container -->
+        <?php echo $this->inlineScript() ?>
+        <!-- Scripts -->
+        <?php echo $this->headScript()->prependFile($this->basePath() . '/js/html5.js', 'text/javascript', array('conditional' => 'lt IE 9',))
+                                      ->prependFile($this->basePath() . '/js/bootstrap.min.js')
+                                      ->prependFile($this->basePath() . '/js/jquery.min.js')
+                                      ->appendFile($this->basePath() . '/js/affix.js'); ?>
+        <script>
+            $('.carousel').carousel();
+        </script>
+    </body>
+</html>

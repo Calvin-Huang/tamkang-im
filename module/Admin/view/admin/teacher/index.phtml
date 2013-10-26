@@ -1,0 +1,35 @@
+<form action="<?php echo $this->url("admin/default", array("controller" => "teacher", "action" => "index")); ?>" method="post">
+    <div class="btn-toolbar">
+        <button class="btn btn-danger" type="submit">儲存排序</button>
+        <?php if (!$this->saveSuccess) :?>
+        <label class="alert pull-right">
+            <button type="button" class="close" data-dismiss="alert">&times;</button>
+            壓住滑鼠左鍵可以進行拖曳排序
+        </label>
+        <?php endif; ?>
+    </div>
+    <?php if ($this->saveSuccess) :?>
+    <div class="alert alert-success">
+        <button type="button" class="close" data-dismiss="alert">&times;</button>
+        <i class="icon-ok"></i>&nbsp;儲存成功
+    </div>
+    <?php endif; ?>
+    <table id="table-sort" class="table table-striped">
+        <thead>
+            <tr>
+                <th>教師姓名</th>
+                <th>教師職位</th>
+            </tr>
+        </thead>
+        <tbody>
+            <?php foreach ($this->teacherList as $key => $value) : ?>
+            <tr style="cursor:pointer;background-color:#FFF;">
+                <td><?php echo $value["name"]; ?></td>
+                <td><?php echo $value["title_name"]; ?></td>
+                <td><input type="hidden" name="sort[]" value="<?php echo $value["id"]; ?>" /></td>
+            </tr>
+            <?php endforeach; ?>
+        </tbody>
+    </table>
+    <input type="hidden" id="t" name="t" value="<?php echo $this->token; ?>" />
+</form>

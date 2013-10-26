@@ -1,0 +1,27 @@
+<form class="form-horizontal" method="post" action="<?php echo $this->url("admin/default", array("controller" => "advance", "action" => "type")); ?>">
+    <div class="btn-toolbar">
+        <button type="submit" class="btn btn-danger">儲存更動</button>
+        <a class="btn" href="<?php echo $this->url("admin/default", array("controller" => "advance", "action" => "index")); ?>">取消</a>
+    </div>
+    <?php if ($this->isSuccess) :?>
+    <div class="alert alert-success">
+        <button type="button" class="close" data-dismiss="alert">&times;</button>
+        <i class="icon-ok"></i>&nbsp;儲存成功
+    </div>
+    <?php endif; ?>
+    <?php foreach ($this->types as $i => $type) : ?>
+    <div class="control-group" style="width:450px;">
+        <button type="button" class="close" data-dismiss="alert">&times;</button>
+        <label class="control-label" for="data-index-<?php echo $i + 1; ?>">種類<?php echo $i + 1; ?></label>
+        <div class="controls">
+            <input type="text" class="field" id="data-index-<?php echo $i + 1; ?>" name="type[]" value="<?php echo $type["type_name"]; ?>" />
+        </div>
+    </div>
+    <?php endforeach; ?>
+    <div class="control-group">
+        <label class="control-label" for="data-index-<?php echo count($this->types) + 1; ?>">種類<?php echo count($this->types) + 1; ?></label>
+        <div class="controls">
+            <input type="text" class="field" id="data-index-<?php echo count($this->types) + 1; ?>" name="type[]" value="" />
+        </div>
+    </div>
+</form>

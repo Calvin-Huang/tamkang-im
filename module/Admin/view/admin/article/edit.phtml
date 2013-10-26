@@ -1,0 +1,137 @@
+<style>
+.modal {
+	width: 800px;
+	margin-left: -400px;
+}
+.modal.fade.in {
+	top: 5%;
+}
+.modal-body {
+	max-height: 525px;
+}
+</style>
+<form action="<?php echo $this->url("admin/default", array("controller" => "article", "action" => "edit")) . "?id=" . $this->id; ?>" method="post">
+    <table class="table table-hover">
+        <tr>
+            <td>狀態設定</td>
+            <td>
+                <div class="span1" style="margin-left:0px;">
+                    <input name="visible-box" id="visible-box" class="css-checkbox" type="checkbox" value="1" <?php echo ($this->visible == 1) ? "checked=\"checked\"" : ""?> />
+                    <label for="visible-box" class="css-label">顯示</label>
+                    <!-- Checkbox powered by CssCheckbox.com -->
+                </div>
+                
+                <div class="span1">
+                    <input name="hidden-box" id="hidden-box" class="css-checkbox" type="checkbox" value="0" <?php echo ($this->visible == 0) ? "checked=\"checked\"" : ""?> />
+                    <label for="hidden-box" class="css-label">不顯示</label>
+                    <!-- Checkbox powered by CssCheckbox.com -->
+                </div>
+                <input name="visible" id="visible" type="hidden" value="<?php echo $this->visible; ?>" />
+            </td>
+        </tr>
+        <tr>
+            <td style="width:80px;">標題</td>
+            <td><input id="title" name="title" type="text" style="width:85%;" value="<?php echo htmlentities($this->title, ENT_QUOTES, "UTF-8") ?>" /></td>
+        </tr>
+        <tr>
+            <td>文章類別</td>
+            <td>
+                <select id="type" name="type">
+                    <?php foreach ($this->typeList as $key => $value) : ?>
+                        <option value="<?php echo $value["id"]; ?>" <?php echo ($value["id"] == $this->typeId) ? "selected" : ""; ?>><?php echo $value["type_name"]; ?></option>
+                    <?php endforeach; ?>
+                </select>
+            </td>
+        </tr>
+        <tr>
+            <td>內容</td>
+            <td>
+                <textarea id="editEditor" name="content" class="ckeditor">
+                    <?php echo $this->content; ?>
+                </textarea>
+            </td>
+        </tr>
+        <tr>
+            <td><i class="icon-picture"></i>&nbsp;附加圖片<span class="label label-warning">jpg jpeg png</span><span class="label label-info">第一張附圖為文章預覽</span></td>
+            <td>
+                <?php foreach ($this->imageList as $i => $value) : ?>
+                <p>
+                    <label>
+                        <span data-action="popover" data-img="<?php echo $this->url("application/default", array("controller" => "image")) . "?" . $value["image_name"]; ?>"><?php echo $value["image_name"]; ?></span>
+                        <a class="close delete-image" data-id="<?php echo $value["id"]; ?>" data-dismiss="alert">&times;</a>
+                    </label>
+                </p>
+                <?php endforeach; ?>
+                <input id="delete-images" name="delete_images" type="hidden" value="" />
+                <p><input name="image[]" type="file" class="image ignore" /></p>
+                <a id="append-image" class="btn">添加欄位</a>
+            </td>
+        </tr>
+        <tr>
+            <td><i class="icon-file"></i>&nbsp;附加檔案<span class="label label-warning">doc docx xls</span><span class="label label-warning">xlsx pdf txt</span><span class="label label-warning">zip 7z</span></td>
+            <td>
+                <?php foreach ($this->downloadList as $i => $value) : ?>
+                <p>
+                    <label><?php echo $value["download_name"]; ?><a class="close delete-download" data-id="<?php echo $value["id"]; ?>" data-dismiss="alert">&times;</a></label>
+                </p>
+                <?php endforeach; ?>
+                <input id="delete-downloads" name="delete_downloads" type="hidden" value="" />
+                <p><input name="document[]" type="file" class="file ignore" /></p>
+                <a id="append-file" class="btn">添加欄位</a>
+            </td>
+        </tr>
+    </table>
+    <input name="t" type="hidden" value="<?php echo $this->token; ?>" />
+</form>
+<script>
+CKEDITOR.replace('editEditor');
+timer = setInterval('updateEditEditor()',100);
+function updateEditEditor(){
+    var editorText = CKEDITOR.instances.editEditor.getData();
+    $('#editEditor').text(editorText);
+}
+
+$('#append-image').on('click', function(){
+    $('.image:last').parent('p').after('<p><input name="image[]" type="file" class="image" /><a class="close" data-dismiss="alert">&times;</a></p>');
+});
+
+$('#append-file').on('click', function(){
+    $('.file:last').parent('p').after('<p><input name="document[]" type="file" class="file" /><a class="close" data-dismiss="alert">&times;</a></p>');
+});
+
+$('.css-checkbox').on('click', function(){
+    $('.css-checkbox').not($(this)).attr('checked', false);
+    $('#visible').val($('.css-checkbox:checked').val());
+    // $(this).attr('checked', true);
+});
+
+// 刪除圖片用input
+$('.delete-image').on('click', function(){
+    var value = $('#delete-images').val();
+    var deleteImages = [];
+    if (value != null && value != '') {
+        deleteImages = JSON.parse(value);
+    }
+    deleteImages.push($(this).data('id'));
+    $('#delete-images').val(JSON.stringify(deleteImages));
+});
+
+// 刪除附件用input
+$('.delete-download').on('click', function(){
+    var value = $('#delete-downloads').val();
+    var deleteDownloads = [];
+    if (value != null && value != '') {
+        deleteDownloads = JSON.parse(value);
+    }
+    deleteDownloads.push($(this).data('id'));
+    $('#delete-downloads').val(JSON.stringify(deleteDownloads));
+});
+
+$('span[data-action=popover]').popover({
+    html: true,
+    trigger: 'hover',
+    content: function () {
+        return '<img src="'+$(this).data('img') + '" />';
+    }
+});
+</script>

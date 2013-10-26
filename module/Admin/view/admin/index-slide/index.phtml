@@ -1,0 +1,64 @@
+<form method="post" action="<?php echo $this->url("admin/default", array("controller" => "index-slide")); ?>">
+    <div class="btn-toolbar">
+        <a class="btn btn-primary" id="add-slide" data-toggle="modal" href="<?php echo $this->url("admin/default", array(
+            "controller" => "index-slide",
+            "action" => "add",
+        )); ?>" data-target="#modal-add">新增slide</a>
+        <button type="submit" class="btn">儲存排序</button>
+        <?php if (!isset($this->isSuccess)) : ?>
+            <label class="alert pull-right">
+                <button type="button" class="close" data-dismiss="alert">&times;</button>
+                壓住滑鼠左鍵可以進行拖曳排序
+            </label>
+        <?php endif; ?>
+    </div>
+    <?php if (isset($this->isSuccess) && $this->isSuccess) :?>
+        <div class="alert alert-success">
+            <button type="button" class="close" data-dismiss="alert">&times;</button>
+            <i class="icon-ok"></i>&nbsp;儲存成功
+        </div>
+    <?php elseif (isset($this->isSuccess) && !$this->isSuccess) : ?>
+        <div class="alert alert-danger">
+            <button type="button" class="close" data-dismiss="alert">&times;</button>
+            <i class="icon-remove"></i>&nbsp;儲存失敗，請聯絡管理員
+        </div>
+    <?php endif; ?>
+    <table id="table-sort" class="table table-striped">
+        <thead>
+            <tr>
+                <th>圖片</th>
+                <th style="width:15%;"></th>
+            </tr>
+        </thead>
+        <tbody>
+            <?php foreach ($this->indexSlideList as $key => $value) : ?>
+            <tr style="cursor:pointer;background-color:#FFF;">
+                <td>
+                    <div class="thumbnail slide-thumbnail" style="background-image:url(<?php echo $this->url("application/default", array("controller" => "image")) . "?" . $value["image"]; ?>);">
+                    </div>
+                </td>
+                <td>
+                    <a class="btn" href="<?php echo $this->url("admin/default", array(
+                            "controller" => "index-slide",
+                            "action" => "edit",
+                        )) . "?id=" . $value["id"]; ?>"
+                        data-toggle="modal"
+                        data-target="#modal-edit"
+                    >修改</a>
+                    
+                    <a class="btn btn-danger" href="<?php echo $this->url("admin/default", array(
+                            "controller" => "index-slide",
+                            "action" => "delete",
+                        )) . "?id=" . $value["id"]; ?>"
+                        data-toggle="modal"
+                        data-target="#modal-delete"
+                    >刪除</a>
+                    <input type="hidden" name="sort[]" value="<?php echo $value["id"]; ?>" type="text" />
+                </td>
+            </tr>
+            <?php endforeach; ?>
+        </tbody>
+    </table>
+    <input type="hidden" name="t" value="<?php echo $this->token; ?>" />
+</form>
+<div class="pagination pagination-small pagination-centered"><?php echo $this->paginator; ?></div>

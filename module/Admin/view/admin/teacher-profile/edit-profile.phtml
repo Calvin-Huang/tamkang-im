@@ -1,0 +1,23 @@
+<form class="form-horizontal" method="post" action="<?php echo $this->url("admin/default", array("controller" => "teacher-profile", "action" => "edit-profile")) . "?type_id=" . $this->typeId; ?>">
+    <div class="btn-toolbar">
+        <button type="submit" class="btn btn-danger">儲存<?php echo $this->typeName; ?></button>
+        <a class="btn" href="<?php echo $this->url("admin/default", array("controller" => "teacher-profile")); ?>">取消更改</a>
+    </div>
+    <?php foreach ($this->profiles as $i => $profile) : ?>
+    <div class="control-group">
+        <a class="close pull-left" data-dismiss="alert">&times;</a>
+        <label class="control-label" for="data-index-<?php echo $i + 1; ?>">內容<?php echo $i + 1; ?></label>
+        <div class="controls">
+            <input type="text" class="field input-block-level" id="data-index-<?php echo $i + 1; ?>" name="profile[]" value="<?php echo $profile["profile"]; ?>" />
+        </div>
+    </div>
+    <?php endforeach; ?>
+    <div class="control-group">
+        <a class="close pull-left" data-dismiss="alert">&times;</a>
+        <label class="control-label" for="data-index-<?php echo count($this->bookList) + 1; ?>">內容<?php echo count($this->profiles) + 1; ?></label>
+        <div class="controls">
+            <input type="text" class="field input-block-level" id="data-index-<?php echo count($this->profiles) + 1; ?>" name="profile[]" value="" />
+        </div>
+    </div>
+    <input name="t" type="hidden" value="<?php echo $this->token; ?>" />
+</form>

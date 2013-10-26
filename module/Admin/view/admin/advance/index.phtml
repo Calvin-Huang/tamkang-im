@@ -1,0 +1,40 @@
+<div class="btn-toolbar">
+    <a class="btn btn-primary" id="add-article" data-toggle="modal" href="<?php echo $this->url("admin/default", array(
+        "controller" => "advance",
+        "action" => "add",
+    )); ?>" data-target="#modal-add">新增介紹</a>
+    <label class="alert pull-right">
+        <button type="button" class="close" data-dismiss="alert">&times;</button>
+        各種類介紹只能新增一篇
+    </label>
+</div>
+<table class="table table-striped">
+    <tr>
+        <th>內文</th>
+        <th style="width:10%;">類別</th>
+        <th style="width:15%;"></th>
+    </tr>
+    <?php foreach ($this->introduces as $i => $introduce) : ?>
+    <tr>
+        <td><?php echo strip_tags($introduce["content"]); ?></td>
+        <td><?php echo $introduce["type_name"]; ?></td>
+        <td>
+            <a class="btn" href="<?php echo $this->url("admin/default", array(
+                    "controller" => "advance",
+                    "action" => "edit",
+                )) . "?id=" . $introduce["id"]; ?>"
+                data-toggle="modal"
+                data-target="#modal-edit"
+            >修改</a>
+            
+            <a class="btn btn-danger" href="<?php echo $this->url("admin/default", array(
+                    "controller" => "advance",
+                    "action" => "delete",
+                )) . "?id=" . $introduce["id"]; ?>"
+                data-toggle="modal"
+                data-target="#modal-delete"
+            >刪除</a>
+        </td>
+    </tr>
+    <?php endforeach; ?>
+</table>

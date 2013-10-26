@@ -1,0 +1,53 @@
+<style>
+.modal {
+	width: 800px;
+	margin-left: -400px;
+}
+.modal.fade.in {
+	top: 5%;
+}
+.modal-body {
+	max-height: 510px;
+}
+</style>
+<form method="post" action="<?php echo $this->url("admin/default", array("controller" => "index-slide", "action" => "add")); ?>">
+    <table class="table table-hover">
+        <tr>
+            <td>背景圖片</td>
+            <td>
+                <p><input type="file" class="image" name="slide-image" /></p>
+                <div id="preview-slide" class="thumbnail slide-thumbnail">
+                    <img src="" id="slide-image" data-src="holder.js/1500x350">
+                </div>
+            </td>
+        </tr>
+    </table>
+    <input name="t" type="hidden" value="<?php echo $this->token; ?>" />
+</form>
+<script type="text/javascript" src="<?php echo $this->basePath() . "/js/holder.js"?>"></script>
+<script>
+setTimeout(function(){
+    $('#slide-image').width('600px').height('140px');
+}, 10);
+
+//圖片預覽上傳
+$('input[type=file]').each(function(index) {
+    $(this).change(function() {
+        if (this.files && this.files[0]) {
+            var fileReader = new FileReader();
+            fileReader.readAsDataURL(this.files[0]);
+            fileReader.onload = function(e) {
+                $('#preview-slide').html('').css('background-image', 'url(' + e.target.result + ')');
+            }
+        } else {
+            $('#preview-slide').html('').css('background-image', 'url(' + this.value + ')');
+        }
+    });
+});
+
+$('.css-checkbox').on('click', function(){
+    $('.css-checkbox').not($(this)).attr('checked', false);
+    $('#color').val($('.css-checkbox:checked').val());
+    // $(this).attr('checked', true);
+});
+</script>

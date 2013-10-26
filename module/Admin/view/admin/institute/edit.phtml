@@ -1,0 +1,45 @@
+<style>
+.modal {
+	width: 800px;
+	margin-left: -400px;
+}
+.modal.fade.in {
+	top: 5%;
+}
+.modal-body {
+	max-height: 525px;
+}
+</style>
+<form action="<?php echo $this->url("admin/default", array("controller" => "institute", "action" => "edit")) . "?id=" . $this->id; ?>" method="post">
+    <table class="table table-hover">
+        <tr>
+            <td>介紹類別</td>
+            <td>
+                <select id="type" name="type" disabled>
+                    <?php foreach ($this->types as $i => $type) : ?>
+                        <option <?php echo ($type["id"] == $this->typeId) ? "selected" : "";?> value="<?php echo $type["id"]; ?>"><?php echo $type["type_name"]; ?></option>
+                    <?php endforeach; ?>
+                </select>
+            </td>
+        </tr>
+        <tr>
+            <td>內容</td>
+            <td>
+                <textarea id="editEditor" name="content" class="ckeditor">
+                    <?php echo $this->content; ?>
+                </textarea>
+            </td>
+        </tr>
+    </table>
+    <input name="t" type="hidden" value="<?php echo $this->token; ?>" />
+</form>
+<script>
+CKEDITOR.replace('editEditor', {
+    height: '600px'
+});
+timer = setInterval('updateEditEditor()',100);
+function updateEditEditor(){
+    var editorText = CKEDITOR.instances.editEditor.getData();
+    $('#editEditor').text(editorText);
+}
+</script>

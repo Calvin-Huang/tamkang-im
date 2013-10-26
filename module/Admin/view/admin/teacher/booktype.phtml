@@ -1,0 +1,26 @@
+<form class="form-horizontal" method="post" action="<?php echo $this->url("admin/default", array("controller" => "teacher", "action" => "booktype")); ?>">
+    <div class="btn-toolbar">
+        <button type="submit" class="btn btn-danger">儲存更動</button>
+    </div>
+    <?php if ($this->saveSuccess) :?>
+    <div class="alert alert-success">
+        <button type="button" class="close" data-dismiss="alert">&times;</button>
+        <i class="icon-ok"></i>&nbsp;儲存成功
+    </div>
+    <?php endif; ?>
+    <?php foreach ($this->booktypeList as $key => $value) : ?>
+    <div class="control-group" style="width:450px;">
+        <button type="button" class="close" data-dismiss="alert">&times;</button>
+        <label class="control-label" for="data-index-<?php echo $key + 1; ?>">種類<?php echo $key + 1; ?></label>
+        <div class="controls">
+            <input type="text" class="field" id="data-index-<?php echo $key + 1; ?>" name="type[]" value="<?php echo $value["type_name"]; ?>" />
+        </div>
+    </div>
+    <?php endforeach; ?>
+    <div class="control-group">
+        <label class="control-label" for="data-index-<?php echo count($this->booktypeList) + 1; ?>">種類<?php echo count($this->booktypeList) + 1; ?></label>
+        <div class="controls">
+            <input type="text" class="field" id="data-index-<?php echo count($this->booktypeList) + 1; ?>" name="type[]" value="" />
+        </div>
+    </div>
+</form>

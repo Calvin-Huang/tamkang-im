@@ -1,0 +1,4 @@
+<form method="post" action="<?php echo $this->url("admin/default", array("controller" => "index-slide", "action" => "delete")) . "?id=" . $this->id; ?>">
+    <h3>確定要刪除嗎？</h3>
+    <input name="t" type="hidden" value="<?php echo $this->token; ?>" />
+</form>
