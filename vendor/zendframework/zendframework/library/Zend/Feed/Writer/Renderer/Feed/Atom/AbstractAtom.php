@@ -13,7 +13,7 @@ use Datetime;
 use DOMDocument;
 use DOMElement;
 use Zend\Feed;
-use Zend\Version\Version;
+use Zend\Feed\Writer\Version;
 
 class AbstractAtom extends Feed\Writer\Renderer\AbstractRenderer
 {
@@ -22,7 +22,7 @@ class AbstractAtom extends Feed\Writer\Renderer\AbstractRenderer
      *
      * @param  \Zend\Feed\Writer\Feed $container
      */
-    public function __construct ($container)
+    public function __construct($container)
     {
         parent::__construct($container);
     }

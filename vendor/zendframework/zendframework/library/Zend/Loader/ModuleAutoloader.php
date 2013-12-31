@@ -111,7 +111,7 @@ class ModuleAutoloader implements SplAutoloader
      * Sets the class map used to speed up the module autoloading.
      *
      * @param  array $classmap
-     * @return ModuleLoader
+     * @return ModuleAutoloader
      */
     public function setModuleClassMap(array $classmap)
     {
@@ -153,9 +153,9 @@ class ModuleAutoloader implements SplAutoloader
             }
         }
 
-        if (count($this->namespacedPaths) >= 1 ) {
-            foreach ( $this->namespacedPaths as $namespace=>$path ) {
-                if ( false === strpos($moduleName,$namespace) ) {
+        if (count($this->namespacedPaths) >= 1) {
+            foreach ($this->namespacedPaths as $namespace => $path) {
+                if (false === strpos($moduleName, $namespace)) {
                     continue;
                 }
 
@@ -326,7 +326,7 @@ class ModuleAutoloader implements SplAutoloader
             throw new Exception\InvalidArgumentException(
                 'Parameter to \\Zend\\Loader\\ModuleAutoloader\'s '
                 . 'registerPaths method must be an array or '
-                . 'implement the \\Traversable interface'
+                . 'implement the Traversable interface'
             );
         }
 
@@ -359,8 +359,8 @@ class ModuleAutoloader implements SplAutoloader
             ));
         }
         if ($moduleName) {
-            if (in_array( substr($moduleName, -2 ), array('\\*','\\%') ) ) {
-                $this->namespacedPaths[ substr($moduleName, 0, -2 ) ] = static::normalizePath($path);
+            if (in_array( substr($moduleName, -2), array('\\*', '\\%'))) {
+                $this->namespacedPaths[substr($moduleName, 0, -2)] = static::normalizePath($path);
             } else {
                 $this->explicitPaths[$moduleName] = static::normalizePath($path);
             }

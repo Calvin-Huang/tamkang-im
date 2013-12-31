@@ -4,6 +4,7 @@ namespace Admin\Controller;
 use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\ViewModel;
 use Admin\Model\AdvanceModel;
+use Admin\Model\Language;
 use Tool\Check\FieldCheck;
 
 /**
@@ -135,18 +136,21 @@ class AdvanceController extends AbstractActionController
         
         $viewModel = new ViewModel();
         $advanceModel = new AdvanceModel();
+        $language = new Language();
         $isSuccess = false;
         
         if ($this->getRequest()->isPost()) {
             $fieldCheck = new FieldCheck();
             $types = $fieldCheck->checkArray($this->params()->fromPost("type"));
+            $languages = $fieldCheck->checkArray($this->params()->fromPost("language"));
             
-            if ($advanceModel->setIntroduceType($types)) {
+            if ($advanceModel->setIntroduceType($types, $languages)) {
                 $isSuccess = true;
             }
         }
         
         $viewModel->setVariable("types", $advanceModel->listIntroduceType());
+        $viewModel->setVariable("languageList", $language->listLanguage());
         $viewModel->setVariable("isSuccess", $isSuccess);
         
         return $viewModel;

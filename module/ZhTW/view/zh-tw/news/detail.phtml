@@ -1,0 +1,68 @@
+<div class="container">
+    <div class="row">
+        <div class="span3">
+            <div id="nav-side" class="bs-docs-sidenav" style="box-shadow:none;">
+                 <div class="input-prepend">
+                    <button type="submit" class="btn"><i class="icon-search"></i></button>
+                    <input class="search input-block-level" type="text" placeholder="輸入關鍵字查詢消息" />
+                </div>
+                <ul class="nav nav-list bs-docs-sidenav">
+                    <li><a href="<?php echo $this->url("zh_TW/default", array("controller" => "news")); ?>"><i class="icon-chevron-right"></i>全部</a></li>
+                    <?php foreach ($this->articleTypes as $i => $articleType) : ?>
+                        <li class="<?php echo ($this->typeId == $articleType["id"]) ? "active" : "" ?>">
+                            <a href="<?php echo $this->url("zh_TW/default", array("controller" => "news")) . "?type=" . $articleType["id"]; ?>">
+                                <i class="icon-chevron-right"></i>
+                                <?php echo $articleType["type_name"]; ?>
+                            </a>
+                        </li>
+                    <?php endforeach; ?>
+                </ul>
+            </div>
+        </div>
+    
+        <div class="span9 content">
+            <div class="page-header">
+                <h3 class="title">
+                    <?php echo $this->title; ?>
+                    <span class="timespam muted"><?php echo $this->time; ?></span>
+                </h3>
+            </div>
+            <hr>
+            <?php echo $this->content; ?>
+            <hr>
+            <?php if (count($this->images) > 0) : ?>
+                <div class="attach-title">
+                    <i class="icon-picture"></i>&nbsp;文章附圖
+                    <a class="btn btn-small pull-right" id="stretch-all">展開所有圖片</a>
+                </div>
+                <div>
+                    <?php foreach ($this->images as $i => $image) : ?>
+                        <a data-src="<?php echo $this->url("application/default", array("controller" => "image")) . "?" . $image["image_name"]; ?>" class="attach attach-image">
+                            <label>
+                                <i class="icon-resize-full"></i>&nbsp;
+                                點擊展開圖片
+                            </label>
+                        </a>
+                    <?php endforeach; ?>
+                </div>
+                <hr>
+            <?php endif; ?>
+            <?php if (count($this->downloads) > 0) : ?>
+                <div class="attach-title">
+                    <i class="icon-file"></i>&nbsp;文章附檔
+                    <a class="btn btn-small pull-right" href="<?php echo $this->url("application/default", array("controller" => "file", "action" => "package")) . "?article_id" . $this->articleId; ?>">下載所有檔案</a>
+                </div>
+                <div>
+                    <?php foreach ($this->downloads as $i => $download) : ?>
+                        <a class="attach attach-download" href="<?php echo $this->url("application/default", array("controller" => "file")) . "?" . $download["file_name"]; ?>">
+                            <label>
+                                <i class="icon-download-alt"></i>&nbsp;
+                                <?php echo $download["download_name"]; ?>
+                            </label>
+                        </a>
+                    <?php endforeach; ?>
+                </div>
+            <?php endif; ?>
+        </div>
+    </div>
+</div>

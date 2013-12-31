@@ -3,7 +3,7 @@
  * Zend Framework (http://framework.zend.com/)
  *
  * @link      http://github.com/zendframework/zf2 for the canonical source repository
- * @copyright Copyright (c) 2005-2012 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright Copyright (c) 2005-2013 Zend Technologies USA Inc. (http://www.zend.com)
  * @license   http://framework.zend.com/license/new-bsd New BSD License
  */
 
@@ -17,7 +17,7 @@ interface AclInterface
      * The $resource parameter can either be a Resource or a Resource identifier.
      *
      * @param  Resource\ResourceInterface|string $resource
-     * @return boolean
+     * @return bool
      */
     public function hasResource($resource);
 
@@ -29,7 +29,7 @@ interface AclInterface
      *
      * If either $role or $resource is null, then the query applies to all Roles or all Resources,
      * respectively. Both may be null to query whether the ACL has a "blacklist" rule
-     * (allow everything to all). By default, Zend_Acl creates a "whitelist" rule (deny
+     * (allow everything to all). By default, Zend\Permissions\Acl creates a "whitelist" rule (deny
      * everything to all), and this method would return false unless this default has
      * been overridden (i.e., by executing $acl->allow()).
      *
@@ -45,7 +45,7 @@ interface AclInterface
      * @param  Role\RoleInterface|string            $role
      * @param  Resource\ResourceInterface|string    $resource
      * @param  string                               $privilege
-     * @return boolean
+     * @return bool
      */
     public function isAllowed($role = null, $resource = null, $privilege = null);
 }

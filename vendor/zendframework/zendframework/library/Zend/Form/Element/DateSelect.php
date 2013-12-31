@@ -3,17 +3,17 @@
  * Zend Framework (http://framework.zend.com/)
  *
  * @link      http://github.com/zendframework/zf2 for the canonical source repository
- * @copyright Copyright (c) 2005-2012 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright Copyright (c) 2005-2013 Zend Technologies USA Inc. (http://www.zend.com)
  * @license   http://framework.zend.com/license/new-bsd New BSD License
  */
 
 namespace Zend\Form\Element;
 
 use DateTime as PhpDateTime;
+use Zend\Form\Exception\InvalidArgumentException;
 use Zend\Form\FormInterface;
 use Zend\Validator\ValidatorInterface;
 use Zend\Validator\Date as DateValidator;
-use Zend\Form\Exception\InvalidArgumentException;
 use Exception;
 
 class DateSelect extends MonthSelect
@@ -33,9 +33,9 @@ class DateSelect extends MonthSelect
      */
     public function __construct($name = null, $options = array())
     {
-        parent::__construct($name, $options);
-
         $this->dayElement = new Select('day');
+
+        parent::__construct($name, $options);
     }
 
     /**
@@ -87,7 +87,7 @@ class DateSelect extends MonthSelect
     }
 
     /**
-     * @param  string|array|ArrayAccess|PhpDateTime $value
+     * @param  string|array|\ArrayAccess|PhpDateTime $value
      * @throws \Zend\Form\Exception\InvalidArgumentException
      * @return void|\Zend\Form\Element
      */
@@ -157,7 +157,7 @@ class DateSelect extends MonthSelect
                 array(
                     'name'    => 'Callback',
                     'options' => array(
-                        'callback' => function($date) {
+                        'callback' => function ($date) {
                             // Convert the date to a specific format
                             if (is_array($date)) {
                                 $date = $date['year'] . '-' . $date['month'] . '-' . $date['day'];

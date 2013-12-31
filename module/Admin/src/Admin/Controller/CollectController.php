@@ -5,6 +5,7 @@ use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\ViewModel;
 use Admin\Model\CollectModel;
 use Tool\Check\FieldCheck;
+use Admin\Model\Language;
 
 /**
  * CollectController
@@ -135,18 +136,21 @@ class CollectController extends AbstractActionController
         
         $viewModel = new ViewModel();
         $collectModel = new CollectModel();
+        $language = new Language();
         $isSuccess = false;
         
         if ($this->getRequest()->isPost()) {
             $fieldCheck = new FieldCheck();
             $types = $fieldCheck->checkArray($this->params()->fromPost("type"));
+            $languages = $fieldCheck->checkArray($this->params()->fromPost("language"));
             
-            if ($collectModel->setIntroduceType($types)) {
+            if ($collectModel->setIntroduceType($types, $languages)) {
                 $isSuccess = true;
             }
         }
         
         $viewModel->setVariable("types", $collectModel->listIntroduceType());
+        $viewModel->setVariable("languageList", $language->listLanguage());
         $viewModel->setVariable("isSuccess", $isSuccess);
         
         return $viewModel;

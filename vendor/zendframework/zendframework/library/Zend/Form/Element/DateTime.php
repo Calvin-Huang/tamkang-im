@@ -32,9 +32,7 @@ class DateTime extends Element implements InputProviderInterface
     );
 
     /**
-     *
-     * Opera and mobile browsers support datetime input, and display a datepicker control
-     * But the submitted value does not include seconds.
+     * A valid format string accepted by date()
      *
      * @var string
      */

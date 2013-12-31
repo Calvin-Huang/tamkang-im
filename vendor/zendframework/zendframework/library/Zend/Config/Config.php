@@ -33,12 +33,12 @@ class Config implements Countable, Iterator, ArrayAccess
     /**
      * Number of elements in configuration data.
      *
-     * @var integer
+     * @var int
      */
     protected $count;
 
     /**
-     * Data withing the configuration.
+     * Data within the configuration.
      *
      * @var array
      */
@@ -210,7 +210,7 @@ class Config implements Countable, Iterator, ArrayAccess
      * count(): defined by Countable interface.
      *
      * @see    Countable::count()
-     * @return integer
+     * @return int
      */
     public function count()
     {

@@ -120,7 +120,7 @@ abstract class AbstractRowGateway implements ArrayAccess, Countable, RowGatewayI
     /**
      * Save
      *
-     * @return integer
+     * @return int
      */
     public function save()
     {
@@ -205,10 +205,13 @@ abstract class AbstractRowGateway implements ArrayAccess, Countable, RowGatewayI
         $statement = $this->sql->prepareStatementForSqlObject($this->sql->delete()->where($where));
         $result = $statement->execute();
 
-        if ($result->getAffectedRows() == 1) {
+        $affectedRows = $result->getAffectedRows();
+        if ($affectedRows == 1) {
             // detach from database
             $this->primaryKeyData = null;
         }
+
+        return $affectedRows;
     }
 
     /**
@@ -280,6 +283,7 @@ abstract class AbstractRowGateway implements ArrayAccess, Countable, RowGatewayI
      * __get
      *
      * @param  string $name
+     * @throws Exception\InvalidArgumentException
      * @return mixed
      */
     public function __get($name)
@@ -287,7 +291,7 @@ abstract class AbstractRowGateway implements ArrayAccess, Countable, RowGatewayI
         if (array_key_exists($name, $this->data)) {
             return $this->data[$name];
         } else {
-            throw new \InvalidArgumentException('Not a valid column in this row: ' . $name);
+            throw new Exception\InvalidArgumentException('Not a valid column in this row: ' . $name);
         }
     }
 

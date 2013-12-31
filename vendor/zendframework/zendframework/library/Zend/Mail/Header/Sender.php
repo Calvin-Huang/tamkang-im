@@ -28,7 +28,7 @@ class Sender implements HeaderInterface
     public static function fromString($headerLine)
     {
         $decodedLine = iconv_mime_decode($headerLine, ICONV_MIME_DECODE_CONTINUE_ON_ERROR, 'UTF-8');
-        list($name, $value) = explode(': ', $decodedLine, 2);
+        list($name, $value) = GenericHeader::splitHeaderLine($decodedLine);
 
         // check to ensure proper header type for this factory
         if (strtolower($name) !== 'sender') {
@@ -41,7 +41,7 @@ class Sender implements HeaderInterface
         }
 
         // Check for address, and set if found
-        if (preg_match('^(?P<name>.*?)<(?P<email>[^>]+)>$', $value, $matches)) {
+        if (preg_match('/^(?P<name>.*?)<(?P<email>[^>]+)>$/', $value, $matches)) {
             $name = $matches['name'];
             if (empty($name)) {
                 $name = null;

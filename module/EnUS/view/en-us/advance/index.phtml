@@ -1,0 +1,24 @@
+<div class="container">
+    <div class="row">
+        <div class="span3 introduce">
+            <div id="nav-side-short" class="introduce bs-docs-sidenav" style="box-shadow:none;">
+                <ul class="nav nav-list bs-docs-sidenav">
+                    <?php foreach ($this->advanceTypes as $i => $advanceType) : ?>
+                        <li class="<?php echo ($this->typeId == $advanceType["id"]) ? "active" : "" ?>">
+                            <a href="<?php echo $this->url("zh_TW/default", array("controller" => "advance")) . "?type=" . $advanceType["id"]; ?>"><i class="icon-chevron-right"></i><?php echo $advanceType["type_name"]; ?></a>
+                        </li>
+                    <?php endforeach; ?>
+                </ul>
+            </div>
+        </div>
+    
+        <div class="span9 content">
+            <div class="page-header">
+                <h3 class="title">Advance</h3>
+            </div>
+            <hr>
+            <?php echo $this->content; ?>
+            <hr>
+        </div>
+    </div>
+</div>

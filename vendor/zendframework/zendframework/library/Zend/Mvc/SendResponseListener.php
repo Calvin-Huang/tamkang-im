@@ -3,7 +3,7 @@
  * Zend Framework (http://framework.zend.com/)
  *
  * @link      http://github.com/zendframework/zf2 for the canonical source repository
- * @copyright Copyright (c) 2005-2012 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright Copyright (c) 2005-2013 Zend Technologies USA Inc. (http://www.zend.com)
  * @license   http://framework.zend.com/license/new-bsd New BSD License
  */
 
@@ -15,9 +15,10 @@ use Zend\EventManager\EventManagerInterface;
 use Zend\EventManager\ListenerAggregateInterface;
 use Zend\Mvc\MvcEvent;
 use Zend\Mvc\ResponseSender\ConsoleResponseSender;
+use Zend\Mvc\ResponseSender\HttpResponseSender;
 use Zend\Mvc\ResponseSender\PhpEnvironmentResponseSender;
-use Zend\Mvc\ResponseSender\SimpleStreamResponseSender;
 use Zend\Mvc\ResponseSender\SendResponseEvent;
+use Zend\Mvc\ResponseSender\SimpleStreamResponseSender;
 use Zend\Stdlib\ResponseInterface as Response;
 
 class SendResponseListener implements
@@ -50,7 +51,7 @@ class SendResponseListener implements
     {
         $eventManager->setIdentifiers(array(
             __CLASS__,
-            get_called_class(),
+            get_class($this),
         ));
         $this->eventManager = $eventManager;
         $this->attachDefaultListeners();
@@ -125,7 +126,7 @@ class SendResponseListener implements
     public function getEvent()
     {
         if (!$this->event instanceof SendResponseEvent) {
-            $this->event = new SendResponseEvent();
+            $this->setEvent(new SendResponseEvent());
         }
         return $this->event;
     }
@@ -160,6 +161,6 @@ class SendResponseListener implements
         $events->attach(SendResponseEvent::EVENT_SEND_RESPONSE, new PhpEnvironmentResponseSender(), -1000);
         $events->attach(SendResponseEvent::EVENT_SEND_RESPONSE, new ConsoleResponseSender(), -2000);
         $events->attach(SendResponseEvent::EVENT_SEND_RESPONSE, new SimpleStreamResponseSender(), -3000);
+        $events->attach(SendResponseEvent::EVENT_SEND_RESPONSE, new HttpResponseSender(), -4000);
     }
-
 }

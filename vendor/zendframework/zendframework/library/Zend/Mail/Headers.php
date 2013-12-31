@@ -70,7 +70,7 @@ class Headers implements Countable, Iterator
         // iterate the header lines, some might be continuations
         foreach (explode($EOL, $string) as $line) {
             // check if a header name is present
-            if (preg_match('/^(?P<name>[^()><@,;:\"\\/\[\]?=}{ \t]+):.*$/', $line, $matches)) {
+            if (preg_match('/^(?P<name>[\x21-\x39\x3B-\x7E]+):.*$/', $line, $matches)) {
                 if ($currentLine) {
                     // a header name was present, then store the current complete line
                     $headers->addHeaderLine($currentLine);
@@ -386,7 +386,7 @@ class Headers implements Countable, Iterator
     public function toString()
     {
         $headers = '';
-        foreach ($this->headers as $header) {
+        foreach ($this as $header) {
             if ($str = $header->toString()) {
                 $headers .= $str . self::EOL;
             }

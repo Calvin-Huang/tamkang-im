@@ -3,7 +3,7 @@
  * Zend Framework (http://framework.zend.com/)
  *
  * @link      http://github.com/zendframework/zf2 for the canonical source repository
- * @copyright Copyright (c) 2005-2012 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright Copyright (c) 2005-2013 Zend Technologies USA Inc. (http://www.zend.com)
  * @license   http://framework.zend.com/license/new-bsd New BSD License
  */
 
@@ -28,17 +28,17 @@ use Zend\Validator\File\UploadFile as UploadValidator;
 class FileInput extends Input
 {
     /**
-     * @var boolean
+     * @var bool
      */
     protected $isValid = false;
 
     /**
-     * @var boolean
+     * @var bool
      */
     protected $autoPrependUploadValidator = true;
 
     /**
-     * @param  boolean $value Enable/Disable automatically prepending an Upload validator
+     * @param  bool $value Enable/Disable automatically prepending an Upload validator
      * @return FileInput
      */
     public function setAutoPrependUploadValidator($value)
@@ -48,7 +48,7 @@ class FileInput extends Input
     }
 
     /**
-     * @return boolean
+     * @return bool
      */
     public function getAutoPrependUploadValidator()
     {
@@ -85,7 +85,7 @@ class FileInput extends Input
 
     /**
      * @param  mixed $context Extra "context" to provide the validator
-     * @return boolean
+     * @return bool
      */
     public function isValid($context = null)
     {

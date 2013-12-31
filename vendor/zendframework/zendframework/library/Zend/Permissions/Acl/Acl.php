@@ -93,7 +93,7 @@ class Acl implements AclInterface
      * will have the least priority, and the last parent added will have the
      * highest priority.
      *
-     * @param  Role\RoleInterface              $role
+     * @param  Role\RoleInterface|string       $role
      * @param  Role\RoleInterface|string|array $parents
      * @throws Exception\InvalidArgumentException
      * @return Acl Provides a fluent interface
@@ -556,6 +556,10 @@ class Acl implements AclInterface
         if (!is_array($resources)) {
             if (null === $resources && count($this->resources) > 0) {
                 $resources = array_keys($this->resources);
+                // Passing a null resource; make sure "global" permission is also set!
+                if (!in_array(null, $resources)) {
+                    array_unshift($resources, null);
+                }
             } else {
                 $resources = array($resources);
             }
@@ -669,7 +673,7 @@ class Acl implements AclInterface
         $id = $resource->getResourceId();
 
         $children = $this->resources[$id]['children'];
-        foreach($children as $child) {
+        foreach ($children as $child) {
             $child_return = $this->getChildResources($child);
             $child_return[$child->getResourceId()] = $child;
 

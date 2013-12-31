@@ -4,7 +4,7 @@
  * Zend Framework (http://framework.zend.com/)
  *
  * @link      http://github.com/zendframework/zf2 for the canonical source repository
- * @copyright Copyright (c) 2005-2012 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright Copyright (c) 2005-2013 Zend Technologies USA Inc. (http://www.zend.com)
  * @license   http://framework.zend.com/license/new-bsd New BSD License
  */
 
@@ -79,7 +79,7 @@ class MongoDB implements SaveHandlerInterface
      *
      * @param string $savePath
      * @param string $name
-     * @return boolean
+     * @return bool
      */
     public function open($savePath, $name)
     {
@@ -93,7 +93,7 @@ class MongoDB implements SaveHandlerInterface
     /**
      * Close session
      *
-     * @return boolean
+     * @return bool
      */
     public function close()
     {
@@ -130,7 +130,7 @@ class MongoDB implements SaveHandlerInterface
      *
      * @param string $id
      * @param string $data
-     * @return boolean
+     * @return bool
      */
     public function write($id, $data)
     {
@@ -165,7 +165,7 @@ class MongoDB implements SaveHandlerInterface
      * Destroy session
      *
      * @param string $id
-     * @return boolean
+     * @return bool
      */
     public function destroy($id)
     {
@@ -188,7 +188,7 @@ class MongoDB implements SaveHandlerInterface
      *
      * @see http://docs.mongodb.org/manual/tutorial/expire-data/
      * @param int $maxlifetime
-     * @return boolean
+     * @return bool
      */
     public function gc($maxlifetime)
     {

@@ -22,12 +22,35 @@ use Zend\ServiceManager\AbstractPluginManager;
 class RoutePluginManager extends AbstractPluginManager
 {
     /**
-     * @var bool Do not share instances
+     * Do not share instances.
+     *
+     * @var bool
      */
     protected $shareByDefault = false;
 
     /**
-     * Validate the plugin
+     * Override setInvokableClass().
+     *
+     * Performs normal operation, but also auto-aliases the class name to the
+     * service name. This ensures that providing the FQCN does not trigger an
+     * abstract factory later.
+     *
+     * @param  string       $name
+     * @param  string       $invokableClass
+     * @param  null|bool    $shared
+     * @return RoutePluginManager
+     */
+    public function setInvokableClass($name, $invokableClass, $shared = null)
+    {
+        parent::setInvokableClass($name, $invokableClass, $shared);
+        if ($name != $invokableClass) {
+            $this->setAlias($invokableClass, $name);
+        }
+        return $this;
+    }
+
+    /**
+     * Validate the plugin.
      *
      * Checks that the filter loaded is either a valid callback or an instance
      * of FilterInterface.
@@ -51,7 +74,7 @@ class RoutePluginManager extends AbstractPluginManager
     }
 
     /**
-     * Attempt to create an instance via an invokable class
+     * Attempt to create an instance via an invokable class.
      *
      * Overrides parent implementation by invoking the route factory,
      * passing $creationOptions as the argument.

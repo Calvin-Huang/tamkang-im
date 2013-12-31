@@ -60,7 +60,7 @@ class ViewHelperManagerFactory extends AbstractPluginManagerFactory
         }
 
         // Configure URL view helper with router
-        $plugins->setFactory('url', function ($sm) use($serviceLocator) {
+        $plugins->setFactory('url', function ($sm) use ($serviceLocator) {
             $helper = new ViewHelper\Url;
             $router = Console::isConsole() ? 'HttpRouter' : 'Router';
             $helper->setRouter($serviceLocator->get($router));
@@ -77,15 +77,18 @@ class ViewHelperManagerFactory extends AbstractPluginManagerFactory
             return $helper;
         });
 
-        $plugins->setFactory('basepath', function ($sm) use($serviceLocator) {
-            $config = $serviceLocator->get('Config');
+        $plugins->setFactory('basepath', function ($sm) use ($serviceLocator) {
+            $config = $serviceLocator->has('Config') ? $serviceLocator->get('Config') : array();
             $basePathHelper = new ViewHelper\BasePath;
             if (isset($config['view_manager']) && isset($config['view_manager']['base_path'])) {
-                $basePath = $config['view_manager']['base_path'];
+                $basePathHelper->setBasePath($config['view_manager']['base_path']);
             } else {
-                $basePath = $serviceLocator->get('Request')->getBasePath();
+                $request = $serviceLocator->get('Request');
+                if (is_callable(array($request, 'getBasePath'))) {
+                    $basePathHelper->setBasePath($request->getBasePath());
+                }
             }
-            $basePathHelper->setBasePath($basePath);
+
             return $basePathHelper;
         });
 
@@ -95,11 +98,11 @@ class ViewHelperManagerFactory extends AbstractPluginManagerFactory
          * Other view helpers depend on this to decide which spec to generate their tags
          * based on. This is why it must be set early instead of later in the layout phtml.
          */
-        $plugins->setFactory('doctype', function ($sm) use($serviceLocator) {
-            $config = $serviceLocator->get('Config');
-            $config = $config['view_manager'];
+        $plugins->setFactory('doctype', function ($sm) use ($serviceLocator) {
+            $config = $serviceLocator->has('Config') ? $serviceLocator->get('Config') : array();
+            $config = isset($config['view_manager']) ? $config['view_manager'] : array();
             $doctypeHelper = new ViewHelper\Doctype;
-            if (isset($config['doctype'])) {
+            if (isset($config['doctype']) && $config['doctype']) {
                 $doctypeHelper->setDoctype($config['doctype']);
             }
             return $doctypeHelper;

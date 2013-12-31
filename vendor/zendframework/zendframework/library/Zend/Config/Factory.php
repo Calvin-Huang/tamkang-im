@@ -127,7 +127,7 @@ class Factory
      *
      * @param string $filename
      * @param array|Config $config
-     * @return boolean TRUE on success | FALSE on failure
+     * @return bool TRUE on success | FALSE on failure
      * @throws Exception\RuntimeException
      * @throws Exception\InvalidArgumentException
      */
@@ -142,8 +142,8 @@ class Factory
             );
         }
 
-        $extension          = substr(strrchr($filename, '.'), 1);
-        $directory          = dirname($filename);
+        $extension = substr(strrchr($filename, '.'), 1);
+        $directory = dirname($filename);
 
         if (!is_dir($directory)) {
             throw new Exception\RuntimeException(
@@ -157,16 +157,16 @@ class Factory
             );
         }
 
-        if(!isset(self::$writerExtensions[$extension])) {
+        if (!isset(static::$writerExtensions[$extension])) {
             throw new Exception\RuntimeException(
                 "Unsupported config file extension: '.{$extension}' for writing."
             );
         }
 
-        $writer = self::$writerExtensions[$extension];
+        $writer = static::$writerExtensions[$extension];
         if (($writer instanceOf Writer\AbstractWriter) === false) {
             $writer = self::getWriterPluginManager()->get($writer);
-            self::$writerExtensions[$extension] = $writer;
+            static::$writerExtensions[$extension] = $writer;
         }
 
         if (is_object($config)) {
@@ -210,7 +210,7 @@ class Factory
      */
     public static function setWriterPluginManager(WriterPluginManager $writers)
     {
-        self::$writers = $writers;
+        static::$writers = $writers;
     }
 
     /**
@@ -256,7 +256,7 @@ class Factory
      *
      * @param string $extension
      * @param string|Writer\AbstractWriter $writer
-     * @throw Exception\InvalidArgumentException
+     * @throws Exception\InvalidArgumentException
      * @return void
      */
     public static function registerWriter($extension, $writer)
@@ -272,6 +272,6 @@ class Factory
             ));
         }
 
-        self::$writerExtensions[$extension] = $writer;
+        static::$writerExtensions[$extension] = $writer;
     }
 }

@@ -12,6 +12,7 @@ namespace Zend\Di\Definition;
 use Zend\Code\Annotation\AnnotationCollection;
 use Zend\Code\Reflection;
 use Zend\Di\Definition\Annotation;
+use Zend\Di\Di;
 
 /**
  * Class definitions based on runtime reflection
@@ -248,7 +249,7 @@ class RuntimeDefinition implements DefinitionInterface
         }
 
         if ($rClass->hasMethod('__construct')) {
-            $def['methods']['__construct'] = true; // required
+            $def['methods']['__construct'] = Di::METHOD_IS_CONSTRUCTOR; // required
             $this->processParams($def, $rClass, $rClass->getMethod('__construct'));
         }
 
@@ -266,7 +267,8 @@ class RuntimeDefinition implements DefinitionInterface
                 if (($annotations instanceof AnnotationCollection)
                     && $annotations->hasAnnotation('Zend\Di\Definition\Annotation\Inject')) {
 
-                    $def['methods'][$methodName] = true;
+                    // use '@inject' and search for parameters
+                    $def['methods'][$methodName] = Di::METHOD_IS_EAGER;
                     $this->processParams($def, $rClass, $rMethod);
                     continue;
                 }
@@ -278,7 +280,7 @@ class RuntimeDefinition implements DefinitionInterface
             foreach ($methodPatterns as $methodInjectorPattern) {
                 preg_match($methodInjectorPattern, $methodName, $matches);
                 if ($matches) {
-                    $def['methods'][$methodName] = false; // check ot see if this is required?
+                    $def['methods'][$methodName] = Di::METHOD_IS_OPTIONAL; // check ot see if this is required?
                     $this->processParams($def, $rClass, $rMethod);
                     continue 2;
                 }
@@ -300,11 +302,12 @@ class RuntimeDefinition implements DefinitionInterface
                 preg_match($interfaceInjectorPattern, $rIface->getName(), $matches);
                 if ($matches) {
                     foreach ($rIface->getMethods() as $rMethod) {
-                        if ($rMethod->getName() === '__construct') {
+                        if (($rMethod->getName() === '__construct') || !count($rMethod->getParameters())) {
                             // constructor not allowed in interfaces
+                            // Don't call interface methods without a parameter (Some aware interfaces define setters in ZF2)
                             continue;
                         }
-                        $def['methods'][$rMethod->getName()] = true;
+                        $def['methods'][$rMethod->getName()] = Di::METHOD_IS_AWARE;
                         $this->processParams($def, $rClass, $rMethod);
                     }
                     continue 2;

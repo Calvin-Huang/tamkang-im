@@ -3,19 +3,19 @@
  * Zend Framework (http://framework.zend.com/)
  *
  * @link      http://github.com/zendframework/zf2 for the canonical source repository
- * @copyright Copyright (c) 2005-2012 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright Copyright (c) 2005-2013 Zend Technologies USA Inc. (http://www.zend.com)
  * @license   http://framework.zend.com/license/new-bsd New BSD License
  */
 
 namespace Zend\Form\Element;
 
-use DateTime;
+use DateTime as PhpDateTime;
 use Zend\Form\Element;
 use Zend\Form\ElementPrepareAwareInterface;
 use Zend\Form\FormInterface;
 use Zend\InputFilter\InputProviderInterface;
-use Zend\Validator\ValidatorInterface;
 use Zend\Validator\Regex as RegexValidator;
+use Zend\Validator\ValidatorInterface;
 
 class MonthSelect extends Element implements InputProviderInterface, ElementPrepareAwareInterface
 {
@@ -54,6 +54,14 @@ class MonthSelect extends Element implements InputProviderInterface, ElementPrep
      * @var bool
      */
     protected $createEmptyOption = false;
+
+    /**
+     * If set to true, view helpers will render delimiters between <select> elements, according to the
+     * specified locale
+     *
+     * @var bool
+     */
+    protected $renderDelimiters = true;
 
     /**
      * @var ValidatorInterface
@@ -110,6 +118,10 @@ class MonthSelect extends Element implements InputProviderInterface, ElementPrep
 
         if (isset($options['create_empty_option'])) {
             $this->setShouldCreateEmptyOption($options['create_empty_option']);
+        }
+
+        if (isset($options['render_delimiters'])) {
+            $this->setShouldRenderDelimiters($options['render_delimiters']);
         }
 
         return $this;
@@ -230,12 +242,30 @@ class MonthSelect extends Element implements InputProviderInterface, ElementPrep
     }
 
     /**
+     * @param  bool $renderDelimiters
+     * @return MonthSelect
+     */
+    public function setShouldRenderDelimiters($renderDelimiters)
+    {
+        $this->renderDelimiters = (bool) $renderDelimiters;
+        return $this;
+    }
+
+    /**
+     * @return bool
+     */
+    public function shouldRenderDelimiters()
+    {
+        return $this->renderDelimiters;
+    }
+
+    /**
      * @param mixed $value
      * @return void|\Zend\Form\Element
      */
     public function setValue($value)
     {
-        if ($value instanceof DateTime) {
+        if ($value instanceof PhpDateTime) {
             $value = array(
                 'year'  => $value->format('Y'),
                 'month' => $value->format('m')
@@ -284,7 +314,7 @@ class MonthSelect extends Element implements InputProviderInterface, ElementPrep
                 array(
                     'name'    => 'Callback',
                     'options' => array(
-                        'callback' => function($date) {
+                        'callback' => function ($date) {
                             // Convert the date to a specific format
                             if (is_array($date)) {
                                 $date = $date['year'] . '-' . $date['month'];

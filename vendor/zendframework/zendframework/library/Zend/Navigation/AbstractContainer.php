@@ -16,7 +16,7 @@ use Traversable;
 use Zend\Stdlib\ErrorHandler;
 
 /**
- * Zend_Navigation_Container
+ * Zend\Navigation\Container
  *
  * AbstractContainer class for Zend\Navigation\Page classes.
  */
@@ -93,7 +93,7 @@ abstract class AbstractContainer implements Countable, RecursiveIterator
      * calling {@link Page\AbstractPage::setParent()}.
      *
      * @param  Page\AbstractPage|array|Traversable $page  page to add
-     * @return AbstractContainer fluent interface, returns self
+     * @return self fluent interface, returns self
      * @throws Exception\InvalidArgumentException if page is invalid
      */
     public function addPage($page)
@@ -136,7 +136,7 @@ abstract class AbstractContainer implements Countable, RecursiveIterator
      * Adds several pages at once
      *
      * @param  array|Traversable|AbstractContainer $pages pages to add
-     * @return AbstractContainer fluent interface, returns self
+     * @return self fluent interface, returns self
      * @throws Exception\InvalidArgumentException if $pages is not array,
      *                                            Traversable or AbstractContainer
      */
@@ -159,6 +159,9 @@ abstract class AbstractContainer implements Countable, RecursiveIterator
         }
 
         foreach ($pages as $page) {
+            if (null === $page) {
+                continue;
+            }
             $this->addPage($page);
         }
 
@@ -169,7 +172,7 @@ abstract class AbstractContainer implements Countable, RecursiveIterator
      * Sets pages this container should have, removing existing pages
      *
      * @param  array $pages pages to set
-     * @return AbstractContainer fluent interface, returns self
+     * @return self fluent interface, returns self
      */
     public function setPages(array $pages)
     {
@@ -220,7 +223,7 @@ abstract class AbstractContainer implements Countable, RecursiveIterator
     /**
      * Removes all pages in container
      *
-     * @return AbstractContainer fluent interface, returns self
+     * @return self fluent interface, returns self
      */
     public function removePages()
     {
@@ -350,7 +353,7 @@ abstract class AbstractContainer implements Countable, RecursiveIterator
         if (!$result) {
             throw new Exception\BadMethodCallException(sprintf(
                 'Bad method call: Unknown method %s::%s',
-                get_called_class(),
+                get_class($this),
                 $method
             ), 0, $error);
         }

@@ -11,7 +11,6 @@ namespace Application;
 
 use Zend\Mvc\ModuleRouteListener;
 use Zend\Mvc\MvcEvent;
-use Application\Model\IndexSlideModel;
 
 class Module
 {
@@ -41,21 +40,5 @@ class Module
                 ),
             ),
         );
-    }
-    
-    public function layoutChanger($e)
-    {
-        $controller = $e->getTarget();
-        if ($controller->params()->fromRoute("controller") == "Application\\Controller\\Index") {
-            $controller->layout("layout/index-layout");
-        }
-    }
-    
-    public function attachSlide($e)
-    {
-        $indexSlideModel = new IndexSlideModel();
-        
-        $controller = $e->getTarget();
-        $controller->layout()->slides = $indexSlideModel->listIndexSlide();
     }
 }

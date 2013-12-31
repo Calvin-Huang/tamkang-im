@@ -5,6 +5,7 @@ use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\ViewModel;
 use Admin\Model\AdmissionModel;
 use Tool\Check\FieldCheck;
+use Admin\Model\Language;
 
 /**
  * AdmissionController
@@ -132,21 +133,25 @@ class AdmissionController extends AbstractActionController
     {
         $basePath = $this->getServiceLocator()->get("viewhelpermanager")->get("BasePath");
         $this->getServiceLocator()->get("viewhelpermanager")->get("HeadScript")->appendFile($basePath->__invoke() . "/js/append-type-field.js");
+        $this->getServiceLocator()->get("navigation/admin")->findOneById("admission-manage")->setActive(true);
         
         $viewModel = new ViewModel();
         $admissionModel = new AdmissionModel();
+        $language = new Language();
         $isSuccess = false;
         
         if ($this->getRequest()->isPost()) {
             $fieldCheck = new FieldCheck();
             $types = $fieldCheck->checkArray($this->params()->fromPost("type"));
+            $languages = $fieldCheck->checkArray($this->params()->fromPost("language"));
             
-            if ($admissionModel->setIntroduceType($types)) {
+            if ($admissionModel->setIntroduceType($types, $languages)) {
                 $isSuccess = true;
             }
         }
         
         $viewModel->setVariable("types", $admissionModel->listIntroduceType());
+        $viewModel->setVariable("languageList", $language->listLanguage());
         $viewModel->setVariable("isSuccess", $isSuccess);
         
         return $viewModel;

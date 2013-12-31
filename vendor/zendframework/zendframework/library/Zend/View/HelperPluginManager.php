@@ -28,7 +28,8 @@ class HelperPluginManager extends AbstractPluginManager
      * @var array
      */
     protected $factories = array(
-        'flashmessenger'      => 'Zend\View\Helper\Service\FlashMessengerFactory',
+        'flashmessenger' => 'Zend\View\Helper\Service\FlashMessengerFactory',
+        'identity'       => 'Zend\View\Helper\Service\IdentityFactory',
     );
 
     /**
@@ -41,11 +42,10 @@ class HelperPluginManager extends AbstractPluginManager
         // basepath and url are not very useful without their factories, however the doctype
         // helper works fine as an invokable. The factory for doctype simply checks for the
         // config value from the merged config.
-        'doctype'             => 'Zend\View\Helper\Doctype', // overridden by a factory in ViewHelperManagerFactory
         'basepath'            => 'Zend\View\Helper\BasePath',
-        'url'                 => 'Zend\View\Helper\Url',
         'cycle'               => 'Zend\View\Helper\Cycle',
         'declarevars'         => 'Zend\View\Helper\DeclareVars',
+        'doctype'             => 'Zend\View\Helper\Doctype', // overridden by a factory in ViewHelperManagerFactory
         'escapehtml'          => 'Zend\View\Helper\EscapeHtml',
         'escapehtmlattr'      => 'Zend\View\Helper\EscapeHtmlAttr',
         'escapejs'            => 'Zend\View\Helper\EscapeJs',
@@ -72,6 +72,7 @@ class HelperPluginManager extends AbstractPluginManager
         'renderchildmodel'    => 'Zend\View\Helper\RenderChildModel',
         'rendertoplaceholder' => 'Zend\View\Helper\RenderToPlaceholder',
         'serverurl'           => 'Zend\View\Helper\ServerUrl',
+        'url'                 => 'Zend\View\Helper\Url',
         'viewmodel'           => 'Zend\View\Helper\ViewModel',
     );
 
@@ -91,16 +92,6 @@ class HelperPluginManager extends AbstractPluginManager
     public function __construct(ConfigInterface $configuration = null)
     {
         parent::__construct($configuration);
-
-        $this->setFactory('identity', function ($helpers) {
-            $services = $helpers->getServiceLocator();
-            $helper   = new Helper\Identity();
-            if (!$services->has('Zend\Authentication\AuthenticationService')) {
-                return $helper;
-            }
-            $helper->setAuthenticationService($services->get('Zend\Authentication\AuthenticationService'));
-            return $helper;
-        });
 
         $this->addInitializer(array($this, 'injectRenderer'))
              ->addInitializer(array($this, 'injectTranslator'));
@@ -154,7 +145,9 @@ class HelperPluginManager extends AbstractPluginManager
     {
         if ($helper instanceof TranslatorAwareInterface) {
             $locator = $this->getServiceLocator();
-            if ($locator && $locator->has('translator')) {
+            if ($locator && $locator->has('MvcTranslator')) {
+                $helper->setTranslator($locator->get('MvcTranslator'));
+            } elseif ($locator && $locator->has('translator')) {
                 $helper->setTranslator($locator->get('translator'));
             }
         }

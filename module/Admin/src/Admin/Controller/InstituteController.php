@@ -5,6 +5,7 @@ use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\ViewModel;
 use Admin\Model\InstituteModel;
 use Tool\Check\FieldCheck;
+use Admin\Model\Language;
 
 /**
  * InstituteController
@@ -135,18 +136,21 @@ class InstituteController extends AbstractActionController
         
         $viewModel = new ViewModel();
         $instituteModel = new InstituteModel();
+        $languageModel = new Language();
         $isSuccess = false;
         
         if ($this->getRequest()->isPost()) {
             $fieldCheck = new FieldCheck();
             $types = $fieldCheck->checkArray($this->params()->fromPost("type"));
+            $languages = $fieldCheck->checkArray($this->params()->fromPost("language"));
             
-            if ($instituteModel->setIntroduceType($types)) {
+            if ($instituteModel->setIntroduceType($types, $languages)) {
                 $isSuccess = true;
             }
         }
         
         $viewModel->setVariable("types", $instituteModel->listIntroduceType());
+        $viewModel->setVariable("languageList", $languageModel->listLanguage());
         $viewModel->setVariable("isSuccess", $isSuccess);
         
         return $viewModel;

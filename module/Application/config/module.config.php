@@ -10,20 +10,10 @@
 return array(
     'router' => array(
         'routes' => array(
-            'home' => array(
-                'type' => 'Zend\Mvc\Router\Http\Literal',
-                'options' => array(
-                    'route'    => '/',
-                    'defaults' => array(
-                        'controller' => 'Application\Controller\Index',
-                        'action'     => 'index',
-                    ),
-                ),
-            ),
             // The following is a route to simplify getting started creating
             // new controllers and actions without needing to create a new
             // module. Simply drop new controllers in, and you can access them
-            // using the path /application/:controller/:action
+            // using the path /zh_TW/:controller/:action
             'application' => array(
                 'type'    => 'Literal',
                 'options' => array(
@@ -70,15 +60,8 @@ return array(
     ),
     'controllers' => array(
         'invokables' => array(
-            'Application\Controller\Index' => 'Application\Controller\IndexController',
-            'Application\Controller\News' => 'Application\Controller\NewsController',
             'Application\Controller\Image' => 'Application\Controller\ImageController',
             'Application\Controller\File' => 'Application\Controller\FileController',
-            'Application\Controller\Faculty' => 'Application\Controller\FacultyController',
-            'Application\Controller\Collect' => 'Application\Controller\CollectController',
-            'Application\Controller\Institute' => 'Application\Controller\InstituteController',
-            'Application\Controller\Advance' => 'Application\Controller\AdvanceController',
-            'Application\Controller\Admission' => 'Application\Controller\AdmissionController',
         ),
     ),
     'view_manager' => array(
@@ -87,12 +70,6 @@ return array(
         'doctype'                  => 'HTML5',
         'not_found_template'       => 'error/404',
         'exception_template'       => 'error/index',
-        'template_map' => array(
-            'layout/layout'           => __DIR__ . '/../view/layout/layout.phtml',
-            'application/index/index' => __DIR__ . '/../view/application/index/index.phtml',
-            'error/404'               => __DIR__ . '/../view/error/404.phtml',
-            'error/index'             => __DIR__ . '/../view/error/index.phtml',
-        ),
         'template_path_stack' => array(
             __DIR__ . '/../view',
         ),

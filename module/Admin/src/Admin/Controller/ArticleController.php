@@ -9,6 +9,7 @@ use Tool\Check\FieldCheck;
 use Tool\Check\Exception\FieldEmptyException;
 use Tool\Page\Paginator;
 use Admin\Model\FileHandler;
+use Admin\Model\Language;
 use Tool\File\Exception\InvalidFileFormatException;
 use Tool\File\Exception\UploadFailedException;
 
@@ -86,19 +87,22 @@ class ArticleController extends AbstractActionController
         $headScript->appendFile($basePath->__invoke() . "/js/append-type-field.js");
         
         $articleModel = new ArticleModel();
+        $language = new Language();
         $viewModel = new ViewModel();
         $isSuccess = false;
         
         if ($this->getRequest()->isPost()) {
             $fieldCheck = new FieldCheck();
             $types = $fieldCheck->checkArray($this->params()->fromPost("type"));
+            $languages = $fieldCheck->checkArray($this->params()->fromPost("language"));
             
-            if ($articleModel->setArticletype($types)) {
+            if ($articleModel->setArticletype($types, $languages)) {
                 $isSuccess = true;
             }
         }
         
         $viewModel->setVariable("articletypeList", $articleModel->listType());
+        $viewModel->setVariable("languageList", $language->listLanguage());
         $viewModel->setVariable("saveSuccess", $isSuccess);
         return $viewModel;
     }

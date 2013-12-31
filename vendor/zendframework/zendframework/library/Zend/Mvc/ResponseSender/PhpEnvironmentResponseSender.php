@@ -3,37 +3,19 @@
  * Zend Framework (http://framework.zend.com/)
  *
  * @link      http://github.com/zendframework/zf2 for the canonical source repository
- * @copyright Copyright (c) 2005-2012 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright Copyright (c) 2005-2013 Zend Technologies USA Inc. (http://www.zend.com)
  * @license   http://framework.zend.com/license/new-bsd New BSD License
  */
 
 namespace Zend\Mvc\ResponseSender;
 
-use Zend\Mvc\ResponseSender\SendResponseEvent;
-use Zend\Http\Header\MultipleHeaderInterface;
 use Zend\Http\PhpEnvironment\Response;
+use Zend\Mvc\ResponseSender\SendResponseEvent;
 
-class PhpEnvironmentResponseSender extends AbstractResponseSender
+class PhpEnvironmentResponseSender extends HttpResponseSender
 {
     /**
-     * Send content
-     *
-     * @param  SendResponseEvent $event
-     * @return PhpEnvironmentResponseSender
-     */
-    public function sendContent(SendResponseEvent $event)
-    {
-        if ($event->contentSent()) {
-            return $this;
-        }
-        $response = $event->getResponse();
-        echo $response->getContent();
-        $event->setContentSent();
-        return $this;
-    }
-
-    /**
-     * Send HTTP response
+     * Send php environment response
      *
      * @param  SendResponseEvent $event
      * @return PhpEnvironmentResponseSender

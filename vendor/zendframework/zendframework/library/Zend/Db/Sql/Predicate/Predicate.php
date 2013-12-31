@@ -9,6 +9,8 @@
 
 namespace Zend\Db\Sql\Predicate;
 
+use Zend\Db\Sql\Exception\RuntimeException;
+
 /**
  * @property Predicate $and
  * @property Predicate $or
@@ -51,12 +53,12 @@ class Predicate extends PredicateSet
      * Indicate end of nested predicate
      *
      * @return Predicate
-     * @throws \RuntimeException
+     * @throws RuntimeException
      */
     public function unnest()
     {
         if ($this->unnest == null) {
-            throw new \RuntimeException('Not nested');
+            throw new RuntimeException('Not nested');
         }
         $unnset       = $this->unnest;
         $this->unnest = null;
@@ -215,6 +217,13 @@ class Predicate extends PredicateSet
         return $this;
     }
 
+    /**
+     * Create an expression, with parameter placeholders
+     *
+     * @param $expression
+     * @param $parameters
+     * @return $this
+     */
     public function expression($expression, $parameters)
     {
         $this->addPredicate(
@@ -229,19 +238,24 @@ class Predicate extends PredicateSet
     /**
      * Create "Literal" predicate
      *
-     * Utilizes Like predicate
+     * Literal predicate, for parameters, use expression()
      *
      * @param  string $literal
-     * @param  int|float|bool|string|array $parameter
      * @return Predicate
      */
-    public function literal($literal, $expressionParameters = null)
+    public function literal($literal)
     {
-        if ($expressionParameters) {
-            $predicate = new Expression($literal, $expressionParameters);
-        } else {
+        // process deprecated parameters from previous literal($literal, $parameters = null) signature
+        if (func_num_args() >= 2) {
+            $parameters = func_get_arg(1);
+            $predicate = new Expression($literal, $parameters);
+        }
+
+        // normal workflow for "Literals" here
+        if (!isset($predicate)) {
             $predicate = new Literal($literal);
         }
+
         $this->addPredicate(
             $predicate,
             ($this->nextPredicateCombineOperator) ?: $this->defaultCombination
@@ -295,7 +309,7 @@ class Predicate extends PredicateSet
      * Utilizes In predicate
      *
      * @param  string $identifier
-     * @param  array|Select $valueSet
+     * @param  array|\Zend\Db\Sql\Select $valueSet
      * @return Predicate
      */
     public function in($identifier, $valueSet = null)

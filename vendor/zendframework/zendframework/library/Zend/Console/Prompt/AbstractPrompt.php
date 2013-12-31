@@ -10,8 +10,8 @@
 namespace Zend\Console\Prompt;
 
 use ReflectionClass;
-use Zend\Console\Console;
 use Zend\Console\Adapter\AdapterInterface as ConsoleAdapter;
+use Zend\Console\Console;
 use Zend\Console\Exception;
 
 abstract class AbstractPrompt implements PromptInterface
@@ -25,13 +25,6 @@ abstract class AbstractPrompt implements PromptInterface
      * @var mixed
      */
     protected $lastResponse;
-
-    /**
-     * Show a prompt
-     *
-     * @return void
-     */
-    abstract public function show();
 
     /**
      * Return last answer to this prompt.

@@ -1,6 +1,6 @@
 <form class="form-horizontal" method="post" action="<?php echo $this->url("admin/default", array("controller" => "institute", "action" => "type")); ?>">
     <div class="btn-toolbar">
-        <button type="submit" class="btn btn-danger">儲存更動</button>
+        <button type="submit" class="btn btn-danger">儲存介紹類別</button>
         <a class="btn" href="<?php echo $this->url("admin/default", array("controller" => "institute", "action" => "index")); ?>">取消</a>
     </div>
     <?php if ($this->isSuccess) :?>
@@ -10,18 +10,28 @@
     </div>
     <?php endif; ?>
     <?php foreach ($this->types as $i => $type) : ?>
-    <div class="control-group" style="width:450px;">
-        <button type="button" class="close" data-dismiss="alert">&times;</button>
+    <div class="control-group">
+        <button type="button" class="close pull-left" data-dismiss="alert">&times;</button>
         <label class="control-label" for="data-index-<?php echo $i + 1; ?>">種類<?php echo $i + 1; ?></label>
-        <div class="controls">
-            <input type="text" class="field" id="data-index-<?php echo $i + 1; ?>" name="type[]" value="<?php echo $type["type_name"]; ?>" />
+        <div class="controls controls-row">
+            <input type="text" class="field span3" id="data-index-<?php echo $i + 1; ?>" name="type[]" value="<?php echo $type["type_name"]; ?>" />
+            <select class="span2" name="language[]">
+                <?php foreach ($this->languageList as $i => $language) : ?>
+                    <option value="<?php echo $language["id"]; ?>"<?php echo ($language["id"] == $type["language_id"]) ? " selected" : ""; ?>><?php echo $language["language"]; ?></option>
+                <?php endforeach; ?>
+            </select>
         </div>
     </div>
     <?php endforeach; ?>
     <div class="control-group">
-        <label class="control-label" for="data-index-<?php echo count($this->types) + 1; ?>">種類<?php echo count($this->types) + 1; ?></label>
-        <div class="controls">
-            <input type="text" class="field" id="data-index-<?php echo count($this->types) + 1; ?>" name="type[]" value="" />
+        <label class="control-label">種類</label>
+        <div class="controls controls-row">
+            <input type="text" class="field span3" name="type[]" value="" />
+            <select class="span2" name="language[]">
+                <?php foreach ($this->languageList as $i => $language) : ?>
+                    <option value="<?php echo $language["id"]; ?>"><?php echo $language["language"]; ?></option>
+                <?php endforeach; ?>
+            </select>
         </div>
     </div>
 </form>

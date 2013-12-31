@@ -93,7 +93,7 @@ return array(
                         'controller' => 'collect',
                     ),
                     'type' => array(
-                        'label' => '設定介紹種類',
+                        'label' => '設定介紹類別',
                         'route' => 'admin/default',
                         'controller' => 'collect',
                         'action' => 'type'
@@ -113,7 +113,7 @@ return array(
                         'controller' => 'institute'
                     ),
                     'type' => array(
-                        'label' => '設定介紹種類',
+                        'label' => '設定介紹類別',
                         'route' => 'admin/default',
                         'controller' => 'institute',
                         'action' => 'type'
@@ -133,7 +133,7 @@ return array(
                         'controller' => 'advance'
                     ),
                     'type' => array(
-                        'label' => '設定介紹種類',
+                        'label' => '設定介紹類別',
                         'route' => 'admin/default',
                         'controller' => 'advance',
                         'action' => 'type'
@@ -154,7 +154,7 @@ return array(
                             'controller' => 'admission'
                     ),
                     'type' => array(
-                            'label' => '設定介紹種類',
+                            'label' => '設定介紹類別',
                             'route' => 'admin/default',
                             'controller' => 'admission',
                             'action' => 'type'
@@ -183,34 +183,34 @@ return array(
             array(
                 'id' => 'news',
                 'label' => '消息公告',
-                'route' => 'application/default',
+                'route' => 'zh_TW/default',
                 'controller' => 'news',
             ),
             array(
                 'id' => 'faculty',
                 'label' => '教師陣容',
-                'route' => 'application/default',
+                'route' => 'zh_TW/default',
                 'controller' => 'faculty',
                 'action' => 'index'
             ),
             array(
                 'id' => 'collect',
                 'label' => '大學部',
-                'route' => 'application/default',
+                'route' => 'zh_TW/default',
                 'controller' => 'collect',
                 'action' => 'index'
             ),
             array(
                 'id' => 'institute',
                 'label' => '碩士班',
-                'route' => 'application/default',
+                'route' => 'zh_TW/default',
                 'controller' => 'institute',
                 'action' => 'index'
             ),
             array(
                 'id' => 'advance',
                 'label' => '碩士在職專班',
-                'route' => 'application/default',
+                'route' => 'zh_TW/default',
                 'controller' => 'advance',
                 'action' => 'index'
             ),
@@ -224,7 +224,58 @@ return array(
             array(
                 'id' => 'admission',
                 'label' => '招生簡介',
-                'route' => 'application/default',
+                'route' => 'zh_TW/default',
+                'controller' => 'admission',
+                'action' => 'index'
+            ),
+        ),
+        'en_us' => array(
+            // And finally, here is where we define our page hierarchy
+            array(
+                'id' => 'news_en_US',
+                'label' => 'News',
+                'route' => 'en_US/default',
+                'controller' => 'news',
+            ),
+            array(
+                'id' => 'faculty_en_US',
+                'label' => 'Faculty',
+                'route' => 'en_US/default',
+                'controller' => 'faculty',
+                'action' => 'index'
+            ),
+            array(
+                'id' => 'collect_en_US',
+                'label' => 'Collect',
+                'route' => 'en_US/default',
+                'controller' => 'collect',
+                'action' => 'index'
+            ),
+            array(
+                'id' => 'institute_en_US',
+                'label' => 'Institute',
+                'route' => 'en_US/default',
+                'controller' => 'institute',
+                'action' => 'index'
+            ),
+            array(
+                'id' => 'advance_en_US',
+                'label' => 'Advance',
+                'route' => 'en_US/default',
+                'controller' => 'advance',
+                'action' => 'index'
+            ),
+            // array(
+            //     'id' => 'download',
+            //     'label' => '文件查找',
+            //     'route' => 'application/default',
+            //     'controller' => 'file',
+            //     'action' => 'search'
+            // ),
+            array(
+                'id' => 'admission_en_US',
+                'label' => 'Admission',
+                'route' => 'en_US/default',
                 'controller' => 'admission',
                 'action' => 'index'
             ),

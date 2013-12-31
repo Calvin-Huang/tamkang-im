@@ -12,9 +12,9 @@ namespace Zend\Feed\Writer\Renderer\Entry;
 use DateTime;
 use DOMDocument;
 use DOMElement;
+use Zend\Feed\Uri;
 use Zend\Feed\Writer;
 use Zend\Feed\Writer\Renderer;
-use Zend\Uri;
 
 /**
 */
@@ -25,7 +25,7 @@ class Rss extends Renderer\AbstractRenderer implements Renderer\RendererInterfac
      *
      * @param  Writer\Entry $container
      */
-    public function __construct (Writer\Entry $container)
+    public function __construct(Writer\Entry $container)
     {
         parent::__construct($container);
     }
@@ -279,7 +279,7 @@ class Rss extends Renderer\AbstractRenderer implements Renderer\RendererInterfac
         }
         $text = $dom->createTextNode($this->getDataContainer()->getId());
         $id->appendChild($text);
-        if (!Uri\UriFactory::factory($this->getDataContainer()->getId())->isValid()) {
+        if (!Uri::factory($this->getDataContainer()->getId())->isValid()) {
             $id->setAttribute('isPermaLink', 'false');
         }
     }

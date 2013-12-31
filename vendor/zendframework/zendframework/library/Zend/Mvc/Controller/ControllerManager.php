@@ -10,6 +10,7 @@
 namespace Zend\Mvc\Controller;
 
 use Zend\EventManager\EventManagerAwareInterface;
+use Zend\EventManager\EventManagerInterface;
 use Zend\Mvc\Exception;
 use Zend\ServiceManager\AbstractPluginManager;
 use Zend\ServiceManager\ConfigInterface;
@@ -66,7 +67,17 @@ class ControllerManager extends AbstractPluginManager
         }
 
         if ($controller instanceof EventManagerAwareInterface) {
-            $controller->setEventManager($parentLocator->get('EventManager'));
+            // If we have an event manager composed already, make sure it gets
+            // injected with the shared event manager.
+            // The AbstractController lazy-instantiates an EM instance, which
+            // is why the shared EM injection needs to happen; the conditional
+            // will always pass.
+            $events = $controller->getEventManager();
+            if (!$events instanceof EventManagerInterface) {
+                $controller->setEventManager($parentLocator->get('EventManager'));
+            } else {
+                $events->setSharedManager($parentLocator->get('SharedEventManager'));
+            }
         }
 
         if (method_exists($controller, 'setPluginManager')) {
@@ -97,7 +108,20 @@ class ControllerManager extends AbstractPluginManager
     }
 
     /**
-     * Override: do not use peering service manager to retrieve controller
+     * Override: do not use peering service managers
+     *
+     * @param  string|array $name
+     * @param  bool         $checkAbstractFactories
+     * @param  bool         $usePeeringServiceManagers
+     * @return bool
+     */
+    public function has($name, $checkAbstractFactories = true, $usePeeringServiceManagers = false)
+    {
+        return parent::has($name, $checkAbstractFactories, $usePeeringServiceManagers);
+    }
+
+    /**
+     * Override: do not use peering service managers
      *
      * @param  string $name
      * @param  array $options

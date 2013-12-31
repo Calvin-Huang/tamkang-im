@@ -492,7 +492,7 @@ class PatternOptions extends AbstractOptions
      *
      * @param  mixed $object
      * @throws Exception\InvalidArgumentException
-     * @return $this
+     * @return PatternOptions
      */
     public function setObject($object)
     {
@@ -575,7 +575,7 @@ class PatternOptions extends AbstractOptions
      * - ObjectCache
      *
      * @param  mixed $objectKey
-     * @return $this
+     * @return PatternOptions
      */
     public function setObjectKey($objectKey)
     {
@@ -654,7 +654,7 @@ class PatternOptions extends AbstractOptions
             );
         }
 
-        $this->publicDir = rtrim(realpath($publicDir), \DIRECTORY_SEPARATOR);
+        $this->publicDir = rtrim(realpath($publicDir), DIRECTORY_SEPARATOR);
         return $this;
     }
 

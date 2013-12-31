@@ -87,7 +87,7 @@ class Debug
      * @param  bool   $echo  OPTIONAL Echo output if true.
      * @return string
      */
-    public static function dump($var, $label=null, $echo=true)
+    public static function dump($var, $label = null, $echo = true)
     {
         // format the label
         $label = ($label===null) ? '' : rtrim($label) . ' ';
@@ -104,7 +104,9 @@ class Debug
                     . PHP_EOL . $output
                     . PHP_EOL;
         } else {
-            if (!extension_loaded('xdebug')) {
+            if (null !== static::$escaper) {
+                $output = static::$escaper->escapeHtml($output);
+            } elseif (!extension_loaded('xdebug')) {
                 $output = static::getEscaper()->escapeHtml($output);
             }
 
