@@ -44,6 +44,7 @@ return array(
                 'Admin\Controller\Institute' => null,
                 'Admin\Controller\Advance' => null,
                 'Admin\Controller\Admission' => null,
+                'Admin\Controller\Teacher' => null,
             ),
             'teacher' => array(
                 'Admin\Controller\Profile' => null,
@@ -52,7 +53,6 @@ return array(
             'administrator' => array(
                 'Admin\Controller\Profile' => null,
                 'Admin\Controller\User' => null,
-                'Admin\Controller\Teacher' => null,
             )
         )
     )

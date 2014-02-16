@@ -1,9 +1,5 @@
 <div class="row">
     <form action="" method="post" enctype="multipart/form-data">
-        <div class="btn-toolbar span12">
-            <button class="btn btn-danger" type="submit">儲存修改</button>
-            <a class="btn" href="<?php echo $this->url("admin/default", array("controller" => "profile")); ?>">取消修改</a>
-        </div>
         <?php if (count($this->errors) > 0) :?>
         <div class="span12">
             <label class="alert alert-danger">
@@ -15,36 +11,91 @@
             </label>
         </div>
         <?php endif; ?>
-        <div class="span4">
+        <div class="span4" style="margin-top:50px;">
             <div class="thumbnail">
                 <img src="<?php echo (isset($this->avatar)) ? $this->url("application/default", array("controller" => "image")) . "?" . $this->avatar : ""; ?>" data-src="holder.js/400x400" />
-                <input type="file" name="avatar" />
             </div>
         </div>
-        <div class="span8">
+        <div class="span8" style="margin-top:50px;">
             <table class="table">
+                <tr>
+                    <th>個人資料</th>
+                    <th>
+                        <button class="btn btn-danger" type="submit">儲存修改</button>
+                        <a class="btn" href="<?php echo $this->url("admin/default", array("controller" => "profile")); ?>">取消修改</a>
+                    </th>
+                </tr>
                 <tr>
                     <td style="width:40%">帳號</td>
                     <td><?php echo $this->username; ?></td>
                 </tr>
                 <tr>
                     <td>姓名</td>
-                    <td><input type="text" name="name" value="<?php echo $this->name; ?>" /></td>
+                    <td><?php echo $this->name; ?></td>
                 </tr>
                 <tr>
                     <td>電子信箱</td>
                     <td><input type="email" name="email" value="<?php echo $this->email; ?>" /></td>
                 </tr>
+                <?php if ($this->role == "teacher") : ?>
+                    <tr>
+                        <td>聘雇形式</td>
+                        <td><?php echo htmlentities($this->title, ENT_QUOTES, "UTF-8"); ?></td>
+                    </tr>
+                    <tr>
+                        <td>兼任職稱</td>
+                        <td>
+                            <?php foreach ($this->othertitles as $i => $othertitle) : ?>
+                                <p class="field" style="width:250px;">
+                                    <input type="text" name="othertitle[]" class="othertitle" value="<?php echo $othertitle["title_name"]; ?>" />
+                                    <a class="close" data-dismiss="alert">&times;</a>
+                                </p>
+                            <?php endforeach; ?>
+                            <p class="field" style="width:250px;">
+                                <input type="text" name="othertitle[]" class="othertitle" value="" />
+                                <a class="close" data-dismiss="alert">&times;</a>
+                            </p>
+                        </td>
+                    </tr>
+                	<tr>
+                		<td>指導班級</td>
+                		<td><input type="text" name="teach-class" value="<?php echo htmlentities($this->teachClass, ENT_QUOTES, "UTF-8"); ?>" /></td>
+                	</tr>
+                	<tr>
+                		<td>研究室位置</td>
+                		<td><input type="text" name="lab-location" value="<?php echo htmlentities($this->labLocation, ENT_QUOTES, "UTF-8"); ?>" /></td>
+                	</tr>
+                	<tr>
+                		<td>研究室網頁</td>
+                		<td>
+                		    <p>
+                		        <input type="text" name="labsite-text" value="<?php echo htmlentities($this->labsiteText); ?>" placeholder="網頁名稱" />
+                		    </p>
+                		    <p>
+                		        <input type="text" name="labsite-url" class="input-xlarge" value="<?php echo htmlentities($this->labsiteUrl); ?>" placeholder="網頁位置" />
+                		        <span class="help-block label label-warning"><i class="icon-warning-sign icon-white"></i>&nbsp;請加上http://或是https://</span>
+                		    </p>
+                		</td>
+                	</tr>
+                	<tr>
+                		<td>個人網頁</td>
+                		<td>
+                		    <p>
+                		        <input type="text" name="personalsite-text" value="<?php echo htmlentities($this->personalsiteText); ?>" placeholder="網頁名稱" />
+                		    </p>
+                		    <p>
+                		        <input type="text" name="personalsite-url" class="input-xlarge" value="<?php echo htmlentities($this->personalsiteUrl); ?>" placeholder="網頁位置" />
+                		        <span class="help-block label label-warning"><i class="icon-warning-sign icon-white"></i>&nbsp;請加上http://或是https://</span>
+                		    </p>
+                		</td>
+                	</tr>
+                <?php endif; ?>
                 <tr>
                     <td>帳號權限等級</td>
-                    <td><?php echo $this->role; ?></td>
-                </tr>
-                <tr>
-                    <td>密碼</td>
-                    <td><input type="password" name="password" placeholder="請輸入新密碼" /></td>
+                    <td><?php echo $this->role_zhTW; ?></td>
                 </tr>
             </table>
         </div>
-        <input type="hidden" name="t" value="<?php echo $this->t; ?>" />
+        <input name="csrf-token" value="<?php echo $this->csrfToken; ?>" type="hidden" />
     </form>
 </div>

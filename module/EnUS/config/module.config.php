@@ -67,15 +67,16 @@ return array(
             'EnUS\Controller\News' => 'EnUS\Controller\NewsController',
             'EnUS\Controller\File' => 'EnUS\Controller\FileController',
             'EnUS\Controller\Faculty' => 'EnUS\Controller\FacultyController',
-            'EnUS\Controller\Collect' => 'EnUS\Controller\CollectController',
-            'EnUS\Controller\Institute' => 'EnUS\Controller\InstituteController',
-            'EnUS\Controller\Advance' => 'EnUS\Controller\AdvanceController',
+            'EnUS\Controller\Undergraduate' => 'EnUS\Controller\UndergraduateController',
+            'EnUS\Controller\Graduate' => 'EnUS\Controller\GraduateController',
+            'EnUS\Controller\Emba' => 'EnUS\Controller\EmbaController',
             'EnUS\Controller\Admission' => 'EnUS\Controller\AdmissionController',
         ),
     ),
     'view_manager' => array(
         'template_map' => array(
             'layout/en_us-layout'           => __DIR__ . '/../view/layout/en_us-layout.phtml',
+            'en-us/index/index.template' => __DIR__ . '/../view/en-us/index/index.template.phtml',
         ),
         'template_path_stack' => array(
             __DIR__ . '/../view',

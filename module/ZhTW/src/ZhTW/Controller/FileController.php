@@ -3,10 +3,11 @@ namespace ZhTW\Controller;
 
 use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\ViewModel;
-use ZhTW\Model\FileModel;
+use Application\Model\FileModel;
 use Tool\Check\FieldCheck;
-use Admin\Model\ArticleModel;
+use Application\Model\ArticleModel;
 use Tool\Page\Paginator;
+use Application\Model\Language;
 
 /**
  * FileController
@@ -28,7 +29,9 @@ class FileController extends AbstractActionController
         $viewModel = new ViewModel();
         $articleModel = new ArticleModel();
         $fieldCheck = new FieldCheck();
+        $languageModel = new Language();
         $fileModel = new FileModel($onePageQuantity);
+        $languageId = $languageModel->getLanguageIdByShortCut("zh_TW");
         
         $typeId = null;
         $term = null;
@@ -45,8 +48,7 @@ class FileController extends AbstractActionController
         }
         
         $downloads = $fileModel->listDownloadByTypeIdAndTerm($page, $typeId, $term);
-        // var_dump($downloads);
-        // exit();
+        
         $similars = array();
         if (isset($term) && $term != "") {
             $similars = $fileModel->listDownloadByTitle($term);
@@ -60,7 +62,7 @@ class FileController extends AbstractActionController
             }
         }
         
-        $viewModel->setVariable("articleTypes", $articleModel->listType());
+        $viewModel->setVariable("articleTypes", $articleModel->listType($languageId));
         $viewModel->setVariable("typeId", $typeId);
         $viewModel->setVariable("term", $term);
         $viewModel->setVariable("downloads", $downloads[1]);

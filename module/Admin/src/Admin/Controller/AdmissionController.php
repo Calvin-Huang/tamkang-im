@@ -132,7 +132,10 @@ class AdmissionController extends AbstractActionController
     public function typeAction()
     {
         $basePath = $this->getServiceLocator()->get("viewhelpermanager")->get("BasePath");
-        $this->getServiceLocator()->get("viewhelpermanager")->get("HeadScript")->appendFile($basePath->__invoke() . "/js/append-type-field.js");
+        $headScript = $this->getServiceLocator()->get("viewhelpermanager")->get("HeadScript");
+        $headScript->appendFile($basePath->__invoke() . "/js/jquery-ui-1.10.3.custom.min.js");
+        $headScript->appendFile($basePath->__invoke() . "/js/append-type-field.js");
+        $headScript->appendFile($basePath->__invoke() . "/js/type-sort.js");
         $this->getServiceLocator()->get("navigation/admin")->findOneById("admission-manage")->setActive(true);
         
         $viewModel = new ViewModel();

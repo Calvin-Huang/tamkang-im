@@ -8,21 +8,28 @@
         <button type="button" class="close" data-dismiss="alert">&times;</button>
         <i class="icon-ok"></i>&nbsp;儲存成功
     </div>
-    <?php endif; ?>
-    <?php foreach ($this->types as $i => $type) : ?>
-    <div class="control-group">
-        <button type="button" class="close pull-left" data-dismiss="alert">&times;</button>
-        <label class="control-label" for="data-index-<?php echo $i + 1; ?>">種類<?php echo $i + 1; ?></label>
-        <div class="controls controls-row">
-            <input type="text" class="field span3" id="data-index-<?php echo $i + 1; ?>" name="type[]" value="<?php echo $type["type_name"]; ?>" />
-            <select class="span2" name="language[]">
-                <?php foreach ($this->languageList as $i => $language) : ?>
-                    <option value="<?php echo $language["id"]; ?>"<?php echo ($language["id"] == $type["language_id"]) ? " selected" : ""; ?>><?php echo $language["language"]; ?></option>
-                <?php endforeach; ?>
-            </select>
+    <?php else : ?>
+        <div class="alert">
+            <button type="button" class="close" data-dismiss="alert">&times;</button>
+            <i class="icon-resize-vertical"></i>&nbsp;按住滑鼠左鍵拉動項目可以進行排序
         </div>
+    <?php endif; ?>
+    <div id="type-sort">
+        <?php foreach ($this->types as $i => $type) : ?>
+        <div class="control-group">
+            <button type="button" class="close pull-left" data-dismiss="alert">&times;</button>
+            <label class="control-label" for="data-index-<?php echo $i + 1; ?>">種類<?php echo $i + 1; ?></label>
+            <div class="controls controls-row">
+                <input type="text" class="field span3" id="data-index-<?php echo $i + 1; ?>" name="type[]" value="<?php echo $type["type_name"]; ?>" />
+                <select class="span2" name="language[]">
+                    <?php foreach ($this->languageList as $i => $language) : ?>
+                        <option value="<?php echo $language["id"]; ?>"<?php echo ($language["id"] == $type["language_id"]) ? " selected" : ""; ?>><?php echo $language["language"]; ?></option>
+                    <?php endforeach; ?>
+                </select>
+            </div>
+        </div>
+        <?php endforeach; ?>
     </div>
-    <?php endforeach; ?>
     <div class="control-group">
         <label class="control-label">種類</label>
         <div class="controls controls-row">

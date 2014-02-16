@@ -1,0 +1,4 @@
+你確定要刪除此筆資訊嗎？
+<form action="<?php echo $this->url("admin/default", array("controller" => "teacher-profile", "action" => "delete-profile")) . "?id=" . $this->id; ?>" method="post">
+    <input name="csrf-token" value="<?php echo $this->csrfToken; ?>" type="hidden" />
+</form>

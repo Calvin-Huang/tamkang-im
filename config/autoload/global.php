@@ -21,7 +21,7 @@ return array(
             // And finally, here is where we define our page hierarchy
             array(
                 'id' => 'profile-manage',
-                'label' => '個人資料',
+                'label' => '帳戶設定',
                 'route' => 'admin/default',
                 'controller' => 'profile',
                 'resource' => 'Admin\Controller\Profile',
@@ -41,15 +41,21 @@ return array(
                 'resource' => 'Admin\Controller\Teacher',
                 'pages' => array(
                     'sort' => array(
-                        'label' => '設定順序',
+                        'label' => '設定顯示順序',
                         'route' => 'admin/default',
                         'controller' => 'teacher'
                     ),
                     'book-type' => array(
-                        'label' => '設定教師專刊種類',
+                        'label' => '設定教師相關資料種類',
                         'route' => 'admin/default',
                         'controller' => 'teacher',
                         'action' => 'booktype'
+                    ),
+                    'teacher-hire' => array(
+                        'label' => '設定教師聘雇形式',
+                        'route' => 'admin/default',
+                        'controller' => 'teacher',
+                        'action' => 'hire'
                     )
                 )
             ),
@@ -162,19 +168,10 @@ return array(
                 )
             ),
             array(
-                'id' => 'teacher-profile',
-                'label' => '教師個人資料',
+                'id' => 'teacher-info',
+                'label' => '歷程顯示資料',
                 'route' => 'admin/default',
                 'controller' => 'teacher-profile',
-                'action' => 'index',
-                'resource' => 'Admin\Controller\TeacherProfile',
-            ),
-            array(
-                'id' => 'teacher-book',
-                'label' => '教師論文資料',
-                'route' => 'admin/default',
-                'controller' => 'teacher-profile',
-                'action' => 'book',
                 'resource' => 'Admin\Controller\TeacherProfile',
             ),
         ),
@@ -194,24 +191,24 @@ return array(
                 'action' => 'index'
             ),
             array(
-                'id' => 'collect',
+                'id' => 'undergraduate',
                 'label' => '大學部',
                 'route' => 'zh_TW/default',
-                'controller' => 'collect',
+                'controller' => 'undergraduate',
                 'action' => 'index'
             ),
             array(
-                'id' => 'institute',
+                'id' => 'graduate',
                 'label' => '碩士班',
                 'route' => 'zh_TW/default',
-                'controller' => 'institute',
+                'controller' => 'graduate',
                 'action' => 'index'
             ),
             array(
-                'id' => 'advance',
+                'id' => 'emba',
                 'label' => '碩士在職專班',
                 'route' => 'zh_TW/default',
-                'controller' => 'advance',
+                'controller' => 'emba',
                 'action' => 'index'
             ),
             // array(
@@ -245,24 +242,24 @@ return array(
                 'action' => 'index'
             ),
             array(
-                'id' => 'collect_en_US',
-                'label' => 'Collect',
+                'id' => 'undergraduate_en_US',
+                'label' => 'Undergraduate',
                 'route' => 'en_US/default',
-                'controller' => 'collect',
+                'controller' => 'undergraduate',
                 'action' => 'index'
             ),
             array(
-                'id' => 'institute_en_US',
-                'label' => 'Institute',
+                'id' => 'graduate_en_US',
+                'label' => 'Graduate',
                 'route' => 'en_US/default',
-                'controller' => 'institute',
+                'controller' => 'graduate',
                 'action' => 'index'
             ),
             array(
-                'id' => 'advance_en_US',
-                'label' => 'Advance',
+                'id' => 'emba_en_US',
+                'label' => 'EMBA',
                 'route' => 'en_US/default',
-                'controller' => 'advance',
+                'controller' => 'emba',
                 'action' => 'index'
             ),
             // array(
@@ -281,5 +278,5 @@ return array(
             ),
         ),
     ),
-
+    'teacher_system_url' => 'http://teacher.tku.edu.tw'
 );

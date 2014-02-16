@@ -7,9 +7,168 @@ use Zend\View\Model\ViewModel;
 use Tool\Security\AccessSecurity;
 use Admin\Model\TeacherModel;
 use Tool\Check\FieldCheck;
+use Tool\Curl\CurlTool;
+use Zend\View\Model\JsonModel;
 
 class TeacherProfileController extends AbstractActionController
 {
+    public function addBookAction()
+    {
+        $viewModel = new ViewModel();
+        $fieldCheck = new FieldCheck();
+        $type = null;
+        $informations = array();
+        $profileTypes = array();
+        $bookTypes = array();
+        
+        try {
+            $typeId = $fieldCheck->checkInput($this->params()->fromQuery("type-id"));
+            
+            $accessSecurity = new AccessSecurity();
+            $authentication = $this->getServiceLocator()->get("authentication");
+            $teacherModel = new TeacherModel();
+            
+            $identity = $authentication->getIdentity();
+            $teacherId = $teacherModel->getTeacherIdByUserId($accessSecurity->checkAccessToken($identity["t"]));
+            
+            if ($this->getRequest()->isPost()) {
+                $fieldCheck->checkToken($this->params()->fromPost("csrf-token"));
+                $informations = $fieldCheck->checkArray($this->params()->fromPost("informations"));
+                
+                foreach ($informations as $i => $information) {
+                    if (isset($information) && $information != "") {
+                        $teacherModel->addBookByTeacherId($teacherId, $information, $typeId);
+                    }
+                }
+                
+                $this->redirect()->toUrl($this->getServiceLocator()->get("viewhelpermanager")->get("Url")->__invoke("admin/default", array("controller" => "teacher-profile")) . "?book-type=" . $typeId);
+            }
+            
+            // set up exists informations and information types.
+            $informations = $teacherModel->listBookByTeacherIdAndTypeId($teacherId, $typeId);
+            $profileTypes = $teacherModel->listProfileType();
+            $bookTypes = $teacherModel->listBookType();
+        } catch (\Exception $exception) {
+            $this->getResponse()->setStatusCode(404);
+        }
+        
+        $viewModel->setVariable("profileTypes", $profileTypes);
+        $viewModel->setVariable("bookTypes", $bookTypes);
+        $viewModel->setVariable("typeId", $typeId);
+        $viewModel->setVariable("informations", $informations);
+        $viewModel->setVariable("csrfToken", $fieldCheck->createToken("tamkang-im"));
+        
+        $this->getServiceLocator()->get("viewhelpermanager")->get("HeadScript")->appendFile(
+            $this->getServiceLocator()->get("viewhelpermanager")->get("BasePath")->__invoke() . "/js/teacher-profile.js"
+        );
+        
+        return $viewModel;
+    }
+
+    public function addProfileAction()
+    {
+        $viewModel = new ViewModel();
+        $fieldCheck = new FieldCheck();
+        $type = null;
+        $informations = array();
+        $profileTypes = array();
+        $bookTypes = array();
+        
+        try {
+            $typeId = $fieldCheck->checkInput($this->params()->fromQuery("type-id"));
+            
+            $accessSecurity = new AccessSecurity();
+            $authentication = $this->getServiceLocator()->get("authentication");
+            $teacherModel = new TeacherModel();
+            
+            $identity = $authentication->getIdentity();
+            $teacherId = $teacherModel->getTeacherIdByUserId($accessSecurity->checkAccessToken($identity["t"]));
+            
+            if ($this->getRequest()->isPost()) {
+                $fieldCheck->checkToken($this->params()->fromPost("csrf-token"));
+                $informations = $fieldCheck->checkArray($this->params()->fromPost("informations"));
+                
+                foreach ($informations as $i => $information) {
+                    if (isset($information) && $information != "") {
+                        $teacherModel->addProfileByTeacherId($teacherId, $information, $typeId);
+                    }
+                }
+                
+                $this->redirect()->toUrl($this->getServiceLocator()->get("viewhelpermanager")->get("Url")->__invoke("admin/default", array("controller" => "teacher-profile")) . "?profile-type=" . $typeId);
+            }
+            
+            // set up exists informations and information types.
+            $informations = $teacherModel->listProfileByTeacherIdAndTypeId($teacherId, $typeId);
+            $profileTypes = $teacherModel->listProfileType();
+            $bookTypes = $teacherModel->listBookType();
+        } catch (\Exception $exception) {
+            $this->getResponse()->setStatusCode(404);
+        }
+        
+        $viewModel->setVariable("profileTypes", $profileTypes);
+        $viewModel->setVariable("bookTypes", $bookTypes);
+        $viewModel->setVariable("typeId", $typeId);
+        $viewModel->setVariable("informations", $informations);
+        $viewModel->setVariable("csrfToken", $fieldCheck->createToken("tamkang-im"));
+        
+        $this->getServiceLocator()->get("viewhelpermanager")->get("HeadScript")->appendFile(
+            $this->getServiceLocator()->get("viewhelpermanager")->get("BasePath")->__invoke() . "/js/teacher-profile.js"
+        );
+        
+        return $viewModel;
+    }
+    
+    public function autoGetBooksAction()
+    {
+        $viewModel = new ViewModel();
+        $fieldCheck = new FieldCheck();
+        
+        try {
+            // check request field if null
+            $typeId = $fieldCheck->checkInput($this->params()->fromQuery("type-id"));
+            
+            $teacherModel = new TeacherModel();
+            
+            // get user informations
+            $accessSecurity = new AccessSecurity();
+            $authentication = $this->getServiceLocator()->get("authentication");
+            $identity = $authentication->getIdentity();
+            
+            if ($this->getRequest()->isPost()) {
+                $fieldCheck->checkToken($this->params()->fromPost("csrf-token"));
+                
+                $infos = $fieldCheck->checkArray($this->params()->fromPost("infos"));
+                $urls = $fieldCheck->checkArray($this->params()->fromPost("urls"));
+                
+                $teacherId = $teacherModel->getTeacherIdByUserId($accessSecurity->checkAccessToken($identity["t"]));
+                
+                $teacherModel->deleteBookByTeacherIdAndTypeId($teacherId, $typeId);
+                
+                foreach ($infos as $i => $info) {
+                    if (isset($info) && $info != "" && isset($urls[$i]) && $urls[$i] != "") {
+                        $teacherModel->addBookByTeacherId($teacherId, $info, $typeId, $urls[$i]);
+                    }
+                }
+                
+                $this->redirect()->toUrl($this->getServiceLocator()->get("viewhelpermanager")->get("Url")->__invoke("admin/default", array("controller" => "teacher-profile")) . "?book-type=" . $typeId);
+            }
+            
+            $config = $this->getServiceLocator()->get("config");
+            
+            $books = $teacherModel->getBooks($config, $teacherModel->getBooktypeValueById($typeId), $identity["name"]);
+            
+            $viewModel->setVariable("informations", $books);
+            $viewModel->setVariable("profileTypes", $teacherModel->listProfileType());
+            $viewModel->setVariable("bookTypes", $teacherModel->listBookType());
+            $viewModel->setVariable("typeId", $typeId);
+            $viewModel->setVariable("csrfToken", $fieldCheck->createToken("tamkang-im"));
+        } catch (\Exception $exception) {
+            $this->getResponse()->setStatusCode(404);
+        }
+        
+        return $viewModel;
+    }
+    
     public function bookAction()
     {
         $accessSecurity = new AccessSecurity();
@@ -32,60 +191,175 @@ class TeacherProfileController extends AbstractActionController
         ));
     }
     
-    public function editBookAction()
-    {
-        $this->getServiceLocator()->get("navigation/admin")->findOneBy("id", "teacher-book")->setActive();
-        $basePath = $this->getServiceLocator()->get("viewhelpermanager")->get("BasePath");
-        $headScript = $this->getServiceLocator()->get("viewhelpermanager")->get("HeadScript");
-        $headScript->appendFile($basePath->__invoke() . "/js/append-book-field.js");
-        
-        $accessSecurity = new AccessSecurity();
-        $authentication = $this->getServiceLocator()->get("authentication");
-        $teacherModel = new TeacherModel();
-        $fieldCheck = new FieldCheck();
-        
-        $identity = $authentication->getIdentity();
-        
-        try {
-            $teacherId = $teacherModel->getTeacherIdByUserId($accessSecurity->checkAccessToken($identity["t"]));
-            $typeId = $fieldCheck->checkInput($this->params()->fromQuery("type_id"));
-            
-            if ($this->getRequest()->isPost()) {
-                // $fieldCheck->checkToken($this->params()->fromPost("t"));
-                $books = $fieldCheck->checkArray($this->params()->fromPost("book"));
-                
-                // 先把舊的專書刪除
-                $teacherModel->deleteBookByTeacherIdAndTypeId($teacherId, $typeId);
-                foreach ($books as $i => $title) {
-                    if (isset($title) && $title != "") {
-                        $teacherModel->addBookByTeacherId($teacherId, $title, $typeId);
-                    }
-                }
-                
-                $this->redirect()->toRoute("admin/default", array("controller" => "teacher-profile", "action" => "book"));
-            }
-        } catch (\Exception $exception) {
-            $this->getResponse()->setStatusCode(404);
-        }
-        
-        $bookList = array();
-        $bookList = $teacherModel->listBookByTeacherIdAndTypeId($teacherId, $typeId);
-        
-        return new ViewModel(array(
-            "bookList" => $bookList,
-            "id" => $typeId,
-            "token" => $fieldCheck->createToken("tamkang-im"),
-            "typeName" => $teacherModel->getBooktypeNameById($typeId),
-        ));
-    }
-    
-    public function editLabsiteAction()
+    public function deleteBookAction()
     {
         $viewModel = new ViewModel();
         $fieldCheck = new FieldCheck();
         
-        $viewModel->setVariable("token", $fieldCheck->createToken("tamkang-im"));
+        $id = null;
         
+        try {
+            $id = $fieldCheck->checkInput($this->params()->fromQuery("id"));
+            
+            if ($this->getRequest()->isPost()) {
+                
+                // check csrf token, if not throw exception
+                $fieldCheck->checkToken($this->params()->fromPost("csrf-token"));
+                
+                $teacherModel = new TeacherModel();
+                $teacherModel->deleteBookById($id);
+                
+                exit();
+            }
+        } catch (\Exception $exception) {
+            
+            // if have not receive specific id, send status code 404 page not found.
+            $this->getResponse()->setStatusCode(404);
+        }
+        
+        // because this is just a alert message so disable the layout
+        $viewModel->setTerminal(true);
+        $viewModel->setVariable("csrfToken", $fieldCheck->createToken("tamkang-im"));
+        $viewModel->setVariable("id", $id);
+        
+        return $viewModel;
+    }
+    
+    public function deleteProfileAction()
+    {
+        $viewModel = new ViewModel();
+        $fieldCheck = new FieldCheck();
+        
+        $id = null;
+        
+        try {
+            $id = $fieldCheck->checkInput($this->params()->fromQuery("id"));
+        
+            if ($this->getRequest()->isPost()) {
+        
+                // check csrf token, if not throw exception
+                $fieldCheck->checkToken($this->params()->fromPost("csrf-token"));
+        
+                $teacherModel = new TeacherModel();
+                $teacherModel->deleteProfilebyId($id);
+        
+                exit();
+            }
+        } catch (\Exception $exception) {
+        
+            // if have not receive specific id, send status code 404 page not found.
+            $this->getResponse()->setStatusCode(404);
+        }
+        
+        // because this is just a alert message so disable the layout
+        $viewModel->setTerminal(true);
+        $viewModel->setVariable("csrfToken", $fieldCheck->createToken("tamkang-im"));
+        $viewModel->setVariable("id", $id);
+        
+        return $viewModel;
+    }
+    
+    public function editBookAction()
+    {
+        $viewModel = new ViewModel();
+        $teacherModel = new TeacherModel();
+        $fieldCheck = new FieldCheck();
+        $accessSecurity = new AccessSecurity();
+        
+        $profileTypes = $teacherModel->listProfileType();
+        
+        // book 是教師教學資料或是論文等等
+        $bookTypes = $teacherModel->listBookType();
+        
+        $authentication = $this->getServiceLocator()->get("authentication");
+        $identity = $authentication->getIdentity();
+        $userId = $accessSecurity->checkAccessToken($identity["t"]);
+        $teacherId = $teacherModel->getTeacherIdByUserId($userId);
+        
+        $typeId = null;
+        $id = null;
+        $informations = array();
+        
+        try {
+            $typeId = $fieldCheck->checkInput($this->params()->fromQuery("type_id"));
+            $id = $fieldCheck->checkInput($this->params()->fromQuery("id"));
+            
+            if ($this->getRequest()->isPost()) {
+                $title = $fieldCheck->checkInput($this->params()->fromPost("title"));
+                
+                $teacherModel->setBookById($id, $title);
+                $this->redirect()->toUrl($this->getServiceLocator()->get("viewhelpermanager")->get("Url")->__invoke("admin/default", array("controller" => "teacher-profile")) . "?book-type=" . $typeId);
+            }
+            
+            $informations = $teacherModel->listBookByTeacherIdAndTypeId($teacherId, $typeId);
+        } catch (\Exception $exception) {
+            $this->getResponse()->setStatusCode("404");
+        }
+        
+        $viewModel->setVariable("profileTypes", $profileTypes);
+        $viewModel->setVariable("bookTypes", $bookTypes);
+        $viewModel->setVariable("typeId", $typeId);
+        $viewModel->setVariable("id", $id);
+        $viewModel->setVariable("informations", $informations);
+        $viewModel->setVariable("csrfToken", $fieldCheck->createToken("tamkang-im"));
+        
+        // add javascript to display edit field at view top
+        $this->getServiceLocator()->get("viewhelpermanager")->get("HeadScript")->appendFile(
+                $this->getServiceLocator()->get("viewhelpermanager")->get("BasePath")->__invoke() . "/js/teacher-profile.js"
+        );
+        
+        return $viewModel;
+    }
+    
+    public function editProfileAction()
+    {
+        $viewModel = new ViewModel();
+        $teacherModel = new TeacherModel();
+        $fieldCheck = new FieldCheck();
+        $accessSecurity = new AccessSecurity();
+    
+        $profileTypes = $teacherModel->listProfileType();
+    
+        // book 是教師教學資料或是論文等等
+        $bookTypes = $teacherModel->listBookType();
+    
+        $authentication = $this->getServiceLocator()->get("authentication");
+        $identity = $authentication->getIdentity();
+        $userId = $accessSecurity->checkAccessToken($identity["t"]);
+        $teacherId = $teacherModel->getTeacherIdByUserId($userId);
+    
+        $typeId = null;
+        $id = null;
+        $informations = array();
+    
+        try {
+            $typeId = $fieldCheck->checkInput($this->params()->fromQuery("type_id"));
+            $id = $fieldCheck->checkInput($this->params()->fromQuery("id"));
+    
+            if ($this->getRequest()->isPost()) {
+                $title = $fieldCheck->checkInput($this->params()->fromPost("title"));
+    
+                $teacherModel->setProfileById($id, $title);
+                $this->redirect()->toUrl($this->getServiceLocator()->get("viewhelpermanager")->get("Url")->__invoke("admin/default", array("controller" => "teacher-profile")) . "?profile-type=" . $typeId);
+            }
+    
+            $informations = $teacherModel->listProfileByTeacherIdAndTypeId($teacherId, $typeId);
+        } catch (\Exception $exception) {
+            $this->getResponse()->setStatusCode("404");
+        }
+    
+        $viewModel->setVariable("profileTypes", $profileTypes);
+        $viewModel->setVariable("bookTypes", $bookTypes);
+        $viewModel->setVariable("typeId", $typeId);
+        $viewModel->setVariable("id", $id);
+        $viewModel->setVariable("informations", $informations);
+        $viewModel->setVariable("csrfToken", $fieldCheck->createToken("tamkang-im"));
+    
+        // add javascript to display edit field at view top
+        $this->getServiceLocator()->get("viewhelpermanager")->get("HeadScript")->appendFile(
+                $this->getServiceLocator()->get("viewhelpermanager")->get("BasePath")->__invoke() . "/js/teacher-profile.js"
+        );
+    
         return $viewModel;
     }
     
@@ -178,62 +452,77 @@ class TeacherProfileController extends AbstractActionController
         return $viewModel;
     }
     
-    public function editProfileAction()
+    public function getBooksAction()
     {
-        $this->getServiceLocator()->get("navigation/admin")->findOneBy("id", "teacher-profile")->setActive();
-        
-        $basePath = $this->getServiceLocator()->get("viewhelpermanager")->get("BasePath");
-        $headScript = $this->getServiceLocator()->get("viewhelpermanager")->get("HeadScript");
-        $headScript->appendFile($basePath->__invoke() . "/js/append-profile-field.js");
-        
-        $viewModel = new ViewModel();
+        $curlTool = new CurlTool();
         $fieldCheck = new FieldCheck();
-        
-        $teacherModel = null;
-        $typeId = null;
-        $profiles = array();
+        $config = $this->getServiceLocator()->get("config");
+        $data = array();
         
         try {
-            $typeId = $fieldCheck->checkInput($this->params()->fromQuery("type_id"));
+            $typeValue = $fieldCheck->checkInput($this->params()->fromQuery("type_value"));
+            $teacherName = $fieldCheck->checkInput($this->params()->fromQuery("teacher_name"));
             
-            $accessSecurity = new AccessSecurity();
-            $teacherModel = new TeacherModel();
-            $authentication = $this->getServiceLocator()->get("authentication");
-            $identity = $authentication->getIdentity();
+            $contents[] = $curlTool->getCurl($config["teacher_system_url"] . "?s=" . $typeValue . "&kwd=" . urlencode($teacherName));
             
-            $userId = $accessSecurity->checkAccessToken($identity["t"]);
-            $teacherId = $teacherModel->getTeacherIdByUserId($userId);
+            $pageBlock = explode("<div class=\"x_pager_style1\">", $contents[0]);
             
-            if ($this->getRequest()->isPost()) {
-                $profiles = $fieldCheck->checkArray($this->params()->fromPost("profile"));
+            // 有頁數區塊才有資料
+            if (count($pageBlock) > 1) {
+                $pageBlock = explode("</div>", $pageBlock[1]);
+                $pageBlock = $pageBlock[0];
                 
-                // 先刪除所有的教師個人資料
-                $teacherModel->deleteProfileByTeacherIdAndTypeId($teacherId, $typeId);
-                foreach ($profiles as $i => $profile) {
-                    if (isset($profile) && $profile != "") {
-                        $teacherModel->addProfileByTeacherId($teacherId, $profile, $typeId);
+                // 取得所有資料數量，一頁30筆，算出所有頁數
+                $totalPages = ceil(((int)(preg_replace("/[\\s\\S]*共有 (\\d+) 筆查詢結果[\\s\\S]*/", "\${1}", $pageBlock))) / 30);
+                
+                // 取得所有頁面內容
+                if ($totalPages > 1) {
+                    for ($i = 1; $i < $totalPages; $i++) {
+                        $contents[] = $curlTool->getCurl($config["teacher_system_url"] . "/StaffSummary.aspx?s=" . $typeValue . "&kwd=" . urlencode($teacherName) . "&pg=" . ($i + 1));
                     }
                 }
                 
-                $this->redirect()->toRoute("admin/default", array("controller" => "teacher-profile", "action" => "index"));
+                foreach ($contents as $i => $content) {
+                    
+                    // 以id ctl00_ContentPlaceHolder1_divCtn切割掉前面不要的區塊
+                    $infoBlock = explode("ctl00_ContentPlaceHolder1_divCtn", $content);
+                    $infoBlock = explode("<tbody>", $infoBlock[1]);
+                    $infoBlock = explode("</tbody>", $infoBlock[1]);
+                    $infoBlock = $infoBlock[0];
+                    
+                    $infoBlock = strip_tags($infoBlock, "<tr><a>");
+                    $infoBlock = str_replace("\n", "", $infoBlock);
+                    $infoBlock = str_replace("\r", "", $infoBlock);
+                    
+                    $dataRows = split("</tr>", $infoBlock);
+                    $temp = "";
+                    
+                    foreach ($dataRows as $i => $dataRow) {
+                        $dataRow = explode("發佈", $dataRow);
+                        
+                        if (isset($dataRow[1]) && $dataRow[1] != "") {
+                            $temp = explode("href=\"", $dataRow[1]);
+                            $temp = explode("\"", $temp[1]);
+                            
+                            $data[] = array(
+                                "url" => $config["teacher_system_url"] . "/" . $temp[0],
+                                "info" => strip_tags($dataRow[1]) 
+                            );
+                        }
+                    }
+                }
             }
-            
-            $profiles = $teacherModel->listProfileByTeacherIdAndTypeId($teacherId, $typeId);
             
         } catch (\Exception $exception) {
             $this->getResponse()->setStatusCode(404);
         }
         
-        $viewModel->setVariable("typeId", $typeId);
-        $viewModel->setVariable("profiles", $profiles);
-        $viewModel->setVariable("token", $fieldCheck->createToken("tamkang-im"));
-        $viewModel->setVariable("typeName", $teacherModel->getProfileNameById($typeId));
-        
-        return $viewModel;
+        return new JsonModel($data);
     }
     
     public function indexAction()
     {
+        $fieldCheck = new FieldCheck();
         $viewModel = new ViewModel();
         $teacherModel = new TeacherModel();
         $accessSecurity = new AccessSecurity();
@@ -243,25 +532,41 @@ class TeacherProfileController extends AbstractActionController
         $userId = $accessSecurity->checkAccessToken($identity["t"]);
         $teacherId = $teacherModel->getTeacherIdByUserId($userId);
         
-        $teacherInfo = $teacherModel->getTeacherByUserId($userId);
         $profileTypes = $teacherModel->listProfileType();
-        $profiles = array();
         
-        foreach ($profileTypes as $i => $profileType) {
-            $profiles[$profileType["id"]] = $teacherModel->listProfileByTeacherIdAndTypeId($teacherId, $profileType["id"]);
+        // book 是教師教學資料或是論文等等
+        $bookTypes = $teacherModel->listBookType();
+        
+        $typeId = null;
+        $actionType = "profile";
+        
+        $informations = array();
+        
+        try {
+            $typeId = $fieldCheck->checkInput($this->params()->fromQuery("profile-type"));
+        } catch (\Exception $exception) {
+            $typeId = $profileTypes[0]["id"];
         }
         
-        $viewModel->setVariable("title", $teacherInfo["title_name"]);
-        $viewModel->setVariable("othertitles", $teacherModel->listOthertitleByTeacherId($teacherId));
-        $viewModel->setVariable("teachClass", (isset($teacherInfo["teach_class"]) && $teacherInfo["teach_class"] != "") ? $teacherInfo["teach_class"] : "無");
-        $viewModel->setVariable("labLocation", (isset($teacherInfo["lab_location"]) && $teacherInfo["lab_location"] != "") ? $teacherInfo["lab_location"] : "無");
-        $viewModel->setVariable("labsiteText", (isset($teacherInfo["labsite_text"]) && $teacherInfo["labsite_text"] != "") ? $teacherInfo["labsite_text"] : "無");
-        $viewModel->setVariable("labsiteUrl", (isset($teacherInfo["labsite_url"]) && $teacherInfo["labsite_url"] != "") ? $teacherInfo["labsite_url"] : "");
-        $viewModel->setVariable("personalsiteText", (isset($teacherInfo["personalsite_text"]) && $teacherInfo["personalsite_text"] != "") ? $teacherInfo["personalsite_text"] : "無");
-        $viewModel->setVariable("personalsiteUrl", (isset($teacherInfo["personalsite_url"]) && $teacherInfo["personalsite_url"] != "") ? $teacherInfo["personalsite_url"] : "");
+        try {
+            $typeId = $fieldCheck->checkInput($this->params()->fromQuery("book-type"));
+            
+            $actionType = "book";
+        } catch (\Exception $exception) {
+            
+        }
+        
+        if ($actionType == "book") {
+            $informations = $teacherModel->listBookByTeacherIdAndTypeId($teacherId, $typeId);
+        } else {
+            $informations = $teacherModel->listProfileByTeacherIdAndTypeId($teacherId, $typeId);
+        }
         
         $viewModel->setVariable("profileTypes", $profileTypes);
-        $viewModel->setVariable("profiles", $profiles);
+        $viewModel->setVariable("bookTypes", $bookTypes);
+        $viewModel->setVariable("typeId", $typeId);
+        $viewModel->setVariable("informations", $informations);
+        $viewModel->setVariable("actionType", $actionType);
         
         return $viewModel;
     }

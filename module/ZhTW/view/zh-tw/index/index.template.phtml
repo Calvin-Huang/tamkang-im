@@ -1,0 +1,26 @@
+<?php foreach ($this->articles as $i => $article) : ?>
+    <div class="row-fluid" style="display:none;">
+        <div class="featurette span8">
+            <hr>
+            <h4 class="timestamp">
+                <?php echo date("Y / m / d", strtotime($article["time"])); ?>
+            </h4>
+            <h2 class="featurette-heading">
+                <?php echo strip_tags($article["title"]); ?>
+            </h2>
+            <p class="featurette-content">
+                <?php echo $article["content"]; ?>
+            </p>
+            <a href="<?php echo $this->url("zh_TW/default", array("controller" => "news", "action" => "detail")) . "?id=" . $article["id"]; ?>" class="btn">詳細全文</a>
+        </div>
+        <div class="span4">
+        <?php if ($article["title_image"] == "") : ?>
+            <hr style="border-width: 3px 0;border-color: #f0f0f7">
+        <?php endif; ?>
+            <?php if ($article["title_image"] != "") : ?>
+                <div class="article-image-preview" style="background-image:url(<?php echo $this->url("application/default", array("controller" => "image")) . "?" . $article["title_image"]; ?>)">
+                </div>
+            <?php endif; ?>
+        </div>
+    </div>
+<?php endforeach; ?>

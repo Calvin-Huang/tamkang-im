@@ -1,0 +1,50 @@
+<div class="row">
+    <form action="" method="post" enctype="multipart/form-data">
+        <div class="btn-toolbar span12">
+            <button class="btn btn-danger" type="submit">儲存修改</button>
+            <a class="btn" href="<?php echo $this->url("admin/default", array("controller" => "profile")); ?>">取消修改</a>
+        </div>
+        <?php if (count($this->errors) > 0) :?>
+        <div class="span12">
+            <label class="alert alert-danger">
+                <button type="button" class="close" data-dismiss="alert">&times;</button>
+                <?php for ($i = 0; $i < count($this->errors) - 2; $i++) : ?>
+                    <?php echo $this->errors[$i] . "<br/>"; ?>
+                <?php endfor; ?>
+                <?php echo $this->errors[count($this->errors) - 1]; ?>
+            </label>
+        </div>
+        <?php endif; ?>
+        <div class="span4">
+            <div class="thumbnail">
+                <img src="<?php echo (isset($this->avatar)) ? $this->url("application/default", array("controller" => "image")) . "?" . $this->avatar : ""; ?>" data-src="holder.js/400x400" />
+                <input type="file" name="avatar" />
+            </div>
+        </div>
+        <div class="span8">
+        <table class="table">
+            <tr>
+                <th>個人資料</th>
+                <th></th>
+            </tr>
+            <tr>
+                <td style="width:40%">帳號</td>
+                <td><?php echo $this->username; ?></td>
+            </tr>
+            <tr>
+                <td>姓名</td>
+                <td><?php echo $this->name; ?></td>
+            </tr>
+            <tr>
+                <td>電子信箱</td>
+                <td><?php echo $this->email; ?></td>
+            </tr>
+            <tr>
+                <td>帳號權限等級</td>
+                <td><?php echo $this->role; ?></td>
+            </tr>
+        </table>
+    </div>
+    <input name="csrf-token" value="<?php echo $this->csrfToken; ?>" type="hidden" />
+    </form>
+</div>

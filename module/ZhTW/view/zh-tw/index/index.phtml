@@ -1,8 +1,9 @@
 <!-- Carousel ================================================== -->
-<div id="myCarousel" class="carousel slide">
+<div id="carousel" class="carousel slide carousel-fade">
 	<div class="carousel-inner">
 	    <?php foreach ($this->slides as $i => $slide) : ?>
 	        <div class="slide-image item<?php echo ($i == 0) ? " active" : ""; ?>" style="background-image:url(<?php echo $this->url("application/default", array("controller" => "image")) . "?" . $slide["image"]; ?>)">
+	            <img style="display:none;" alt="preload-slide-image" src="<?php echo $this->url("application/default", array("controller" => "image")) . "?" . $slide["image"]; ?>">
     			<div class="container">
     				<div class="carousel-caption">
     					
@@ -11,8 +12,8 @@
     		</div>
 	    <?php endforeach; ?>
 	</div>
-	<a class="left carousel-control" href="#myCarousel" data-slide="prev">&lsaquo;</a>
-	<a class="right carousel-control" href="#myCarousel" data-slide="next">&rsaquo;</a>
+	<a class="left carousel-control" href="#carousel" data-slide="prev">&lsaquo;</a>
+	<a class="right carousel-control" href="#carousel" data-slide="next">&rsaquo;</a>
 </div>
 <!-- /.carousel -->
 
@@ -30,19 +31,19 @@
             </div>
             <ul class="nav nav-list side-link">
                 <li>
-                    <a href="">
+                    <a href="http://imna.im.tku.edu.tw/" target="_blank">
                         <i class="pull-left specials-icon imna"></i>
                         <span class="muted">網路策進協會</span>
                     </a>
                 </li>
                 <li>
-                    <a href="">
+                    <a href="http://consult.im.tku.edu.tw/" target="_blank">
                         <i class="pull-left specials-icon ico"></i>
                         <span class="muted">資訊顧問室</span>
                     </a>
                 </li>
                 <li>
-                    <a href="">
+                    <a href="https://www.facebook.com/TKUB310" target="_blank">
                         <i class="pull-left specials-icon b310"></i>
                         <span class="muted">大學部實驗室</span>
                     </a>
@@ -53,9 +54,15 @@
             </div>
             <ul class="nav nav-list side-link">
                 <li>
-                    <a href="">
+                    <a href="http://dsv.su.se/en/" target="_blank">
                         <i class="pull-left specials-icon dsv"></i>
                         <small class="muted">瑞典斯德哥爾摩<br/>資訊與系統科學系</small>
+                    </a>
+                </li>
+                <li>
+                    <a href="http://w3.tku.edu.tw/sister/index.asp#main" target="_blank">
+                        <i class="pull-left specials-icon ipi"></i>
+                        <span class="muted" style="font-size: 15px;">國際姊妹校專區</span>
                     </a>
                 </li>
             </ul>
@@ -93,6 +100,8 @@
                         	</div>
         	            </div>
                 	<?php endforeach; ?>
+                	<div class="row-fluid" id="infinity-loader" style="height:50px;background-image:url(<?php echo $this->basePath() . "/images/ajax-loader.gif"; ?>);background-repeat:no-repeat;background-position:center;">
+                	</div>
                 </div>
         	</div>
         	<!-- /END THE FEATURETTES -->

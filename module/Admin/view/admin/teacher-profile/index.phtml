@@ -1,62 +1,65 @@
 <div class="row">
-    <div class="span12">
-        <div class="btn-toolbar">
-            <a class="btn btn-primary" href="<?php echo $this->url("admin/default", array("controller" => "teacher-profile", "action" => "edit-info")); ?>">編輯教師資訊</a>
-        </div>
-        <table class="table">
-            <tr>
-                <td style="width:40%;">教師職位</td>
-                <td><?php echo htmlentities($this->title, ENT_QUOTES, "UTF-8"); ?></td>
-            </tr>
-            <tr>
-                <td>其他職位</td>
-                <td>
-                    <?php foreach ($this->othertitles as $i => $othertitle) : ?>
-                        <p><?php echo htmlentities($othertitle["title_name"], ENT_QUOTES, "UTF-8"); ?></p>
-                    <?php endforeach; ?>
-                </td>
-            </tr>
-            <tr>
-                <td>指導班級</td>
-                <td><?php echo htmlentities($this->teachClass, ENT_QUOTES, "UTF-8"); ?></td>
-            </tr>
-            <tr>
-                <td>研究室位置</td>
-                <td><?php echo htmlentities($this->labLocation, ENT_QUOTES, "UTF-8"); ?></td>
-            </tr>
-            <tr>
-                <td>研究室網頁</td>
-                <td>
-                    <a href="<?php echo htmlentities($this->labsiteUrl, ENT_QUOTES, "UTF-8"); ?>" target="_blank">
-                        <?php echo htmlentities($this->labsiteText, ENT_QUOTES, "UTF-8"); ?>
+    <div class="span3 bs-admin-sidebar">
+        <ul class="nav nav-list bs-admin-sidenav">
+            <?php foreach($this->profileTypes as $i => $profileType) : ?>
+                <li class="<?php echo ($this->actionType == "profile" && $profileType["id"] == $this->typeId) ? "active" : ""; ?>">
+                    <a href="<?php echo $this->url("admin/default", array("controller" => "teacher-profile")) . "?profile-type=" . htmlentities($profileType["id"], ENT_QUOTES, "UTF-8"); ?>">
+                        <i class="icon-chevron-right"></i>
+                        <?php echo htmlentities($profileType["type_name"], ENT_QUOTES, "UTF-8"); ?>
                     </a>
-                </td>
-            </tr>
-            <tr>
-                <td>個人網頁</td>
-                <td>
-                    <a href="<?php echo htmlentities($this->personalsiteUrl, ENT_QUOTES, "UTF-8"); ?>" target="_blank">
-                        <?php echo htmlentities($this->personalsiteText, ENT_QUOTES, "UTF-8"); ?>
+                </li>
+            <?php endforeach; ?>
+        </ul>
+        <ul class="nav nav-list bs-admin-sidenav">
+            <?php foreach($this->bookTypes as $i => $bookType): ?>
+                <li class="<?php echo ($this->actionType == "book" && $bookType["id"] == $this->typeId) ? "active" : ""; ?>">
+                    <a href="<?php echo $this->url("admin/default", array("controller" => "teacher-profile")) . "?book-type=" . htmlentities($bookType["id"], ENT_QUOTES, "UTF-8"); ?>">
+                        <i class="icon-chevron-right"></i>
+                        <?php echo htmlentities($bookType["type_name"], ENT_QUOTES, "UTF-8"); ?>
                     </a>
-                </td>
-            </tr>
-        </table>
+                </li>
+            <?php endforeach; ?>
+        </ul>
     </div>
-    <?php foreach ($this->profileTypes as $i => $profileType) : ?>
-        <div class="span12">
-            <hr>
+    <div class="span9">
+        <div class="row">
             <div class="btn-toolbar">
-                <a class="btn btn-primary" href="<?php echo $this->url("admin/default", array("controller" => "teacher-profile", "action" => "edit-profile")) . "?type_id=" . $profileType["id"]; ?>">
-                    編輯<?php echo $profileType["type_name"]; ?>
-                </a>
+                <?php if ($this->actionType == "book") : ?>
+                    <a href="<?php echo $this->url("admin/default", array("controller" => "teacher-profile", "action" => "auto-get-books")) . "?type-id=" . $this->typeId; ?>" class="btn btn-primary">自動截取</a>
+                <?php endif; ?>
+                <a href="<?php echo $this->url("admin/default", array("controller" => "teacher-profile", "action" => "add-" . $this->actionType)) . "?type-id=" . $this->typeId; ?>" class="btn">新增</a>
             </div>
-            <table class="table table-striped">
-                <?php foreach ($this->profiles[$profileType["id"]] as $j => $profile) : ?>
-                <tr>
-                    <td><?php echo $profile["profile"]; ?></td>
-                </tr>
+            <table class="table">
+                <?php foreach($this->informations as $i => $information): ?>
+                    <tr>
+                        <td>
+                            <?php if (isset($information["url"])) : ?>
+                                <a target="_blank" href="<?php echo htmlentities($information["url"], ENT_QUOTES, "UTF-8"); ?>">
+                                    <?php echo htmlentities($information["title"], ENT_QUOTES, "UTF-8"); ?>
+                                </a>
+                            <?php else : ?>
+                                <?php echo htmlentities($information["title"], ENT_QUOTES, "UTF-8"); ?>
+                            <?php endif; ?>
+                        </td>
+                        <td style="width:150px;">
+                            <a class="btn" href="<?php echo $this->url("admin/default", array(
+                                    "controller" => "teacher-profile",
+                                    "action" => "edit-" . $this->actionType)
+                                ) . "?type_id=" . $this->typeId . "&id=" . $information["id"]; ?>">
+                                修改
+                            </a>
+                            <a class="btn btn-danger" href="<?php echo $this->url("admin/default", array(
+                                    "controller" => "teacher-profile",
+                                    "action" => "delete-" . $this->actionType,
+                                )) . "?id=" . $information["id"]; ?>"
+                                data-toggle="modal"
+                                data-target="#modal-delete">
+                                刪除
+                            </a>
+                        </td>
+                    </tr>
                 <?php endforeach; ?>
             </table>
         </div>
-    <?php endforeach; ?>
+    </div>
 </div>

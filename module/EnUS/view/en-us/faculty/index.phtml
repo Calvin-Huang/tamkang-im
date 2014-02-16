@@ -10,10 +10,10 @@
                     <?php endif; ?>
                 </form>
                 <ul class="nav nav-list bs-docs-sidenav">
-                    <li><a href="<?php echo $this->url("en_US/default", array("controller" => "faculty")); ?>"><i class="icon-chevron-right"></i>全部</a></li>
+                    <li><a href="<?php echo $this->url("en_US/default", array("controller" => "faculty")); ?>"><i class="icon-chevron-right"></i>All</a></li>
                     <?php foreach ($this->facultyTitles as $i => $faculty) : ?>
                         <li class="<?php echo ($this->titleId == $faculty["id"]) ? "active" : "" ?>">
-                            <a href="<?php echo $this->url("en_US/default", array("controller" => "faculty")) . "?title=" . $faculty["id"]; ?>"><i class="icon-chevron-right"></i><?php echo $faculty["title_name"]; ?></a>
+                            <a href="<?php echo $this->url("en_US/default", array("controller" => "faculty")) . "?title=" . $faculty["id"]; ?>"><i class="icon-chevron-right"></i><?php echo $faculty["en_US"]; ?></a>
                         </li>
                     <?php endforeach; ?>
                 </ul>
@@ -32,13 +32,9 @@
         	                    <hr>
             	                <h2 class="featurette-heading">
                                     <?php echo htmlentities($faculty["name"], ENT_QUOTES, "UTF-8"); ?>
-                                    <span class="muted"><?php echo htmlentities($faculty["title_name"], ENT_QUOTES, "UTF-8"); ?></span>
+                                    <span class="muted"><?php echo htmlentities($faculty["en_US"], ENT_QUOTES, "UTF-8"); ?></span>
                                 </h2>
                                 <table class="table">
-                                    <tr>
-                                        <td style="width:45%;">Hold Office</td>
-                                        <td><?php echo htmlentities($faculty["title_name"], ENT_QUOTES, "UTF-8"); ?></td>
-                                    </tr>
                                     <?php if (count($faculty["other_title"]) > 0) : ?>
                                         <tr>
                                             <td>Other Jobs</td>
@@ -65,6 +61,30 @@
                                             <td><?php echo htmlentities($faculty["lab_location"], ENT_QUOTES, "UTF-8"); ?></td>
                                         </tr>
                                     <?php endif; ?>
+                                    <tr>
+                                        <td>Lab Website</td>
+                                        <td>
+                                            <?php if (isset($this->faculty["labsite_url"]) && $this->faculty["labsite_url"] != "") : ?>
+                                                <a href="<?php echo htmlentities($this->faculty["labsite_url"], ENT_QUOTES, "UTF-8"); ?>" target="_blank">
+                                                    <?php echo htmlentities($this->faculty["labsite_text"], ENT_QUOTES, "UTF-8"); ?>
+                                                </a>
+                                            <?php else : ?>
+                                                <a href="#" class="link-disabled">None</a>
+                                            <?php endif; ?>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>Persional Website</td>
+                                        <td>
+                                            <?php if (isset($this->faculty["personalsite_url"]) && $this->faculty["personalsite_url"] != "") : ?>
+                                            <a href="<?php echo htmlentities($this->faculty["personalsite_url"], ENT_QUOTES, "UTF-8"); ?>" target="_blank">
+                                                <?php echo htmlentities($this->faculty["personalsite_text"], ENT_QUOTES, "UTF-8"); ?>
+                                            </a>
+                                            <?php else : ?>
+                                                <a href="#" class="link-disabled">None</a>
+                                            <?php endif; ?>
+                                        </td>
+                                    </tr>
                                 </table>
                                 <a href="<?php echo $this->url("en_US/default", array("controller" => "faculty", "action" => "profile")) . "?id=" . $faculty["id"]; ?>" class="btn">Detail Information</a>
                             </div>

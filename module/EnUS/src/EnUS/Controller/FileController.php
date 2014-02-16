@@ -48,8 +48,7 @@ class FileController extends AbstractActionController
         }
         
         $downloads = $fileModel->listDownloadByTypeIdAndTerm($page, $typeId, $term);
-        // var_dump($downloads);
-        // exit();
+        
         $similars = array();
         if (isset($term) && $term != "") {
             $similars = $fileModel->listDownloadByTitle($term);

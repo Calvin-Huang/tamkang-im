@@ -1,23 +1,72 @@
-<form class="form-horizontal" method="post" action="<?php echo $this->url("admin/default", array("controller" => "teacher-profile", "action" => "edit-book")) . "?type_id=" . $this->id; ?>">
-    <div class="btn-toolbar">
-        <button type="submit" class="btn btn-danger">儲存<?php echo $this->typeName; ?></button>
-        <a class="btn" href="<?php echo $this->url("admin/default", array("controller" => "teacher-profile", "action" => "book")); ?>">取消更改</a>
+<div class="row">
+    <div class="span3 bs-admin-sidebar">
+        <ul class="nav nav-list bs-admin-sidenav">
+            <?php foreach($this->profileTypes as $i => $profileType) : ?>
+                <li>
+                    <a href="<?php echo $this->url("admin/default", array("controller" => "teacher-profile")) . "?profile-type=" . htmlentities($profileType["id"], ENT_QUOTES, "UTF-8"); ?>">
+                        <i class="icon-chevron-right"></i>
+                        <?php echo htmlentities($profileType["type_name"], ENT_QUOTES, "UTF-8"); ?>
+                    </a>
+                </li>
+            <?php endforeach; ?>
+        </ul>
+        <ul class="nav nav-list bs-admin-sidenav">
+            <?php foreach($this->bookTypes as $i => $bookType): ?>
+                <li class="<?php echo ($bookType["id"] == $this->typeId) ? "active" : ""; ?>">
+                    <a href="<?php echo $this->url("admin/default", array("controller" => "teacher-profile")) . "?book-type=" . htmlentities($bookType["id"], ENT_QUOTES, "UTF-8"); ?>">
+                        <i class="icon-chevron-right"></i>
+                        <?php echo htmlentities($bookType["type_name"], ENT_QUOTES, "UTF-8"); ?>
+                    </a>
+                </li>
+            <?php endforeach; ?>
+        </ul>
     </div>
-    <?php foreach ($this->bookList as $key => $value) : ?>
-    <div class="control-group">
-        <a class="close pull-left" data-dismiss="alert">&times;</a>
-        <label class="control-label" for="data-index-<?php echo $key + 1; ?>">標題<?php echo $key + 1; ?></label>
-        <div class="controls">
-            <input type="text" class="field input-block-level" id="data-index-<?php echo $key + 1; ?>" name="book[]" value="<?php echo $value["title"]; ?>" />
+    <div class="span9">
+        <div class="row">
+            <div class="btn-toolbar">
+                <a href="" class="btn btn-primary">自動截取</a>
+                <a href="" class="btn">新增</a>
+                <a href="<?php echo $this->url("admin/default", array("controller" => "teacher-profile")) . "?book-type=" . $this->typeId; ?>" class="btn">取消</a>
+            </div>
+            <form class="validate-form" action="" method="post">
+                <table class="table">
+                    <?php foreach($this->informations as $i => $information): ?>
+                        <tr>
+                            <td>
+                                <?php if ($this->id == $information["id"]) : ?>
+                                    <input id="edit-field" class="input-block-level" data-rule-required="true"
+                                        name="title" value="<?php echo htmlentities($information["title"], ENT_QUOTES, "UTF-8"); ?>" type="text" />
+                                <?php else : ?>
+                                    <?php echo htmlentities($information["title"], ENT_QUOTES, "UTF-8"); ?>
+                                <?php endif; ?>
+                            </td>
+                            <td style="width:150px;">
+                                <?php if ($this->id == $information["id"]) : ?>
+                                    <button class="btn btn-primary" type="submit">
+                                        儲存
+                                    </button>
+                                <?php else : ?>
+                                    <a class="btn" href="<?php echo $this->url("admin/default", array(
+                                            "controller" => "teacher-profile",
+                                            "action" => "edit-book")
+                                        ) . "?type_id=" . $this->typeId . "&id=" . $information["id"]; ?>">
+                                        修改
+                                    </a>
+                                <?php endif; ?>
+                                <a class="btn btn-danger" href="<?php echo $this->url("admin/default", array(
+                                        "controller" => "teacher-profile",
+                                        "action" => "delete-book",
+                                    )) . "?id=" . $information["id"]; ?>"
+                                    data-toggle="modal"
+                                    data-target="#modal-delete">
+                                    刪除
+                                </a>
+                            </td>
+                        </tr>
+                    <?php endforeach; ?>
+                </table>
+                <input name="csrf-token" value="<?php echo $this->csrfToken; ?>" type="hidden" />
+            </form>
         </div>
     </div>
-    <?php endforeach; ?>
-    <div class="control-group">
-        <a class="close pull-left" data-dismiss="alert">&times;</a>
-        <label class="control-label" for="data-index-<?php echo count($this->bookList) + 1; ?>">標題<?php echo count($this->bookList) + 1; ?></label>
-        <div class="controls">
-            <input type="text" class="field input-block-level" id="data-index-<?php echo count($this->bookList) + 1; ?>" name="book[]" value="" />
-        </div>
-    </div>
-    <input name="t" type="hidden" value="<?php echo $this->token; ?>" />
-</form>
+</div>

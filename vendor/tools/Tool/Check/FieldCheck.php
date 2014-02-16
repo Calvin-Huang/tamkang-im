@@ -61,6 +61,10 @@ class FieldCheck
         if ($field == "" || !isset($field)) {
             throw new FieldEmptyException();
         }
+        
+        $string = (string)trim($field);
+        $string = strip_tags($string, "<h1><h2><h3><p><strong><s><em><ol><ul><li><table><thead><tbody><td><tr><a>");
+        
         return (string)trim($field);
     }
     

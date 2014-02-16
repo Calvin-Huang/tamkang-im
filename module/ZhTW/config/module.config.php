@@ -74,9 +74,9 @@ return array(
             'ZhTW\Controller\News' => 'ZhTW\Controller\NewsController',
             'ZhTW\Controller\File' => 'ZhTW\Controller\FileController',
             'ZhTW\Controller\Faculty' => 'ZhTW\Controller\FacultyController',
-            'ZhTW\Controller\Collect' => 'ZhTW\Controller\CollectController',
-            'ZhTW\Controller\Institute' => 'ZhTW\Controller\InstituteController',
-            'ZhTW\Controller\Advance' => 'ZhTW\Controller\AdvanceController',
+            'ZhTW\Controller\Undergraduate' => 'ZhTW\Controller\UndergraduateController',
+            'ZhTW\Controller\Graduate' => 'ZhTW\Controller\GraduateController',
+            'ZhTW\Controller\Emba' => 'ZhTW\Controller\EmbaController',
             'ZhTW\Controller\Admission' => 'ZhTW\Controller\AdmissionController',
         ),
     ),
@@ -89,11 +89,15 @@ return array(
         'template_map' => array(
             'layout/layout'           => __DIR__ . '/../view/layout/layout.phtml',
             'zh-tw/index/index' => __DIR__ . '/../view/zh-tw/index/index.phtml',
+            'zh-tw/index/index.template' => __DIR__ . '/../view/zh-tw/index/index.template.phtml',
             'error/404'               => __DIR__ . '/../view/error/404.phtml',
             'error/index'             => __DIR__ . '/../view/error/index.phtml',
         ),
         'template_path_stack' => array(
             __DIR__ . '/../view',
         ),
+        'strategies' => array(
+            'ViewJsonStrategy',
+        )
     ),
 );

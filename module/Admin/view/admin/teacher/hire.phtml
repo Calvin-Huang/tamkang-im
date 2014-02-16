@@ -1,0 +1,48 @@
+<div>
+    <?php if ($this->isSuccess) :?>
+        <div class="alert alert-success" style="margin-top:25px;">
+            <button type="button" class="close" data-dismiss="alert">&times;</button>
+            <i class="icon-ok"></i>&nbsp;儲存成功
+        </div>
+    <?php elseif (isset($this->editId) && $this->editId != "") : ?>
+        <div class="btn-toolbar">
+            <a href="<?php echo $this->url("admin/default", array("controller" => "teacher", "action" => "hire")); ?>" class="btn">取消</a>
+        </div>
+    <?php endif; ?>
+    <form action="<?php echo $this->url("admin/default", array("controller" => "teacher", "action" => "hire")); ?>" method="post">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>教師名稱</th>
+                    <th>聘雇形式</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                <?php foreach ($this->teachers as $i => $teacher) : ?>
+                    <tr>
+                        <td><?php echo htmlentities($teacher["name"], ENT_QUOTES, "UTF-8"); ?></td>
+                        <td>
+                            <select <?php echo ($this->editId == $teacher["id"]) ? "name=\"title-id\"" : "disabled"; ?>>
+                                <?php foreach ($this->titles as $j => $title) : ?>
+                                    <option value="<?php echo $title["id"] ?>" <?php echo ($title["id"] == $teacher["title_id"]) ? "selected" : ""; ?>>
+                                        <?php echo htmlentities($title["title_name"], ENT_QUOTES, "UTF-8"); ?>
+                                    </option>
+                                <?php endforeach; ?>
+                            </select>
+                        </td>
+                        <td>
+                            <?php if ($this->editId == $teacher["id"]) : ?>
+                                <button class="btn btn-danger" type="submit">儲存</button>
+                            <?php else : ?>
+                                <a href="<?php echo $this->url("admin/default", array("controller" => "teacher", "action" => "hire")) . "?edit-id=" . $teacher["id"]; ?>" class="btn">修改</a>
+                            <?php endif; ?>
+                        </td>
+                    </tr>
+                <?php endforeach; ?>
+            </tbody>
+        </table>
+        <input name="edit-id" value="<?php echo $this->editId; ?>" type="hidden" />
+        <input name="csrf-token" value="<?php echo $this->csrfToken; ?>" type="hidden" />
+    </form>
+</div>

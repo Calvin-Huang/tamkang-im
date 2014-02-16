@@ -14,21 +14,22 @@ use Zend\View\Model\ViewModel;
 use Application\Model\ArticleModel;
 use Application\Model\IndexSlideModel;
 use Application\Model\Language;
+use Zend\View\Model\JsonModel;
+use Tool\Check\FieldCheck;
 
 class IndexController extends AbstractActionController
 {
     public function indexAction()
     {
-        $basePath = $this->getServiceLocator()->get("viewhelpermanager")->get("BasePath");
-        $headScript = $this->getServiceLocator()->get("viewhelpermanager")->get("HeadScript");
-        $headScript->appendFile($basePath->__invoke() . "/js/rubber-banding.js");
-        
         $viewModel = new ViewModel();
         $articleModel = new ArticleModel();
         $indexSlideModel = new IndexSlideModel();
         $languageModel = new Language();
+        $fieldCheck = new FieldCheck();
         
-        $articleArray = $articleModel->listArticle(1, $languageModel->getLanguageIdByShortCut("zh_TW"), null, null, true);
+        $currentPage = $fieldCheck->checkPage($this->params()->fromPost("page"));
+        
+        $articleArray = $articleModel->listArticle($currentPage, $languageModel->getLanguageIdByShortCut("zh_TW"), null, null, true);
         $articles = array();
         $downloads = array();
         $slides = array();
@@ -53,6 +54,16 @@ class IndexController extends AbstractActionController
         
         for ($i = 0; $i < count($slides); $i++) {
             $slides[$i]["content"] = str_replace("\n", "<br/>", $slides[$i]["content"]);
+        }
+        
+        // if infinity scroll get value, return json array and stop application
+        if ($this->getRequest()->isPost()) {
+            $viewModel->setTemplate("zh-tw/index/index.template");
+            $viewModel->setTerminal(true);
+        } else {
+            $basePath = $this->getServiceLocator()->get("viewhelpermanager")->get("BasePath");
+            $headScript = $this->getServiceLocator()->get("viewhelpermanager")->get("HeadScript");
+            $headScript->appendFile($basePath->__invoke() . "/js/infinity-scroll.js");
         }
         
         $viewModel->setVariable("articles", $articles);

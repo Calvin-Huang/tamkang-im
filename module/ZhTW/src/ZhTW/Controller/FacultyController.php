@@ -67,15 +67,23 @@ class FacultyController extends AbstractActionController
         
         $viewModel = new ViewModel();
         $fieldCheck = new FieldCheck();
+        $facultyModel = new FacultyModel();
+        $typeId = -1;
+        $bookTypes = $facultyModel->listBookType();
+        $books = array();
+        $profileTypes = $facultyModel->listProfileType();
+        $profiles = array();
+        
+        try {
+            $typeId = $fieldCheck->checkInput($this->params()->fromQuery("type-id"));
+        } catch (\Exception $exception) {
+            $typeId = $bookTypes[0]["id"];
+        }
         
         try {
             $facultyId = $fieldCheck->checkInput($this->params()->fromQuery("id"));
             
-            $facultyModel = new FacultyModel();
             $faculty = $facultyModel->getTeacherById($facultyId);
-            
-            $profileTypes = $facultyModel->listProfileType();
-            $profiles = array();
             
             foreach ($profileTypes as $i => $profileType) {
                 $profile = $facultyModel->listProfileByTeacherIdAndTypeId($facultyId, $profileType["id"]);
@@ -86,24 +94,20 @@ class FacultyController extends AbstractActionController
                 }
             }
             
-            $bookTypeList = $facultyModel->listBookType();
-            $bookList = array();
+            $books = $facultyModel->listBookByTeacherIdAndTypeId($facultyId, $typeId);
             
-            foreach ($bookTypeList as $key => $value) {
-                $bookList[$value["id"]] = $facultyModel->listBookByTeacherIdAndTypeId($facultyId, $value["id"]);
-            }
-            
+            $viewModel->setVariable("id", $facultyId);
             $viewModel->setVariable("faculty", $faculty);
             $viewModel->setVariable("othertitles", $facultyModel->listOthertitleByTeacherId($facultyId));
-            
-            $viewModel->setVariable("profileTypes", $profileTypes);
             $viewModel->setVariable("profiles", $profiles);
-            
-            $viewModel->setVariable("bookTypeList", $bookTypeList);
-            $viewModel->setVariable("bookList", $bookList);
+            $viewModel->setVariable("books", $books);
         } catch (\Exception $exception) {
             $this->getResponse()->setStatusCode(404);
         }
+        
+        $viewModel->setVariable("typeId", $typeId);
+        $viewModel->setVariable("profileTypes", $profileTypes);
+        $viewModel->setVariable("bookTypes", $bookTypes);
         
         return $viewModel;
     }

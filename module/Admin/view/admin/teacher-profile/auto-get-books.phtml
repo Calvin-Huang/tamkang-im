@@ -1,0 +1,59 @@
+<div class="row">
+    <div class="span3 bs-admin-sidebar">
+        <ul class="nav nav-list bs-admin-sidenav">
+            <?php foreach($this->profileTypes as $i => $profileType) : ?>
+                <li>
+                    <a href="<?php echo $this->url("admin/default", array("controller" => "teacher-profile")) . "?profile-type=" . htmlentities($profileType["id"], ENT_QUOTES, "UTF-8"); ?>">
+                        <i class="icon-chevron-right"></i>
+                        <?php echo htmlentities($profileType["type_name"], ENT_QUOTES, "UTF-8"); ?>
+                    </a>
+                </li>
+            <?php endforeach; ?>
+        </ul>
+        <ul class="nav nav-list bs-admin-sidenav">
+            <?php foreach($this->bookTypes as $i => $bookType): ?>
+                <li class="<?php echo ($bookType["id"] == $this->typeId) ? "active" : ""; ?>">
+                    <a href="<?php echo $this->url("admin/default", array("controller" => "teacher-profile")) . "?book-type=" . htmlentities($bookType["id"], ENT_QUOTES, "UTF-8"); ?>">
+                        <i class="icon-chevron-right"></i>
+                        <?php echo htmlentities($bookType["type_name"], ENT_QUOTES, "UTF-8"); ?>
+                    </a>
+                </li>
+            <?php endforeach; ?>
+        </ul>
+    </div>
+    <div class="span9">
+        <div class="row">
+            <div class="btn-toolbar">
+                <a href="" class="btn btn-primary">重新截取</a>
+                <a href="<?php echo $this->url("admin/default", array("controller" => "teacher-profile")) . "?book-type=" . $this->typeId; ?>" class="btn">取消</a>
+            </div>
+            <div class="alert">
+                <strong>請注意！</strong>
+                自動截取功能將會將所有舊記錄替換為新截取記錄
+                <label class="close" data-dismiss="alert">&times;</label>
+            </div>
+            <form class="validate-form" action="" method="post">
+                <table class="table">
+                    <?php foreach($this->informations as $i => $information): ?>
+                        <tr>
+                            <td>
+                                <a target="_blank" href="<?php echo htmlentities($information["url"], ENT_QUOTES, "UTF-8"); ?>">
+                                    <?php echo htmlentities($information["info"], ENT_QUOTES, "UTF-8"); ?>
+                                </a>
+                                <input type="hidden" name="infos[]" value="<?php echo htmlentities($information["info"], ENT_QUOTES, "UTF-8"); ?>" />
+                                <input type="hidden" name="urls[]" value="<?php echo htmlentities($information["url"], ENT_QUOTES, "UTF-8"); ?>" />
+                            </td>
+                            <td style="width:150px;">
+                            </td>
+                        </tr>
+                    <?php endforeach; ?>
+                </table>
+                <div class="form-actions">
+                    <button class="btn btn-primary" type="submit">儲存</button>
+                    <a href="<?php echo $this->url("admin/default", array("controller" => "teacher-profile")) . "?book-type=" . $this->typeId; ?>" class="btn">取消</a>
+                </div>
+                <input name="csrf-token" value="<?php echo $this->csrfToken; ?>" type="hidden" />
+            </form>
+        </div>
+    </div>
+</div>

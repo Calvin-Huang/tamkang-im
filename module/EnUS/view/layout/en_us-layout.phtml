@@ -22,7 +22,7 @@
                         <span class="icon-bar"></span>
                     </a>
                     <a class="main-brand brand" href="<?php echo $this->url("en_US/default"); ?>"></a>
-                    <div class="nav-collapse collapse navigation">
+                    <div class="nav-collapse collapse navigation en_US-nav">
                         <?php echo $this->navigation('navigation/en_us')->menu()->setPartial($partial = array('template/navigation', 'default')) ?>
                     </div><!--/.nav-collapse -->
                 </div>
@@ -41,14 +41,13 @@
                 </div>
                 <div class="span9 content">
                     <a href="<?php echo $this->url("zh_TW/default"); ?>">中文版</a> &middot; 
-                    <a href="#">About us</a> &middot; 
-                    <a href="http://www.tku.edu.tw/">TKU</a> &middot;
-                    <a href="http://www.tku.edu.tw/pdp.asp">Personal Data Policy</a> &middot;
-                    <a href="http://www.tku.edu.tw/notify.asp">Notify</a> &middot;
-                    <a href="http://www.tku.edu.tw/privacy.asp">Privacy</a> &middot;
+                    <!--  <a href="#">About us</a> &middot;  -->
+                    <a href="http://english.tku.edu.tw/" target="_blank">TKU</a> &middot;
+                    <a href="http://english.tku.edu.tw/PrivacySecurity.asp#Security" target="_blank">Security</a> &middot;
+                    <a href="http://english.tku.edu.tw/PrivacySecurity.asp#Privacy" target="_blank">Privacy</a> &middot;
                     <a href="<?php echo $this->url("admin"); ?>">Admin System</a>
                     <br/>
-                    &copy; 2013 Tamkang IM, <a href="http://calvinpeak.net">Calvin</a> &amp; <a href="http://qugoid.tumblr.com/">Sam</a>.
+                    &copy; 2013 CapsLock, <a href="http://calvinpeak.net">Calvin</a> &amp; <a href="http://qugoid.tumblr.com/">Sam</a>.
                 </div>
             </footer>
         </div> <!-- /container -->
