@@ -50,7 +50,7 @@
             <?php if (count($this->downloads) > 0) : ?>
                 <div class="attach-title">
                     <i class="icon-file"></i>&nbsp;文章附檔
-                    <a class="btn btn-small pull-right" href="<?php echo $this->url("application/default", array("controller" => "file", "action" => "package")) . "?article_id" . $this->articleId; ?>">下載所有檔案</a>
+                    <a class="btn btn-small pull-right disabled" href="#<?php // echo $this->url("application/default", array("controller" => "file", "action" => "package")) . "?article_id" . $this->articleId; ?>">下載所有檔案</a>
                 </div>
                 <div>
                     <?php foreach ($this->downloads as $i => $download) : ?>
