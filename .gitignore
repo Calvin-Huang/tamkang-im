@@ -9,3 +9,5 @@ tamkang-im.sublime-workspace
 sqlconnection.config.php
 encrypt.config.php
 docs
+cache
+upload
