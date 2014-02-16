@@ -9,5 +9,6 @@ tamkang-im.sublime-workspace
 sqlconnection.config.php
 encrypt.config.php
 docs
-cache
-upload
+data/cache/*
+data/upload/*
+!upload/not-found.jpg
