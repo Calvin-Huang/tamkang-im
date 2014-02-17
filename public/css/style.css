@@ -154,6 +154,7 @@ body.font {
 	background-image: none;
 	border-color: #242535;
 	height: 120px;
+	filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#242535',endColorstr='#242535',GradientType=0)
 }
 
 .main-nav .nav > li:first-child > a {
