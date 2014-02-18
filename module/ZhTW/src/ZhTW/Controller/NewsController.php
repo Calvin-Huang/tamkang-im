@@ -101,7 +101,7 @@ class NewsController extends AbstractActionController
             );
         }
         
-        $viewModel->setVariable("pagination", Paginator::factory($page, $onePageDisplay, $articleArray[0]));
+        $viewModel->setVariable("paginator", Paginator::factory($page, $onePageDisplay, $articleArray[0]));
         $viewModel->setVariable("term", $term);
         $viewModel->setVariable("articles", $articles);
         $viewModel->setVariable("articleTypes", $articleModel->listType($languageId));
