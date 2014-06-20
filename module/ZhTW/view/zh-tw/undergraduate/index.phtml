@@ -1,22 +1,22 @@
 <div class="container">
     <div class="row">
-        <div class="span3">
-            <div id="nav-side-short" class="introduce bs-docs-sidenav" style="box-shadow:none;">
+        <div class="col-sm-3 col-xs-12">
+            <div class="introduce bs-docs-sidenav">
                 <ul class="nav nav-list bs-docs-sidenav">
                     <?php foreach ($this->collectTypes as $i => $collectType) : ?>
                         <li class="<?php echo ($this->typeId == $collectType["id"]) ? "active" : "" ?>">
-                            <a href="<?php echo $this->url("zh_TW/default", array("controller" => "undergraduate")) . "?type=" . $collectType["id"]; ?>"><i class="icon-chevron-right"></i><?php echo $collectType["type_name"]; ?></a>
+                            <a href="<?php echo $this->url("zh_TW/default", array("controller" => "undergraduate")) . "?type=" . $collectType["id"]; ?>">
+                                <?php echo $collectType["type_name"]; ?>
+                                <i class="fa fa-chevron-right pull-right"></i>
+                            </a>
                         </li>
                     <?php endforeach; ?>
                 </ul>
             </div>
         </div>
     
-        <div class="span9 content">
-            <div class="page-header">
-                <h3 class="title">大學部</h3>
-            </div>
-            <hr>
+        <div class="col-sm-9 col-xs-12">
+            <h4 class="page-header">大學部</h4>
             <?php echo $this->content; ?>
             <hr>
         </div>

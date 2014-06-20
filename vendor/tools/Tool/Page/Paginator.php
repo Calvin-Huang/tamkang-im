@@ -95,7 +95,7 @@ class Paginator
             $paginator = $paginator . "<li class=\"disabled\"><a href=\"#\">&rsaquo;</a></li>\n";
         }
         
-        return "<ul>" . $paginator . "</ul>";
+        return "<ul class=\"pagination\">" . $paginator . "</ul>";
     }
 }
 ?>

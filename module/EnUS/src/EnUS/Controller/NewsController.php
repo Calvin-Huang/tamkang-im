@@ -61,7 +61,7 @@ class NewsController extends AbstractActionController
         $basePath = $this->getServiceLocator()->get("viewhelpermanager")->get("BasePath");
         $this->getServiceLocator()->get("viewhelpermanager")->get("HeadScript")->appendFile($basePath->__invoke() . "/js/search-highlight.js");
         
-        $onePageDisplay = 10;
+        $onePageDisplay = 20;
         $viewModel = new ViewModel();
         $articleModel = new ArticleModel($onePageDisplay);
         $languageModel = new Language();

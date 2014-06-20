@@ -36,19 +36,22 @@ class IndexController extends AbstractActionController
         $slides = $indexSlideModel->listIndexSlide();
         
         foreach ($articleArray[1] as $i => $article) {
-            $articleImages = $articleModel->listArticleImageByArticleId($article["id"]);
+            $articleTitle = strip_tags($article["title"]);
             $articleContent = strip_tags($article["content"]);
             
-            if (mb_strlen($articleContent, "UTF-8") > 170) {
-                $articleContent = mb_substr($articleContent, 0, 167, "UTF-8") . "...";
+            if (mb_strlen($articleTitle, "UTF-8") > 37) {
+                $articleTitle = mb_substr($articleTitle, 0, 34, "UTF-8") . "...";
+            }
+            
+            if (mb_strlen($articleContent, "UTF-8") > 55) {
+                $articleContent = mb_substr($articleContent, 0, 52, "UTF-8") . "...";
             }
             
             $articles[$i] = array(
                 "id" => $article["id"],
-                "title" => $article["title"],
+                "title" => $articleTitle,
                 "content" => $articleContent,
-                "time" => $article["create_time"],
-                "title_image" => $articleImages[0]["image_name"],
+                "time" => $article["create_time"]
             );
         }
         

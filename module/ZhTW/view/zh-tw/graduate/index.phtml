@@ -1,22 +1,22 @@
 <div class="container">
     <div class="row">
-        <div class="span3 introduce">
-            <div id="nav-side-short" class="introduce bs-docs-sidenav" style="box-shadow:none;">
+        <div class="col-sm-3 col-xs-12">
+            <div class="introduce bs-docs-sidenav">
                 <ul class="nav nav-list bs-docs-sidenav">
                     <?php foreach ($this->instituteTypes as $i => $instituteType) : ?>
                         <li class="<?php echo ($this->typeId == $instituteType["id"]) ? "active" : "" ?>">
-                            <a href="<?php echo $this->url("zh_TW/default", array("controller" => "graduate")) . "?type=" . $instituteType["id"]; ?>"><i class="icon-chevron-right"></i><?php echo $instituteType["type_name"]; ?></a>
+                            <a href="<?php echo $this->url("zh_TW/default", array("controller" => "graduate")) . "?type=" . $instituteType["id"]; ?>">
+                                <?php echo $instituteType["type_name"]; ?>
+                                <i class="fa fa-chevron-right pull-right"></i>
+                            </a>
                         </li>
                     <?php endforeach; ?>
                 </ul>
             </div>
         </div>
     
-        <div class="span9 content">
-            <div class="page-header">
-                <h3 class="title">碩士班</h3>
-            </div>
-            <hr>
+        <div class="col-sm-9 col-xs-12">
+            <h4 class="page-header">碩士班</h4>
             <?php echo $this->content; ?>
             <hr>
         </div>

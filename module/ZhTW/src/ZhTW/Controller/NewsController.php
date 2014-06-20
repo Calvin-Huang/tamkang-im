@@ -61,7 +61,7 @@ class NewsController extends AbstractActionController
         $basePath = $this->getServiceLocator()->get("viewhelpermanager")->get("BasePath");
         $this->getServiceLocator()->get("viewhelpermanager")->get("HeadScript")->appendFile($basePath->__invoke() . "/js/search-highlight.js");
         
-        $onePageDisplay = 10;
+        $onePageDisplay = 20;
         $viewModel = new ViewModel();
         $articleModel = new ArticleModel($onePageDisplay);
         $languageModel = new Language();
@@ -86,18 +86,22 @@ class NewsController extends AbstractActionController
         $articles = array();
         
         foreach ($articleArray[1] as $i => $article) {
-            $articleImages = $articleModel->listArticleImageByArticleId($article["id"]);
+            $articleTitle = strip_tags($article["title"]);
             $articleContent = strip_tags($article["content"]);
             
-            if (mb_strlen($articleContent, "UTF-8") > 140) {
-                $articleContent = mb_substr($articleContent, 0, 137, "UTF-8") . "...";
+            if (mb_strlen($articleTitle, "UTF-8") > 37) {
+                $articleTitle = mb_substr($articleTitle, 0, 34, "UTF-8") . "...";
             }
+            
+            if (mb_strlen($articleContent, "UTF-8") > 55) {
+                $articleContent = mb_substr($articleContent, 0, 52, "UTF-8") . "...";
+            }
+            
             $articles[$i] = array(
                 "id" => $article["id"],
-                "title" => $article["title"],
+                "title" => $articleTitle,
                 "content" => $articleContent,
-                "time" => date("Y / m / d", strtotime($article["create_time"])),
-                "title_image" => $articleImages[0]["image_name"],
+                "time" => $article["create_time"]
             );
         }
         

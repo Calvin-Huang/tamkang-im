@@ -8,38 +8,49 @@
         <?php echo $this->headMeta()->appendName('viewport', 'width=device-width, initial-scale=1.0') ?>
 
         <!-- Le styles -->
+        <link href="//netdna.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
+        <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
         <?php echo $this->headLink(array('rel' => 'shortcut icon', 'type' => 'image/vnd.microsoft.icon', 'href' => $this->basePath() . '/images/favicon.ico'))
-                        ->prependStylesheet($this->basePath() . '/css/style.css')
-                        ->prependStylesheet($this->basePath() . '/css/bootstrap.min.css') ?>
+                        ->appendStylesheet($this->basePath() . '/css/outdatedBrowser.min.css')
+                        ->appendStylesheet($this->basePath() . '/css/style.css') ?>
     </head>
     <body class="font">
-        <div class="navbar navbar-fixed-top">
-            <div class="navbar-inner navbar-inverse main-nav">
-                <div class="container">
-                    <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+        <!-- header start -->
+        <div class="navbar navbar-inverse navbar-fixed-top main-nav full-size">
+            <div class="container">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                        <span class="sr-only">Toggle navigation</span>
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
+                    </button>
+                    <a class="big-brand navbar-brand active" href="<?php echo $this->url('home'); ?>">
+                        <img alt="淡江大學資訊管理學系" src="/images/tkuim-logo-web-big.png">
                     </a>
-                    <a class="main-brand brand" href="<?php echo $this->url('home'); ?>"></a>
-                    <div class="nav-collapse collapse navigation">
-                        <?php echo $this->navigation('navigation/default')->menu()->setPartial($partial = array('template/navigation', 'default')) ?>
-                    </div><!--/.nav-collapse -->
+                    <a class="small-brand navbar-brand" href="<?php echo $this->url('home'); ?>">
+                        <img alt="淡江大學資訊管理學系" src="/images/tkuim-logo-web.png">
+                        <label>TKU<span>I</span>M</label>
+                    </a>
                 </div>
+                <div class="collapse navbar-collapse navigation">
+                    <?php echo $this->navigation('navigation/default')->menu()->setPartial($partial = array('template/navigation', 'default')) ?>
+                </div><!--/.nav-collapse -->
             </div>
         </div>
+        <!-- header end -->
         <div>
             <?php echo $this->content; ?>
             <hr>
         </div>
         <div class="container">
             <footer class="row">
-                <div class="span3">
+                <div class="col-sm-3 col-xs-12">
                     電話: 26215656轉2645或2648<br/>
                     傳真: （02）26209737<br/>
                     E-Mail：tlmx@oa.tku.edu.tw
                 </div>
-                <div class="span9 content">
+                <div class="col-sm-9 col-xs-12">
                     <a href="<?php echo $this->url("en_US/default"); ?>">English Version</a> &middot; 
                     <!--  <a href="#">關於我們</a> &middot;  -->
                     <a href="http://www.tku.edu.tw/" target="_blank">淡江大學首頁</a> &middot;
@@ -52,14 +63,47 @@
                 </div>
             </footer>
         </div> <!-- /container -->
+        
+        <!-- outdate browser handle start -->
+        <div id="outdated">
+            <h6>Your browser is out-of-date!</h6>
+            <p>Update your browser to view this website correctly. <a id="btnUpdate" href="http://outdatedbrowser.com/">Update my browser now</a></p>
+            <p id="btnClose"><a href="#">Close</a></p>
+        </div>
+        <!-- outdate browser handle end -->
+        
         <?php echo $this->inlineScript() ?>
         <!-- Scripts -->
-        <?php echo $this->headScript()->prependFile($this->basePath() . '/js/html5.js', 'text/javascript', array('conditional' => 'lt IE 9',))
-                                      ->prependFile($this->basePath() . '/js/bootstrap.min.js')
-                                      ->prependFile($this->basePath() . '/js/jquery.min.js')
-                                      ->appendFile($this->basePath() . '/js/affix.js'); ?>
+        <script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
+        <script src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
+        <?php echo $this->headScript()->appendFile($this->basePath() . '/js/outdatedBrowser.min.js', 'text/javascript'); ?>
+        <script type="text/javascript">
+        $( document ).ready(function() {
+            outdatedBrowser({
+                bgColor: '#3f3f3f',
+                color: '#e3e3e3',
+                lowerThan: 'IE10'
+            });
+        });
+        </script>
         <script>
             $('.carousel').carousel();
+            $(window).on('scroll', function(){
+                if ($(window).scrollTop() == 0) {
+                    navbarFullsize();
+                } else {
+                    navbarSmallsize();
+                }
+            });
+            function navbarFullsize() {
+                $('.navbar').addClass('full-size');
+                $('.small-brand').removeClass('active');
+            }
+
+            function navbarSmallsize() {
+                $('.navbar').removeClass('full-size');
+                $('.small-brand').addClass('active');
+            }
         </script>
     </body>
 </html>

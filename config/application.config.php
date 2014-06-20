@@ -1,7 +1,7 @@
 <?php
 return array(
     'modules' => array(
-        'ZendDeveloperTools',
+        
         'ZhTW',
         'EnUS',
         'Admin',

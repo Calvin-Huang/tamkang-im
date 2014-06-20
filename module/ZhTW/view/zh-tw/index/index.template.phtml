@@ -1,26 +1,18 @@
 <?php foreach ($this->articles as $i => $article) : ?>
-    <div class="row-fluid" style="display:none;">
-        <div class="featurette span8">
-            <hr>
-            <h4 class="timestamp">
-                <?php echo date("Y / m / d", strtotime($article["time"])); ?>
-            </h4>
-            <h2 class="featurette-heading">
-                <?php echo strip_tags($article["title"]); ?>
-            </h2>
-            <p class="featurette-content">
-                <?php echo $article["content"]; ?>
-            </p>
-            <a href="<?php echo $this->url("zh_TW/default", array("controller" => "news", "action" => "detail")) . "?id=" . $article["id"]; ?>" class="btn">詳細全文</a>
+<div class="col-xs-12">
+    <div class="article">
+        <div class="article-body">
+            <a href="<?php echo $this->url("zh_TW/default", array("controller" => "news", "action" => "detail")) . "?id=" . $article["id"]; ?>">
+                <h4>
+                    <?php echo $article["title"]; ?>
+                    <small class="pull-right"><i class="fa fa-clock-o fa-fw"></i><?php echo date("Y /m/d", strtotime($article["time"])); ?></small>
+                </h4>
+            </a>
+            <p class="text-muted"><?php echo $article["content"]; ?></p>
         </div>
-        <div class="span4">
-        <?php if ($article["title_image"] == "") : ?>
-            <hr style="border-width: 3px 0;border-color: #f0f0f7">
-        <?php endif; ?>
-            <?php if ($article["title_image"] != "") : ?>
-                <div class="article-image-preview" style="background-image:url(<?php echo $this->url("application/default", array("controller" => "image")) . "?" . $article["title_image"]; ?>)">
-                </div>
-            <?php endif; ?>
-        </div>
+        <a class="article-view-btn" href="<?php echo $this->url("zh_TW/default", array("controller" => "news", "action" => "detail")) . "?id=" . $article["id"]; ?>">
+            <i class="fa fa-angle-right fa-3x"></i>
+        </a>
     </div>
+</div>
 <?php endforeach; ?>

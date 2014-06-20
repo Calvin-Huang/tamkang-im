@@ -1,6 +1,6 @@
 <div class="container">
     <div class="row">
-        <div class="span3 introduce">
+        <div class="col-sm-3 col-xs-6">
             <div id="nav-side-short" class="introduce bs-docs-sidenav" style="box-shadow:none;">
                 <ul class="nav nav-list bs-docs-sidenav">
                     <?php foreach ($this->admissionTypes as $i => $admissionType) : ?>
@@ -12,11 +12,8 @@
             </div>
         </div>
     
-        <div class="span9 content">
-            <div class="page-header">
-                <h3 class="title">招生簡介</h3>
-            </div>
-            <hr>
+        <div class="col-sm-9 col-xs-12">
+            <h4 class="page-header">招生簡介</h4>
             <?php echo $this->content; ?>
             <hr>
         </div>
