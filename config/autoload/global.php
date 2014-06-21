@@ -52,7 +52,7 @@ return array(
                         'action' => 'booktype'
                     ),
                     'teacher-hire' => array(
-                        'label' => '設定教師聘雇形式',
+                        'label' => '設定教師職稱',
                         'route' => 'admin/default',
                         'controller' => 'teacher',
                         'action' => 'hire'
