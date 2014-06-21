@@ -26,7 +26,10 @@
         <div class="col-sm-9 col-xs-12">
             <h4 class="page-header">
                 <?php echo $this->title; ?>
-                <span class="timespam muted"><?php echo $this->time; ?></span>
+                <small class="pull-right text-muted">
+                    <i class="fa fa-clock-o"></i>
+                    <?php echo $this->time; ?>
+                </small>
             </h4>
             <?php echo $this->content; ?>
             <hr>

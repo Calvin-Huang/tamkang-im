@@ -89,8 +89,6 @@ class FacultyController extends AbstractActionController
                 $profile = $facultyModel->listProfileByTeacherIdAndTypeId($facultyId, $profileType["id"]);
                 if (count($profile) > 0) {
                     $profiles[$profileType["id"]] = $profile;
-                } else {
-                    unset($profileTypes[$i]);
                 }
             }
             

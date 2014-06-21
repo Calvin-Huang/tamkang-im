@@ -89,7 +89,7 @@
         <script>
             $('.carousel').carousel();
             $(window).on('scroll', function(){
-                if ($(window).scrollTop() == 0) {
+                if ($(window).scrollTop() <= 80) {
                     navbarFullsize();
                 } else {
                     navbarSmallsize();

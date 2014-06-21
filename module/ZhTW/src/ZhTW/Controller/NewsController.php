@@ -34,7 +34,7 @@ class NewsController extends AbstractActionController
             $article = $articleModel->getArticleByIdAndIsVisible($id, true);
             
             $typeId = $article["type_id"];
-            $time = date("Y / m / d", strtotime($article["create_time"]));
+            $time = date("Y/m/d", strtotime($article["create_time"]));
             $title = $article["title"];
             $content = $article["content"];
             
