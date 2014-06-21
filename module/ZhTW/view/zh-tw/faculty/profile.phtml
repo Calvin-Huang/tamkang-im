@@ -75,12 +75,21 @@
                 <?php echo $this->profileTypes[0]["type_name"]; ?>
             </h4>
             <ul class="list-unstyled">
-                <?php foreach ($this->profiles[$this->profileTypes[0]["id"]] as $j => $profile) : ?>
+                <?php if (count($this->profiles[$this->profileTypes[2]["id"]]) <= 0) : ?>
                     <li>
-                        <i class="fa fa-angle-right fa-fw"></i>
-                        <?php echo $profile["profile"]; ?>
+                        <h4 class="text-center">
+                            <i class="fa fa-exclamation"></i>
+                            暫無資料
+                        </h4>
                     </li>
-                <?php endforeach; ?>
+                <?php else : ?>
+                    <?php foreach ($this->profiles[$this->profileTypes[2]["id"]] as $j => $profile) : ?>
+                        <li>
+                            <i class="fa fa-angle-right fa-fw"></i>
+                            <?php echo $profile["profile"]; ?>
+                        </li>
+                    <?php endforeach; ?>
+                <?php endif; ?>
             </ul>
         </div>
         <div class="col-sm-4 col-xs-6">
@@ -89,12 +98,21 @@
                 <?php echo $this->profileTypes[1]["type_name"]; ?>
             </h4>
             <ul class="list-unstyled">
-                <?php foreach ($this->profiles[$this->profileTypes[1]["id"]] as $j => $profile) : ?>
+                <?php if (count($this->profiles[$this->profileTypes[2]["id"]]) <= 0) : ?>
                     <li>
-                        <i class="fa fa-angle-right fa-fw"></i>
-                        <?php echo $profile["profile"]; ?>
+                        <h4 class="text-center">
+                            <i class="fa fa-exclamation"></i>
+                            暫無資料
+                        </h4>
                     </li>
-                <?php endforeach; ?>
+                <?php else : ?>
+                    <?php foreach ($this->profiles[$this->profileTypes[2]["id"]] as $j => $profile) : ?>
+                        <li>
+                            <i class="fa fa-angle-right fa-fw"></i>
+                            <?php echo $profile["profile"]; ?>
+                        </li>
+                    <?php endforeach; ?>
+                <?php endif; ?>
             </ul>
         </div>
         <div class="col-sm-4 col-xs-6">
@@ -103,14 +121,25 @@
                 <?php echo $this->profileTypes[2]["type_name"]; ?>
             </h4>
             <ul class="list-unstyled">
-                <?php foreach ($this->profiles[$this->profileTypes[2]["id"]] as $j => $profile) : ?>
+                <?php if (count($this->profiles[$this->profileTypes[2]["id"]]) <= 0) : ?>
                     <li>
-                        <i class="fa fa-angle-right fa-fw"></i>
-                        <?php echo $profile["profile"]; ?>
+                        <h4 class="text-center">
+                            <i class="fa fa-exclamation"></i>
+                            暫無資料
+                        </h4>
                     </li>
-                <?php endforeach; ?>
+                <?php else : ?>
+                    <?php foreach ($this->profiles[$this->profileTypes[2]["id"]] as $j => $profile) : ?>
+                        <li>
+                            <i class="fa fa-angle-right fa-fw"></i>
+                            <?php echo $profile["profile"]; ?>
+                        </li>
+                    <?php endforeach; ?>
+                <?php endif; ?>
             </ul>
         </div>
+    </div>
+    <div class="row" style="margin-top: 30px;">
         <!-- personal information end -->
         <div class="col-sm-3 col-xs-6 bs-docs-sidebar">
             <ul class="nav nav-list bs-docs-sidenav margin-top-0">
@@ -124,7 +153,7 @@
                 <?php endforeach; ?>
             </ul>
         </div>
-        <div class="col-sm-9 col-xs-12">
+        <div class="col-sm-9 col-xs-12"">
             <table class="table">
                 <?php foreach($this->books as $i => $book): ?>
                     <tr>
