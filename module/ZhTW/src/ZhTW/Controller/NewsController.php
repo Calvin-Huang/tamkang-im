@@ -21,7 +21,7 @@ class NewsController extends AbstractActionController
         $languageModel = new Language();
         
         $id = null;
-        $time = date("Y / m / d");
+        $time = date("Y/m/d");
         $title = "";
         $content = "";
         $typeId = null;

@@ -17,6 +17,11 @@ $('#action-add, #action-edit, #action-delete').click(function(){
 $('.modal-body').on('submit', 'form', function(e){
     e.preventDefault();
     
+    if( window.FormData === undefined ) {
+        window.alert('瀏覽器過時, 無法進行表單操作');
+        return;
+    }
+    
     var formData = new FormData();
     var filesNumber = 0;
     

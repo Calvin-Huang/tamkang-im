@@ -1,0 +1,166 @@
+#outdated {
+	height: 530px;
+}
+
+a#btnClose {
+	color: #FFF;
+}
+
+#outdated a#btnClose:hover {
+	color: #FFF;
+}
+
+.browsers {
+	margin-top: 30px;
+}
+
+.browsers .browser {
+	width: 20%;
+	text-align: center;
+	color: #FFF;
+	padding: 25px 50px 50px;
+	float: left;
+}
+
+.browsers .browser:hover {
+	background: url('../images/shadow.png') no-repeat scroll center 35% transparent;
+}
+
+.browsers .browser .statistic {
+	opacity: 0;
+	transition: opacity 0.3s ease 0s;
+	-o-transition: opacity 0.3s ease 0s;
+	-moz-transition: opacity 0.3s ease 0s;
+	-webkit-transition: opacity 0.3s ease 0s;
+}
+
+.browsers .browser:hover .statistic {
+	opacity: 1;
+}
+
+.browsers .browser a {
+	opacity: 0;
+}
+
+.browsers .browser:hover a {
+	opacity: 1;
+}
+
+.browsers .browser .statistic h1 {
+	margin-bottom: 10px;
+	font-weight: bolder;
+}
+
+.browsers .browser .statistic p {
+	
+}
+
+.browsers .browser .btn.btn-download {
+    padding: 16px 0px 14px;
+    font-weight: 800;
+    font-size: 15px;
+    line-height: 15px;
+    text-align: center;
+    color: #FFF;
+    border-radius: 30px;
+    border: 3px solid #FFF;
+    transition: all 0.3s ease 0s;
+	-o-transition: all 0.3s ease 0s;
+	-moz-transition: all 0.3s ease 0s;
+	-webkit-transition: all 0.3s ease 0s;
+}
+
+.browsers .browser .btn.btn-download:hover {
+	background-color: #FFF;
+}
+
+.browsers .browser .logo {
+	font-weight: bolder;
+	margin-bottom: 30px;
+}
+
+
+.browsers .browser .logo span {
+	display: block;
+	height: 100px;
+	width: 100px;
+	margin: 0px auto 10px;
+	background: url('../images/browsers-bg.png');
+}
+
+#chrome {
+	background-color: #F2B635;
+}
+
+#chrome .btn.btn-download:hover {
+    color: #F2B635;
+}
+
+#chrome:hover .logo span {
+	background-position: 0px -100px;
+}
+
+#firefox {
+	background-color: #F19A2A;
+}
+
+#firefox .btn.btn-download:hover {
+    color: #F19A2A;
+}
+
+#firefox .logo span {
+	background-position: -100px 0;
+}
+
+#firefox:hover .logo span {
+	background-position: -100px -100px;
+}
+
+#ie {
+	background-color: #00CAFF;
+}
+
+#ie .btn.btn-download:hover {
+    color: #00CAFF;
+}
+
+#ie .logo span {
+	background-position: -200px 0px;
+}
+
+#ie:hover .logo span {
+	background-position: -200px -100px;
+}
+
+
+#safari {
+	background-color: #00A0E6;
+}
+
+#safari .btn.btn-download:hover {
+    color: #00A0E6;
+}
+
+#safari .logo span {
+	background-position: -300px 0px;
+}
+
+#safari:hover .logo span {
+	background-position: -300px -100px;
+}
+
+#opera {
+	background-color: #F25648;
+}
+
+#opera .btn.btn-download:hover {
+    color: #F25648;
+}
+
+#opera .logo span {
+	background-position: -400px 0px;
+}
+
+#opera:hover .logo span {
+	background-position: -400px -100px;
+}

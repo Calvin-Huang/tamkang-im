@@ -12,6 +12,7 @@
         <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
         <?php echo $this->headLink(array('rel' => 'shortcut icon', 'type' => 'image/vnd.microsoft.icon', 'href' => $this->basePath() . '/images/favicon.ico'))
                         ->appendStylesheet($this->basePath() . '/css/outdatedBrowser.min.css')
+                        ->appendStylesheet($this->basePath() . '/css/outdate-show.css')
                         ->appendStylesheet($this->basePath() . '/css/style.css') ?>
     </head>
     <body class="font">
@@ -65,10 +66,88 @@
         </div> <!-- /container -->
         
         <!-- outdate browser handle start -->
-        <div id="outdated">
-            <h6>Your browser is out-of-date!</h6>
-            <p>Update your browser to view this website correctly. <a id="btnUpdate" href="http://outdatedbrowser.com/">Update my browser now</a></p>
-            <p id="btnClose"><a href="#">Close</a></p>
+        <div id="outdated" style="display:block;">
+            <a href="#" id="btnClose" class="btn pull-right btn-lg" data-dismiss="#outdated"><i class="fa fa-times"></i></a>
+            <h3>你的瀏覽器已經過時！</h3>
+            <p>快更新你的瀏覽器以獲得正確的網頁顯示</p>
+            <a id="btnUpdate" style="display: none;"></a>
+            <div class="browsers">
+                <div class="browser" id="chrome">
+                    <div class="statistic">
+                        <h1>37.0%</h1>
+                        <p>
+                            的網路使用者用這個瀏覽器
+                        </p>
+                    </div>
+                    <div class="logo">
+                        <span></span>
+                        GOOGLE CHROME
+                    </div>
+                    <a href="https://www.google.com/chrome/browser/" target="_blank" class="btn btn-download btn-block">
+                        下載
+                    </a>
+                </div>
+                <div class="browser" id="firefox">
+                    <div class="statistic">
+                        <h1>17.6%</h1>
+                        <p>
+                            的網路使用者用這個瀏覽器
+                        </p>
+                    </div>
+                    <div class="logo">
+                        <span></span>
+                        MOZILLA FIREFOX
+                    </div>
+                    <a href="http://mozilla.com.tw/firefox/new/" target="_blank" class="btn btn-download btn-block">
+                        下載
+                    </a>
+                </div>
+                <div class="browser" id="ie">
+                    <div class="statistic">
+                        <h1>19.6%</h1>
+                        <p>
+                            的網路使用者用這個瀏覽器
+                        </p>
+                    </div>
+                    <div class="logo">
+                        <span></span>
+                        INTERNET EXPLORER
+                    </div>
+                    <a href="http://windows.microsoft.com/en-us/internet-explorer/download-ie" target="_blank" class="btn btn-download btn-block">
+                        下載
+                    </a>
+                </div>
+                <div class="browser" id="safari">
+                    <div class="statistic">
+                        <h1>16.7%</h1>
+                        <p>
+                            的網路使用者用這個瀏覽器
+                        </p>
+                    </div>
+                    <div class="logo">
+                        <span></span>
+                        APPLE SAFARI
+                    </div>
+                    <a href="http://support.apple.com/downloads/#safari" target="_blank" class="btn btn-download btn-block">
+                        下載
+                    </a>
+                </div>
+                <div class="browser" id="opera">
+                    <div class="statistic">
+                        <h1>3%</h1>
+                        <p>
+                            的網路使用者用這個瀏覽器
+                        </p>
+                    </div>
+                    <div class="logo">
+                        <span></span>
+                        OPERA
+                    </div>
+                    <a href="http://www.opera.com/zh-tw/computer" target="_blank" class="btn btn-download btn-block">
+                        下載
+                    </a>
+                </div>
+            </div>
         </div>
         <!-- outdate browser handle end -->
         
@@ -82,7 +161,10 @@
             outdatedBrowser({
                 bgColor: '#3f3f3f',
                 color: '#e3e3e3',
-                lowerThan: 'IE10'
+                
+            });
+            $('#btnClose').on('click', function(){
+                $('#outdated').remove();
             });
         });
         </script>

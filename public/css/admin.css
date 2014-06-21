@@ -8,18 +8,6 @@
     margin-top: 10%;
 }
 
-#login .btn-success {
-    background-color: #0099FF;
-    background-image: -moz-linear-gradient(top, #33CCFF, #0099FF);
-    background-image: -ms-linear-gradient(top, #33CCFF, #0099FF);
-    background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#33CCFF), to(#0099FF));
-    background-image: -webkit-linear-gradient(top, #33CCFF, #0099FF);
-    background-image: -o-linear-gradient(top, #33CCFF, #0099FF);
-    background-image: linear-gradient(top, #33CCFF, #0099FF);
-    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#33CCFF', endColorstr='#0099FF', GradientType=0);
-
-    /*display: inline-block;*/
-}
 #login .btn {
 	font-size: 18px;
 	padding: 6px 0;
@@ -27,19 +15,11 @@
 #login .btn-modify{
     width: 80px;
 }
-#login .btn-success:hover,
-#login .btn-success:active,
-#login .btn-success.active,
-#login .btn-success.disabled,
-#login .btn-success[disabled] {
-    background-color: #0099FF;
-}
+
 .disabled {
     pointer-events: none;
 }
-#login .btn-success:active, #login .btn-success.active {
-  background-color: #0099FF;
-}
+
 #name{
     background: url(/images/register_sprite.png) 11px 21px no-repeat;
 }
@@ -48,14 +28,19 @@
     width: 430px;
 }
 #username{
-    background: url(/images/register_sprite.png) 11px 21px no-repeat;
+    background: url(/images/register_sprite.png) 11px 7px no-repeat;
 }
 #username input{
     margin-left: 40px;
     width: 430px;
 }
+
+.form-control {
+	margin-bottom: 10px;
+}
+
 #password{
-    background: url(/images/register_sprite.png) 7px -92px no-repeat;
+    background: url(/images/register_sprite.png) 7px -104px no-repeat;
 }
 #password input{
     margin-left: 40px;

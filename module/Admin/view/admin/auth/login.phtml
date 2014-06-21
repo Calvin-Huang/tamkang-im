@@ -2,8 +2,11 @@
 <html>
     <head>
         <meta charset="utf-8">
-        <link href="<?php echo $this->basePath("css/bootstrap.min.css"); ?>" rel="stylesheet" type="text/css">
+        <link href="//netdna.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
+        <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
         <link href="<?php echo $this->basePath("css/style.css"); ?>" rel="stylesheet" type="text/css">
+        <link href="<?php echo $this->basePath("css/outdatedBrowser.min.css"); ?>" rel="stylesheet" type="text/css">
+        <link href="<?php echo $this->basePath("css/outdate-show.css"); ?>" rel="stylesheet" type="text/css">
         <link href="<?php echo $this->basePath("css/admin.css"); ?>" rel="stylesheet" type="text/css">
         <link href="<?php echo $this->basePath("images/favicon.ico"); ?>" rel="shortcut icon" type="text/css">
         <script src="<?php echo $this->basePath("js/jquery-1.9.1.min.js"); ?>"></script>
@@ -27,19 +30,123 @@
                 <div id="hint">驗證碼不正確</div>
             <?php } ?>
             <div id="username">
-                <input class="field" name="username" type="text" placeholder="請輸入帳號" />
+                <input class="form-control" name="username" type="text" placeholder="請輸入帳號" />
             </div>
             <div id="password">
-                <input class="field" name="password" type="password" placeholder="請輸入密碼" />
+                <input class="form-control" name="password" type="password" placeholder="請輸入密碼" />
             </div>
-            <div class="row-fluid">
-                <button class="btn btn-success span9">登入</button>
-                <a class="btn span3" href="<?php echo $this->url("zh_TW/default", array("controller" => "index", "action" => "index")); ?>">取消</a>
+            <div class="row">
+                <div class="col-xs-9">
+                    <button class="btn btn-primary btn-block">登入</button>
+                </div>
+                <div class="col-xs-3">
+                    <a class="btn btn-block btn-default" href="<?php echo $this->url("zh_TW/default", array("controller" => "index", "action" => "index")); ?>">取消</a>
+                </div>
             </div>
             <input type="hidden" value="<?php echo $this->token; ?>" name="t" />
             <div id="background-image" style="z-index:-10;position:fixed;top:0;left:0;width:100%;height:100%;background-size:cover;opacity:0;"></div>
         </form>
         <img id="background-source" src="<?php echo $this->basePath("images/login_back.jpg"); ?>" style="display:none;" />
+        
+        <!-- outdate browser handle start -->
+        <div id="outdated">
+            <a href="#" id="btnClose" class="btn pull-right btn-lg" data-dismiss="#outdated"><i class="fa fa-times"></i></a>
+            <h3>你的瀏覽器已經過時！</h3>
+            <p>快更新你的瀏覽器以獲得正確的網頁顯示與<span style="font-size: 18px;color: #FFF;font-weight: bold;">正常的後台操作</span></p>
+            <a id="btnUpdate" style="display: none;"></a>
+            <div class="browsers">
+                <div class="browser" id="chrome">
+                    <div class="statistic">
+                        <h1>37.0%</h1>
+                        <p>
+                            的網路使用者用這個瀏覽器
+                        </p>
+                    </div>
+                    <div class="logo">
+                        <span></span>
+                        GOOGLE CHROME
+                    </div>
+                    <a href="https://www.google.com/chrome/browser/" target="_blank" class="btn btn-download btn-block">
+                        下載
+                    </a>
+                </div>
+                <div class="browser" id="firefox">
+                    <div class="statistic">
+                        <h1>17.6%</h1>
+                        <p>
+                            的網路使用者用這個瀏覽器
+                        </p>
+                    </div>
+                    <div class="logo">
+                        <span></span>
+                        MOZILLA FIREFOX
+                    </div>
+                    <a href="http://mozilla.com.tw/firefox/new/" target="_blank" class="btn btn-download btn-block">
+                        下載
+                    </a>
+                </div>
+                <div class="browser" id="ie">
+                    <div class="statistic">
+                        <h1>19.6%</h1>
+                        <p>
+                            的網路使用者用這個瀏覽器
+                        </p>
+                    </div>
+                    <div class="logo">
+                        <span></span>
+                        INTERNET EXPLORER
+                    </div>
+                    <a href="http://windows.microsoft.com/en-us/internet-explorer/download-ie" target="_blank" class="btn btn-download btn-block">
+                        下載
+                    </a>
+                </div>
+                <div class="browser" id="safari">
+                    <div class="statistic">
+                        <h1>16.7%</h1>
+                        <p>
+                            的網路使用者用這個瀏覽器
+                        </p>
+                    </div>
+                    <div class="logo">
+                        <span></span>
+                        APPLE SAFARI
+                    </div>
+                    <a href="http://support.apple.com/downloads/#safari" target="_blank" class="btn btn-download btn-block">
+                        下載
+                    </a>
+                </div>
+                <div class="browser" id="opera">
+                    <div class="statistic">
+                        <h1>3%</h1>
+                        <p>
+                            的網路使用者用這個瀏覽器
+                        </p>
+                    </div>
+                    <div class="logo">
+                        <span></span>
+                        OPERA
+                    </div>
+                    <a href="http://www.opera.com/zh-tw/computer" target="_blank" class="btn btn-download btn-block">
+                        下載
+                    </a>
+                </div>
+            </div>
+        </div>
+        <!-- outdate browser handle end -->
+        
+        <script src="<?php echo $this->basePath("js/outdatedBrowser.min.js"); ?>"></script>
+        <script type="text/javascript">
+        $( document ).ready(function() {
+            outdatedBrowser({
+                bgColor: '#3f3f3f',
+                color: '#e3e3e3',
+                
+            });
+            $('#btnClose').on('click', function(){
+                $('#outdated').remove();
+            });
+        });
+        </script>
         <script>
             $('#background-source').load(function() {
                 var imageSource = $(this).attr('src');
