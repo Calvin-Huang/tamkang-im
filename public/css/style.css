@@ -152,7 +152,8 @@ body.font {
 	background-color: #242535;
 	background-image: none;
 	border-color: #242535;
-	filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#242535',endColorstr='#242535',GradientType=0)
+	filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#242535',endColorstr='#242535',GradientType=0);
+	overflow: hidden;
 }
 
 .main-nav .nav > li:first-child > a {
