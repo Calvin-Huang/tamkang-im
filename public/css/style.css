@@ -225,11 +225,16 @@ a.small-brand.navbar-brand img {
 }
 
 a.big-brand.active {
+	height: 50px;
 	opacity: 0;
 	transition: all 0.1s;
 	-o-transition: all 0.1s;
 	-moz-transition: all 0.1s;
 	-webkit-transition: all 0.1s;
+}
+
+a.big-brand {
+	height: auto;
 }
 
 .navbar.full-size a.big-brand {
@@ -852,4 +857,62 @@ body #modal-delete {
 	.teacher .faculty-image-preview {
 		width: 150px;
 		height: 150px;
+	}
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+	.navbar.full-size ul.navbar-nav li a {
+	    padding-bottom: 10px;
+	    padding-top: 10px;
+	}
+
+	a.small-brand.navbar-brand {
+		position: relative;
+	}
+	
+	a.small-brand.navbar-brand img {
+		opacity: 1;
+	}
+	
+	.navbar.full-size a.small-brand.navbar-brand img {
+		height: 40px;
+		padding-top: 0px;
+		padding-bottom: 7px;
+		opacity: 1;
+	}
+	
+	a.small-brand.navbar-brand label {
+		opacity: 1;
+	}
+	
+	body.font {
+		padding-top: 70px;
+	}
+	
+	.page-header {
+		margin-top: 20px;
+	}
+	
+	.teacher .faculty-image-preview {
+		width: 150px;
+		height: 150px;
+	}
+	.navbar ul.navbar-nav li a {
+		margin-left: 15px;
+	}
+	
+	.navbar.full-size ul.navbar-nav li a {
+		padding-top: 15px;
+		padding-bottom: 15px;
+	}
+}
+
+@media (min-width: 992px) and (max-width: 1199px) {
+	.navbar ul.nav.navbar-nav li a {
+		margin-left: 15px;
+	}
+}
+
+@media (min-width: 1200px) {
+	
 }
