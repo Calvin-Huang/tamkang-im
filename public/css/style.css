@@ -848,4 +848,8 @@ body #modal-delete {
 	.page-header {
 		margin-top: 20px;
 	}
+	
+	.teacher .faculty-image-preview {
+		width: 150px;
+		height: 150px;
 }
