@@ -170,6 +170,7 @@
         </script>
         <script>
             $('.carousel').carousel();
+            initOffcanvas();
             $(window).on('scroll', function(){
                 if ($(window).scrollTop() <= 80) {
                     navbarFullsize();
@@ -186,6 +187,14 @@
                 $('.navbar').removeClass('full-size');
                 $('.small-brand').addClass('active');
             }
+
+            function initOffcanvas(){
+                $('[data-toggle=offcanvas]').on('click', function(e){
+                    e.preventDefault();
+                    $('.row-offcanvas').toggleClass('active');
+                });
+            };
+                        
         </script>
     </body>
 </html>

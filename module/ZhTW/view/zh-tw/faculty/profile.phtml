@@ -1,5 +1,5 @@
 <div class="container">
-    <div class="row">
+    <div class="row row-offcanvas row-offcanvas-left">
         <div class="col-sm-4 col-xs-12">
             <?php if (isset($this->faculty["avatar"]) && $this->faculty["avatar"] != "") : ?>
             <img class="img-responsive profile-img"
@@ -92,7 +92,7 @@
                 <?php endif; ?>
             </ul>
         </div>
-        <div class="col-sm-4 col-xs-6">
+        <div class="col-sm-4 col-xs-12">
             <h4>
                 <i class="fa fa-tags"></i>
                 <?php echo $this->profileTypes[1]["type_name"]; ?>
@@ -141,7 +141,7 @@
     </div>
     <div class="row" style="margin-top: 30px;">
         <!-- personal information end -->
-        <div class="col-sm-3 col-xs-6 bs-docs-sidebar">
+        <div class="col-sm-3 col-xs-4 bs-docs-sidebar">
             <ul class="nav nav-list bs-docs-sidenav margin-top-0">
                 <?php foreach($this->bookTypes as $i => $bookType): ?>
                     <li class="<?php echo ($bookType["id"] == $this->typeId) ? "active" : ""; ?>">
@@ -153,7 +153,7 @@
                 <?php endforeach; ?>
             </ul>
         </div>
-        <div class="col-sm-9 col-xs-12"">
+        <div class="col-sm-9 col-xs-8">
             <table class="table">
                 <?php foreach($this->books as $i => $book): ?>
                     <tr>

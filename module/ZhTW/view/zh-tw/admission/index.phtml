@@ -1,6 +1,12 @@
 <div class="container">
-    <div class="row">
-        <div class="col-sm-3 col-xs-6">
+    <div class="row row-offcanvas row-offcanvas-left">
+        <div class="col-xs-12 visible-xs">
+            <a href="#" data-toggle="offcanvas">
+                <i class="fa fa-plus-square-o fa-fw"></i>
+                分類項目
+            </a>
+        </div>
+        <div class="col-sm-3 col-xs-6 sidebar-offcanvas">
             <div id="nav-side-short" class="introduce bs-docs-sidenav" style="box-shadow:none;">
                 <ul class="nav nav-list bs-docs-sidenav">
                     <?php foreach ($this->admissionTypes as $i => $admissionType) : ?>
