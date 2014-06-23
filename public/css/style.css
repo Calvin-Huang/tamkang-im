@@ -812,3 +812,30 @@ body #modal-delete {
 	width: 400px;
 	margin-left: -200px;
 }
+
+@media (max-width: 767px) {
+	
+	.navbar.full-size ul.navbar-nav li a {
+	    padding-bottom: 10px;
+	    padding-top: 10px;
+	}
+
+	a.small-brand.navbar-brand img {
+		opacity: 1;
+	}
+	
+	.navbar.full-size a.small-brand.navbar-brand img {
+		height: 40px;
+		padding-top: 0px;
+		padding-bottom: 7px;
+		opacity: 1;
+	}
+	
+	a.small-brand.navbar-brand label {
+		opacity: 1;
+	}
+	
+	body.font {
+		padding-top: 40px;
+	}
+}
