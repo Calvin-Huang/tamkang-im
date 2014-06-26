@@ -1,6 +1,12 @@
 <div class="container">
-    <div class="row">
-        <div class="col-sm-3 col-xs-6">
+    <div class="row row-offcanvas row-offcanvas-left">
+        <div class="col-xs-12 visible-xs">
+            <a href="#" data-toggle="offcanvas">
+                <i class="fa fa-plus-square-o fa-fw"></i>
+                分類項目
+            </a>
+        </div>
+        <div class="col-sm-3 col-xs-6 sidebar-offcanvas">
             <form class="input-group search-form" method="get" action="<?php echo $this->url("zh_TW/default", array("controller" => "file", "action" => "search")); ?>">
                 <span class="input-group-btn">
                     <button type="submit" class="btn btn-default"><i class="fa fa-search"></i></button>
@@ -31,7 +37,7 @@
                     <i class="fa fa-file-o fa-fw"></i>文件查找
                 <?php endif; ?>
                 <span class="pull-right btn-group">
-                    <a class="btn btn-default" data-toggle="tooltip" data-placement="top" data-container="body" title="消息列表"><i class="fa fa-list"></i></a>
+                    <a class="btn btn-default" data-toggle="tooltip" data-placement="top" data-container="body" title="消息列表" href="<?php echo $this->url("zh_TW/default", array("controller" => "news", "action" => "index")); ?>"><i class="fa fa-list"></i></a>
                     <a class="btn btn-default active" data-toggle="tooltip" data-placement="top" data-container="body" title="文件查找" href="<?php echo $this->url("zh_TW/default", array("controller" => "file", "action" => "search")); ?>"><i class="fa fa-file"></i></a>
                 </span>
             </h4>
