@@ -8,38 +8,53 @@
         <?php echo $this->headMeta()->appendName('viewport', 'width=device-width, initial-scale=1.0') ?>
 
         <!-- Le styles -->
+        <link href="//netdna.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
         <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
         <?php echo $this->headLink(array('rel' => 'shortcut icon', 'type' => 'image/vnd.microsoft.icon', 'href' => $this->basePath() . '/images/favicon.ico'))
-                        ->prependStylesheet($this->basePath() . '/css/style.css') ?>
+                        ->appendStylesheet($this->basePath() . '/css/outdatedBrowser.min.css')
+                        ->appendStylesheet($this->basePath() . '/css/outdate-show.css')
+                        ->appendStylesheet($this->basePath() . '/css/style.css') ?>
     </head>
     <body class="font">
-        <div class="navbar navbar-fixed-top">
-            <div class="navbar-inner navbar-inverse main-nav">
-                <div class="container">
-                    <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+        
+        <!-- header start -->
+        <div class="navbar navbar-inverse navbar-fixed-top main-nav full-size">
+            <div class="container">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                        <span class="sr-only">Toggle navigation</span>
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
+                    </button>
+                    <a class="big-brand navbar-brand active hidden-xs hidden-sm" href="<?php echo $this->url('home'); ?>">
+                        <img alt="Information Management Department" src="/images/tkuim-logo-web-big.png">
                     </a>
-                    <a class="main-brand brand" href="<?php echo $this->url("en_US/default"); ?>"></a>
-                    <div class="nav-collapse collapse navigation en_US-nav">
-                        <?php echo $this->navigation('navigation/en_us')->menu()->setPartial($partial = array('template/navigation', 'default')) ?>
-                    </div><!--/.nav-collapse -->
+                    <a class="small-brand navbar-brand" href="<?php echo $this->url('home'); ?>">
+                        <img alt="Information Management Department" src="/images/tkuim-logo-web.png">
+                        <label>TKU<span>I</span>M</label>
+                    </a>
                 </div>
+                <div class="collapse navbar-collapse navigation">
+                    <?php echo $this->navigation('navigation/en_US')->menu()->setPartial($partial = array('template/navigation', 'default')) ?>
+                </div><!--/.nav-collapse -->
             </div>
         </div>
+        <!-- header end -->
+        
+        
         <div>
             <?php echo $this->content; ?>
             <hr>
         </div>
         <div class="container">
             <footer class="row">
-                <div class="span3">
+                <div class="col-sm-3 col-xs-12">
                     Phone: 26215656-2645 or 2648<br/>
                     Tex: （02）26209737<br/>
                     E-Mail：tlmx@oa.tku.edu.tw
                 </div>
-                <div class="span9 content">
+                <div class="col-sm-6 col-xs-12">
                     <a href="<?php echo $this->url("zh_TW/default"); ?>">中文版</a> &middot; 
                     <!--  <a href="#">About us</a> &middot;  -->
                     <a href="http://english.tku.edu.tw/" target="_blank">TKU</a> &middot;
@@ -51,13 +66,137 @@
                 </div>
             </footer>
         </div> <!-- /container -->
+        
+        <!-- outdate browser handle start -->
+        <div id="outdated">
+            <a href="#" id="btnClose" class="btn pull-right btn-lg" data-dismiss="#outdated"><i class="fa fa-times"></i></a>
+            <h3>Your browser is out-of-date!</h3>
+            <p>Update your browser to view this website correctly.</p>
+            <a id="btnUpdate" style="display: none;"></a>
+            <div class="browsers">
+                <div class="browser" id="chrome">
+                    <div class="statistic">
+                        <h1>37.0%</h1>
+                        <p>
+                            PEOPLE ARE USING THIS BROWSER
+                        </p>
+                    </div>
+                    <div class="logo">
+                        <span></span>
+                        GOOGLE CHROME
+                    </div>
+                    <a href="https://www.google.com/chrome/browser/" target="_blank" class="btn btn-download btn-block">
+                        DOWNLOAD
+                    </a>
+                </div>
+                <div class="browser" id="firefox">
+                    <div class="statistic">
+                        <h1>17.6%</h1>
+                        <p>
+                            PEOPLE ARE USING THIS BROWSER
+                        </p>
+                    </div>
+                    <div class="logo">
+                        <span></span>
+                        MOZILLA FIREFOX
+                    </div>
+                    <a href="http://mozilla.com.tw/firefox/new/" target="_blank" class="btn btn-download btn-block">
+                        DOWNLOAD
+                    </a>
+                </div>
+                <div class="browser" id="ie">
+                    <div class="statistic">
+                        <h1>19.6%</h1>
+                        <p>
+                            PEOPLE ARE USING THIS BROWSER
+                        </p>
+                    </div>
+                    <div class="logo">
+                        <span></span>
+                        INTERNET EXPLORER
+                    </div>
+                    <a href="http://windows.microsoft.com/en-us/internet-explorer/download-ie" target="_blank" class="btn btn-download btn-block">
+                        DOWNLOAD
+                    </a>
+                </div>
+                <div class="browser" id="safari">
+                    <div class="statistic">
+                        <h1>16.7%</h1>
+                        <p>
+                            PEOPLE ARE USING THIS BROWSER
+                        </p>
+                    </div>
+                    <div class="logo">
+                        <span></span>
+                        APPLE SAFARI
+                    </div>
+                    <a href="http://support.apple.com/downloads/#safari" target="_blank" class="btn btn-download btn-block">
+                        DOWNLOAD
+                    </a>
+                </div>
+                <div class="browser" id="opera">
+                    <div class="statistic">
+                        <h1>3%</h1>
+                        <p>
+                            PEOPLE ARE USING THIS BROWSER
+                        </p>
+                    </div>
+                    <div class="logo">
+                        <span></span>
+                        OPERA
+                    </div>
+                    <a href="http://www.opera.com/zh-tw/computer" target="_blank" class="btn btn-download btn-block">
+                        DOWNLOAD
+                    </a>
+                </div>
+            </div>
+        </div>
+        <!-- outdate browser handle end -->
+        
         <?php echo $this->inlineScript() ?>
         <!-- Scripts -->
+        <script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
         <script src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
-        <?php echo $this->headScript()->prependFile($this->basePath() . '/js/html5.js', 'text/javascript', array('conditional' => 'lt IE 9',))
-                                      ->prependFile($this->basePath() . '/js/jquery.min.js'); ?>
+        <?php echo $this->headScript()->appendFile($this->basePath() . '/js/outdatedBrowser.min.js', 'text/javascript'); ?>
+        <script type="text/javascript">
+        $( document ).ready(function() {
+            outdatedBrowser({
+                bgColor: '#3f3f3f',
+                color: '#e3e3e3',
+                
+            });
+            $('#btnClose').on('click', function(){
+                $('#outdated').remove();
+            });
+        });
+        </script>
         <script>
             $('.carousel').carousel();
+            initOffcanvas();
+            $(window).on('scroll', function(){
+                if ($(window).scrollTop() <= 80) {
+                    navbarFullsize();
+                } else {
+                    navbarSmallsize();
+                }
+            });
+            function navbarFullsize() {
+                $('.navbar').addClass('full-size');
+                $('.small-brand').removeClass('active');
+            }
+
+            function navbarSmallsize() {
+                $('.navbar').removeClass('full-size');
+                $('.small-brand').addClass('active');
+            }
+
+            function initOffcanvas(){
+                $('[data-toggle=offcanvas]').on('click', function(e){
+                    e.preventDefault();
+                    $('.row-offcanvas').toggleClass('active');
+                });
+            };
+                        
         </script>
     </body>
 </html>

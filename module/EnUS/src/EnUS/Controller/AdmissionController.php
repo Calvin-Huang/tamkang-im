@@ -29,6 +29,7 @@ class AdmissionController extends AbstractActionController
         $fieldCheck = new FieldCheck();
         
         $types = $admissionModel->listIntroduceType($languageMpodel->getLanguageIdByShortCut("en_US"));
+        
         $typeId = $types[0]["id"];
         $content = "";
         

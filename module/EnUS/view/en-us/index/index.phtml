@@ -1,8 +1,15 @@
 <!-- Carousel ================================================== -->
-<div id="myCarousel" class="carousel slide">
+<div id="carousel" class="carousel slide carousel-fade hidden-xs">
+    <!-- Indicators -->
+    <ol class="carousel-indicators">
+        <?php foreach($this->slides as $i => $slide) : ?>
+            <li data-target="#carousel" data-slide-to="<?php echo $i; ?>" class="<?php echo ($i == 0) ? " active" : ""; ?>"></li>
+        <?php endforeach; ?>
+    </ol>
 	<div class="carousel-inner">
 	    <?php foreach ($this->slides as $i => $slide) : ?>
 	        <div class="slide-image item<?php echo ($i == 0) ? " active" : ""; ?>" style="background-image:url(<?php echo $this->url("application/default", array("controller" => "image")) . "?" . $slide["image"]; ?>)">
+	            <img style="display:none;" alt="preload-slide-image" src="<?php echo $this->url("application/default", array("controller" => "image")) . "?" . $slide["image"]; ?>">
     			<div class="container">
     				<div class="carousel-caption">
     					
@@ -11,8 +18,13 @@
     		</div>
 	    <?php endforeach; ?>
 	</div>
-	<a class="left carousel-control" href="#myCarousel" data-slide="prev">&lsaquo;</a>
-	<a class="right carousel-control" href="#myCarousel" data-slide="next">&rsaquo;</a>
+	<!-- Controls -->
+    <a class="left carousel-control" href="#carousel" data-slide="prev">
+        <span class="glyphicon glyphicon-chevron-left"></span>
+    </a>
+    <a class="right carousel-control" href="#carousel" data-slide="next">
+        <span class="glyphicon glyphicon-chevron-right"></span>
+    </a>
 </div>
 <!-- /.carousel -->
 
@@ -21,90 +33,109 @@
 <!-- Marketing messaging and featurettes
                 ================================================== -->
 <!-- Wrap the rest of the page in another container to center all the content. -->
-
-<div class="container marketing">
-    <div class="row">
-        <div class="span3">
-            <div class="page-header">
-                <h3 class="title title-thin">Students Self-learning Societies</h3>
-            </div>
-            <ul class="nav nav-list side-link">
+<div class="container">
+    <div class="row row-offcanvas row-offcanvas-left">
+        <div class="col-xs-12 visible-xs">
+            <a href="#" data-toggle="offcanvas">
+                <i class="fa fa-plus-square-o fa-fw"></i>
+                Sub-navigation
+            </a>
+        </div>
+        <div class="col-sm-3 col-xs-6 sidebar-offcanvas">
+            <h4 class="page-header">
+                <i class="fa fa-users fa-fw"></i>
+                Students Self-learning Societies
+            </h4>
+            <ul class="nav nav-list bs-docs-sidenav">
                 <li>
                     <a href="http://imna.im.tku.edu.tw/" target="_blank">
-                        <i class="pull-left specials-icon imna"></i>
-                        <span class="muted">IMNA</span>
+                        IMNA
+                        <i class="fa fa-chevron-right pull-right"></i>
                     </a>
                 </li>
                 <li>
                     <a href="http://consult.im.tku.edu.tw/" target="_blank">
-                        <i class="pull-left specials-icon ico"></i>
-                        <span class="muted">ICO</span>
+                        ICO
+                        <i class="fa fa-chevron-right pull-right"></i>
                     </a>
                 </li>
                 <li>
                     <a href="https://www.facebook.com/TKUB310" target="_blank">
-                        <i class="pull-left specials-icon b310"></i>
-                        <span class="muted">B310</span>
+                        B310
+                        <i class="fa fa-chevron-right pull-right"></i>
                     </a>
                 </li>
             </ul>
-            <div class="page-header">
-                <h3 class="title title-thin">University</h3>
-            </div>
-            <ul class="nav nav-list side-link">
+            <h4 class="page-header">
+                <i class="fa fa-bookmark fa-fw"></i>
+                Partner Institution
+            </h4>
+            <ul class="nav nav-list bs-docs-sidenav">
                 <li>
                     <a href="http://dsv.su.se/en/" target="_blank">
-                        <i class="pull-left specials-icon dsv"></i>
-                        <small class="muted">Stockholms<br/>universitet</small>
+                        Stockholms universitet, Department of Computer and Systems Sciences
+                        <i class="fa fa-chevron-right pull-right"></i>
                     </a>
                 </li>
                 <li>
-                    <a href="http://w3.tku.edu.tw/sister/index_e.asp#main" target="_blank">
-                        <i class="pull-left specials-icon ipi"></i>
-                        <small class="muted">International<br/>Partner Institution</small>
+                    <a href="http://w3.tku.edu.tw/sister/index.asp#main" target="_blank">
+                        International Partner Institution
+                        <i class="fa fa-chevron-right pull-right"></i>
+                    </a>
+                </li>
+            </ul>
+            <h4 class="page-header">
+                <i class="fa fa-book fa-fw"></i>
+                Conference
+            </h4>
+            <ul class="nav nav-list bs-docs-sidenav">
+                <li>
+                    <a href="http://163.13.200.22/cscimpa2014/" target="_blank">
+                        CSCIMPA 2014
+                        <i class="fa fa-chevron-right pull-right"></i>
+                    </a>
+                </li>
+                <li>
+                    <a href="http://163.13.200.22/cscim2012/index_tc.html" target="_blank">
+                        CSCIM 2012
+                        <i class="fa fa-chevron-right pull-right"></i>
+                    </a>
+                </li>
+                <li>
+                    <a href="http://163.13.200.22/cscim/index_tc.html" target="_blank">
+                        CSCIM 2011
+                        <i class="fa fa-chevron-right pull-right"></i>
                     </a>
                 </li>
             </ul>
         </div>
-        <div class="span9 content">
-            <div class="page-header">
-                <h3 class="title">News</h3>
-            </div>
-        	<!-- START THE FEATURETTES -->
-        	<div class="row-fluid"  style="margin-top:-5px;">
-        	    <div class="span12">
-        	        <?php foreach ($this->articles as $i => $article) : ?>
-        	            <div class="row-fluid">
-        	                <div class="featurette span8">
-        	                    <hr>
-        	                    <h4 class="timestamp">
-        	                        <?php echo date("Y / m / d", strtotime($article["time"])); ?>
-        	                    </h4>
-                        		<h2 class="featurette-heading">
-                        		    <?php echo strip_tags($article["title"]); ?>
-                        		</h2>
-                        		<p class="featurette-content">
-                        		    <?php echo $article["content"]; ?>
-                        		</p>
-                                <a href="<?php echo $this->url("zh_TW/default", array("controller" => "news", "action" => "detail")) . "?id=" . $article["id"]; ?>" class="btn">詳細全文</a>
-                        	</div>
-                        	<div class="span4">
-                        	<?php if ($article["title_image"] == "") : ?>
-                        	    <hr style="border-width: 3px 0;border-color: #f0f0f7">
-                        	<?php endif; ?>
-                            	<?php if ($article["title_image"] != "") : ?>
-                            	    <div class="article-image-preview" style="background-image:url(<?php echo $this->url("application/default", array("controller" => "image")) . "?" . $article["title_image"]; ?>)">
-                            	    </div>
-                        	    <?php endif; ?>
-                        	</div>
-        	            </div>
-                	<?php endforeach; ?>
-                	<div class="row-fluid" id="infinity-loader" style="height:50px;background-image:url(<?php echo $this->basePath() . "/images/ajax-loader.gif"; ?>);background-repeat:no-repeat;background-position:center;">
-                	</div>
+        <div class="col-sm-9 col-xs-12">
+            <h4 class="page-header articles-header">
+                <i class="fa fa-bullhorn fa-fw"></i>
+                News
+            </h4>
+            <div class="row">
+                <?php foreach ($this->articles as $i => $article) : ?>
+                <div class="col-xs-12">
+                    <div class="article">
+                        <div class="article-body">
+                            <a href="<?php echo $this->url("en_US/default", array("controller" => "news", "action" => "detail")) . "?id=" . $article["id"]; ?>">
+                                <h4>
+                                    <?php echo $article["title"]; ?>
+                                    <small class="pull-right"><i class="fa fa-clock-o fa-fw"></i><?php echo date("Y /m/d", strtotime($article["time"])); ?></small>
+                                </h4>
+                            </a>
+                            <p class="text-muted"><?php echo $article["content"]; ?></p>
+                        </div>
+                        <a class="article-view-btn" href="<?php echo $this->url("en_US/default", array("controller" => "news", "action" => "detail")) . "?id=" . $article["id"]; ?>">
+                            <i class="fa fa-angle-right fa-3x"></i>
+                        </a>
+                    </div>
                 </div>
-        	</div>
-        	<!-- /END THE FEATURETTES -->
+                <?php endforeach; ?>
+                <div class="col-xs-12" id="infinity-loader" style="height:50px;background-image:url(<?php echo $this->basePath() . "/images/ajax-loader.gif"; ?>);background-repeat:no-repeat;background-position:center;">
+                </div>
+            </div>
         </div>
     </div>
 </div>
-
