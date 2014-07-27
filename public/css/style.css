@@ -940,6 +940,11 @@ body #modal-delete {
 	.navbar ul.nav.navbar-nav li a {
 		margin-left: 15px;
 	}
+	
+	.navbar.main-nav ul.navbar-nav li a.dropdown-toggle {
+		padding-right: 7px;
+		padding-left: 7px;
+	}
 }
 
 @media (min-width: 1200px) {
