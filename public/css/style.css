@@ -892,6 +892,16 @@ body #modal-delete {
 		width: 100%;
 		margin-bottom: 10px;
 	}
+	
+	.navbar.main-nav ul.navbar-nav li a.dropdown-toggle {
+		padding-left: 33px;
+		margin-left: 0;
+	}
+	
+	.navbar.main-nav ul.navbar-nav li ul.dropdown-menu a {
+		padding-left: 47px;
+		color: #FFF;
+	}
 }
 
 @media (min-width: 768px) and (max-width: 991px) {
