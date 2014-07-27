@@ -237,6 +237,10 @@ return array(
                         'controller' => 'index',
                         'action' => 'index'
                     ),
+                    array(
+                        'label' => '<i class="fa fa-sign-in fa-fw"></i>  管理後台 ',
+                        'route' => 'admin/default'
+                    ),
                 )
             ),
         ),
@@ -301,6 +305,10 @@ return array(
                                     'route' => 'zh_TW/default',
                                     'controller' => 'index',
                                     'action' => 'index'
+                            ),
+                            array(
+                                    'label' => '<i class="fa fa-sign-in fa-fw"></i>  Admin System',
+                                    'route' => 'admin/default'
                             ),
                     )
             ),
