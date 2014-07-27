@@ -168,7 +168,6 @@ footer {
 	background-image: none;
 	border-color: #242535;
 	filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#242535',endColorstr='#242535',GradientType=0);
-	overflow: hidden;
 }
 
 .main-nav .nav > li:first-child > a {
@@ -181,6 +180,21 @@ footer {
 
 .navbar .navbar-header {
 	position: relative;
+}
+
+.navbar.main-nav ul.navbar-nav li a.dropdown-toggle {
+	padding-right: 15px;
+	padding-left: 15px;
+}
+
+.navbar.main-nav ul.navbar-nav li ul.dropdown-menu a {
+	margin: 0;
+	padding: 5px 10px;
+	color: #000;
+}
+
+.navbar-inverse .navbar-nav > .open > a, .navbar-inverse .navbar-nav > .open > a:hover, .navbar-inverse .navbar-nav > .open > a:focus {
+	background-color: #222333;
 }
 
 a.small-brand.navbar-brand {

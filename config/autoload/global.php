@@ -225,6 +225,20 @@ return array(
                 'controller' => 'admission',
                 'action' => 'index'
             ),
+            array(
+                'label' => '<i class="fa fa-gear"></i>',
+                'route' => 'en_US/default',
+                'controller' => 'index',
+                'action' => 'index',
+                'pages' => array(
+                    array(
+                        'label' => '<i class="fa fa-language fa-fw"></i> English verson',
+                        'route' => 'en_US/default',
+                        'controller' => 'index',
+                        'action' => 'index'
+                    ),
+                )
+            ),
         ),
         'en_us' => array(
             // And finally, here is where we define our page hierarchy
@@ -275,6 +289,20 @@ return array(
                 'route' => 'en_US/default',
                 'controller' => 'admission',
                 'action' => 'index'
+            ),
+            array(
+                    'label' => '<i class="fa fa-gear"></i>',
+                    'route' => 'zh_TW/default',
+                    'controller' => 'index',
+                    'action' => 'index',
+                    'pages' => array(
+                            array(
+                                    'label' => '<i class="fa fa-language fa-fw"></i> 中文版本',
+                                    'route' => 'zh_TW/default',
+                                    'controller' => 'index',
+                                    'action' => 'index'
+                            ),
+                    )
             ),
         ),
     ),
