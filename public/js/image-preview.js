@@ -5,10 +5,14 @@ $('input[type=file]').each(function(index) {
             var fileReader = new FileReader();
             fileReader.readAsDataURL(this.files[0]);
             fileReader.onload = function(e) {
-                $('.thumbnail').find('img').attr('src', e.target.result);
-            }
+                $('.thumbnail-avatar').css({
+                    'background-image': 'url(' + e.target.result + ')'
+                });
+            };
         } else {
-            $('.thumbnail').find('img').attr('src', this.value);
+            $('.thumbnail-avatar').css({
+                'background-image': 'url(' + this.value + ')'
+            });
         }
-    })
+    });
 });

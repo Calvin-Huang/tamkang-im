@@ -5,8 +5,7 @@
         </div>
     </div>
     <div class="span4">
-        <div class="thumbnail">
-            <img src="<?php echo (isset($this->avatar)) ? $this->url("application/default", array("controller" => "image")) . "?" . $this->avatar : ""; ?>" data-src="holder.js/400x400" />
+        <div class="thumbnail thumbnail-avatar" style="background-image: url(<?php echo (isset($this->avatar)) ? $this->url("application/default", array("controller" => "image")) . "?" . $this->avatar : "http://placehold.it/300x300"; ?>);">
         </div>
     </div>
     <div class="span8">
