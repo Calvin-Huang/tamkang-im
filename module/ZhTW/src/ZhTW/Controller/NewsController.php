@@ -101,7 +101,8 @@ class NewsController extends AbstractActionController
                 "id" => $article["id"],
                 "title" => $articleTitle,
                 "content" => $articleContent,
-                "time" => $article["create_time"]
+                "time" => $article["create_time"],
+                "top" => $article["top"]
             );
         }
         

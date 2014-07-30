@@ -52,9 +52,9 @@ class InstituteController extends AbstractActionController
         
         try {
             $id = $fieldCheck->checkInput($this->params()->fromQuery("id"));
+            $instituteModel = new InstituteModel();
             
             if ($this->getRequest()->isPost()) {
-                $instituteModel = new InstituteModel();
                 $instituteModel->deleteIntroduceById($id);
                 
                 exit();
@@ -126,6 +126,7 @@ class InstituteController extends AbstractActionController
         }
         
         $viewModel->setVariable("introduces", $introduces);
+        $viewModel->setVariable("types", $instituteModel->listNotExistsIntroduceType());
         return $viewModel;
     }
     

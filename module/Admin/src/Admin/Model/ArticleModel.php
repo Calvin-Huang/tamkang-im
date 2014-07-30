@@ -12,7 +12,7 @@ class ArticleModel extends PageHelper
         parent::__construct($onePageDisplay);
     }
     
-    public function addArticle($title, $content, $typeId)
+    public function addArticle($title, $content, $typeId, $top)
     {
         $sqlConnection = new SqlConnection();
         $param = array();
@@ -21,10 +21,11 @@ class ArticleModel extends PageHelper
         $param[] = $content;
         $param[] = $typeId;
         $param[] = 1;
+        $param[] = $top;
         $param[] = date("Y-m-d H:i:s");
         $param[] = date("Y-m-d H:i:s");
-        $query = "INSERT INTO `article` (`title`, `content`, `type_id`, `visible`, `create_time`, `update_time`) ";
-        $query.= "VALUES (?, ?, ?, ?, ?, ?)";
+        $query = "INSERT INTO `article` (`title`, `content`, `type_id`, `visible`, `top`, `create_time`, `update_time`) ";
+        $query.= "VALUES (?, ?, ?, ?, ?, ?, ?)";
         
         return $sqlConnection->executeQuery($query, $param);
     }
@@ -126,7 +127,7 @@ class ArticleModel extends PageHelper
         $param = array();
         
         $param[] = $id;
-        $query = "SELECT `title`, `content`, `type_id`, `visible`, `create_time` ";
+        $query = "SELECT `title`, `content`, `type_id`, `visible`, `create_time`, `top` ";
         $query.= "FROM `article`";
         $query.= "WHERE `id` = ?";
         
@@ -177,7 +178,7 @@ class ArticleModel extends PageHelper
         $param = array();
         $condition = array();
         
-        $query = "SELECT A.`id`, A.`title`, A.`content`, A.`visible`, A.`create_time`, AT.`type_name` ";
+        $query = "SELECT A.`id`, A.`title`, A.`content`, A.`visible`, A.`top`, A.`create_time`, AT.`type_name` ";
         $query.= "FROM `article` A ";
         $query.= "INNER JOIN `article_type` AT ON A.`type_id` = AT.`id` ";
         
@@ -198,7 +199,7 @@ class ArticleModel extends PageHelper
         }
         
         $query.= (count($condition) > 0) ? "WHERE " . join(" AND ", $condition) . " " : "";
-        $query.= "ORDER BY `create_time` DESC ";
+        $query.= "ORDER BY `top` DESC, `create_time` DESC ";
         $query.= $this->getPageQueryString($currentPage);
         
         return array(
@@ -264,7 +265,7 @@ class ArticleModel extends PageHelper
         return true;
     }
     
-    public function updateArticleById($id, $title, $content, $typeId, $visible = 1)
+    public function updateArticleById($id, $title, $content, $typeId, $visible = 1, $top = 0)
     {
         $sqlConnection = new SqlConnection();
         $param = array();
@@ -283,6 +284,9 @@ class ArticleModel extends PageHelper
         
         $param[] = $visible;
         $condition[] = "`visible` = ?";
+        
+        $param[] = $top;
+        $condition[] = "`top` = ?";
         
         $param[] = date("Y-m-d H:i:s");
         $condition[] = "`update_time` = ?";

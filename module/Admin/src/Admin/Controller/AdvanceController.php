@@ -126,6 +126,7 @@ class AdvanceController extends AbstractActionController
         }
         
         $viewModel->setVariable("introduces", $introduces);
+        $viewModel->setVariable("types", $advanceModel->listNotExistsIntroduceType());
         return $viewModel;
     }
     

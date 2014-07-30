@@ -98,6 +98,7 @@ class NewsController extends AbstractActionController
                 "content" => $articleContent,
                 "time" => date("Y / m / d", strtotime($article["create_time"])),
                 "title_image" => $articleImages[0]["image_name"],
+                "top" => $article["top"]
             );
         }
         

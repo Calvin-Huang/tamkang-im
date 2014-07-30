@@ -15,18 +15,34 @@
         <tr>
             <td>狀態設定</td>
             <td>
-                <div class="span1" style="margin-left:0px;">
-                    <input name="visible-box" id="visible-box" class="css-checkbox" type="checkbox" value="1" <?php echo ($this->visible == 1) ? "checked=\"checked\"" : ""?> />
-                    <label for="visible-box" class="css-label">顯示</label>
-                    <!-- Checkbox powered by CssCheckbox.com -->
+                <div class="row">
+                    <div class="span1" style="margin-left:0px;">
+                        <input name="visible-box" id="visible-box" class="css-checkbox" type="checkbox" value="1" <?php echo ($this->visible == 1) ? "checked=\"checked\"" : ""?> />
+                        <label for="visible-box" class="css-label">顯示</label>
+                        <!-- Checkbox powered by CssCheckbox.com -->
+                    </div>
+                    
+                    <div class="span1">
+                        <input name="hidden-box" id="hidden-box" class="css-checkbox" type="checkbox" value="0" <?php echo ($this->visible == 0) ? "checked=\"checked\"" : ""?> />
+                        <label for="hidden-box" class="css-label">不顯示</label>
+                        <!-- Checkbox powered by CssCheckbox.com -->
+                    </div>
+                    <input name="visible" id="visible" type="hidden" value="<?php echo $this->visible; ?>" />
                 </div>
-                
-                <div class="span1">
-                    <input name="hidden-box" id="hidden-box" class="css-checkbox" type="checkbox" value="0" <?php echo ($this->visible == 0) ? "checked=\"checked\"" : ""?> />
-                    <label for="hidden-box" class="css-label">不顯示</label>
-                    <!-- Checkbox powered by CssCheckbox.com -->
+                <div class="row top <?php echo ($this->visible == 0)? "unvisible" : ""; ?>">
+                    <div class="span1" style="margin-left:0px;">
+                        <input name="top-box" id="top-box" class="css-checkbox" type="checkbox" value="1" <?php echo ($this->top == 1) ? "checked=\"checked\"" : ""?> />
+                        <label for="top-box" class="css-label">置頂</label>
+                        <!-- Checkbox powered by CssCheckbox.com -->
+                    </div>
+                    
+                    <div class="span1">
+                        <input name="not-top-box" id="not-top-box" class="css-checkbox" type="checkbox" value="0" <?php echo ($this->top == 0) ? "checked=\"checked\"" : ""?> />
+                        <label for="not-top-box" class="css-label">不置頂</label>
+                        <!-- Checkbox powered by CssCheckbox.com -->
+                    </div>
+                    <input name="top" id="top" type="hidden" value="<?php echo $this->top; ?>" />
                 </div>
-                <input name="visible" id="visible" type="hidden" value="<?php echo $this->visible; ?>" />
             </td>
         </tr>
         <tr>
@@ -99,10 +115,34 @@ $('#append-file').on('click', function(){
     $('.file:last').parent('p').after('<p><input name="document[]" type="file" class="file" /><a class="close" data-dismiss="alert">&times;</a></p>');
 });
 
-$('.css-checkbox').on('click', function(){
-    $('.css-checkbox').not($(this)).attr('checked', false);
-    $('#visible').val($('.css-checkbox:checked').val());
-    // $(this).attr('checked', true);
+// $('.css-checkbox').on('click', function(){
+//     $('.css-checkbox').not($(this)).attr('checked', false);
+//     $('#visible').val($('.css-checkbox:checked').val());
+//     // $(this).attr('checked', true);
+// });
+
+$('#visible-box').on('click', function(){
+    $('#hidden-box').attr('checked', false);
+    $('#visible').val($(this).val());
+
+    $('.top').removeClass('unvisible');
+});
+
+$('#hidden-box').on('click', function(){
+    $('#visible-box').attr('checked', false);
+    $('#visible').val($(this).val());
+
+    $('.top').addClass('unvisible');
+});
+
+$('#top-box').on('click', function(){
+    $('#not-top-box').attr('checked', false);
+    $('#top').val($(this).val());
+});
+
+$('#not-top-box').on('click', function(){
+    $('#top-box').attr('checked', false);
+    $('#top').val($(this).val());
 });
 
 // 刪除圖片用input

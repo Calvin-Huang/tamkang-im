@@ -42,11 +42,14 @@
         	    <div class="span12">
         	        <?php foreach ($this->articles as $i => $article) : ?>
                     <div class="col-xs-12">
-                        <div class="article">
+                        <div class="article <?php echo ($article["top"] == 1)? "top" : "" ?>">
                             <div class="article-body">
                                 <a href="<?php echo $this->url("zh_TW/default", array("controller" => "news", "action" => "detail")) . "?id=" . $article["id"]; ?>">
                                     <h4>
                                         <?php echo $article["title"]; ?>
+                                        <?php if ($article["top"] == 1): ?>
+                                            <small class="label label-default">置頂</small>
+                                        <?php endif; ?>
                                         <small class="pull-right"><i class="fa fa-clock-o fa-fw"></i><?php echo date("Y /m/d", strtotime($article["time"])); ?></small>
                                     </h4>
                                 </a>

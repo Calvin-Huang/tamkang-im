@@ -13,6 +13,27 @@
 <form action="<?php echo $this->url("admin/default", array("controller" => "article", "action" => "add")); ?>" method="post">
     <table class="table table-hover">
         <tr>
+            <td style="width:80px;">
+                狀態
+            </td>
+            <td>
+                <div class="row top">
+                    <div class="span1" style="margin-left:0px;">
+                        <input name="top-box" id="top-box" class="css-checkbox" type="checkbox" value="1" <?php echo ($this->top == 1) ? "checked=\"checked\"" : ""?> />
+                        <label for="top-box" class="css-label">置頂</label>
+                        <!-- Checkbox powered by CssCheckbox.com -->
+                    </div>
+                    
+                    <div class="span1">
+                        <input name="not-top-box" id="not-top-box" class="css-checkbox" type="checkbox" value="0" <?php echo ($this->top == 0) ? "checked=\"checked\"" : ""?> />
+                        <label for="not-top-box" class="css-label">不置頂</label>
+                        <!-- Checkbox powered by CssCheckbox.com -->
+                    </div>
+                    <input name="top" id="top" type="hidden" value="0" />
+                </div>
+            </td>
+        </tr>
+        <tr>
             <td style="width:80px;">標題</td>
             <td><input id="title" name="title" type="text" style="width:85%;" /></td>
         </tr>
@@ -61,5 +82,15 @@ $('#append-image').on('click', function(){
 
 $('#append-file').on('click', function(){
     $('.file:last').parent('p').after('<p><input type="file" class="file" name="document[]" /><a class="close" data-dismiss="alert">&times;</a></p>');
+});
+
+$('#top-box').on('click', function(){
+    $('#not-top-box').attr('checked', false);
+    $('#top').val($(this).val());
+});
+
+$('#not-top-box').on('click', function(){
+    $('#top-box').attr('checked', false);
+    $('#top').val($(this).val());
 });
 </script>

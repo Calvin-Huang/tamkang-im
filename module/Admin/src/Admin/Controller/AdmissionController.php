@@ -126,6 +126,7 @@ class AdmissionController extends AbstractActionController
         }
         
         $viewModel->setVariable("introduces", $introduces);
+        $viewModel->setVariable("types", $admissionModel->listNotExistsIntroduceType());
         return $viewModel;
     }
     

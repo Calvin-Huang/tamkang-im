@@ -48,6 +48,7 @@ public function indexAction()
                 "content" => $articleContent,
                 "time" => $article["create_time"],
                 "title_image" => $articleImages[0]["image_name"],
+                "top" => $article["top"]
             );
         }
         

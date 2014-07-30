@@ -31,7 +31,7 @@ class ArticleModel extends PageHelper
         $param = array();
         $condition = array();
     
-        $query = "SELECT A.`id`, A.`title`, A.`content`, A.`visible`, A.`create_time`, AT.`type_name` ";
+        $query = "SELECT A.`id`, A.`title`, A.`content`, A.`visible`, A.`top`, A.`create_time`, AT.`type_name` ";
         $query.= "FROM `article` A ";
         $query.= "INNER JOIN `article_type` AT ON A.`type_id` = AT.`id` AND AT.`language_id` = ? ";
     
@@ -54,7 +54,7 @@ class ArticleModel extends PageHelper
         }
     
         $query.= (count($condition) > 0) ? "WHERE " . join(" AND ", $condition) . " " : "";
-        $query.= "ORDER BY `create_time` DESC ";
+        $query.= "ORDER BY `top` DESC, `create_time` DESC ";
         $query.= $this->getPageQueryString($currentPage);
     
         return array(

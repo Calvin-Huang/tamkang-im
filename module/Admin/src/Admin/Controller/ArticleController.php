@@ -35,8 +35,9 @@ class ArticleController extends AbstractActionController
                 $title = $fieldCheck->checkInput($this->params()->fromPost("title"));
                 $content = $fieldCheck->checkEditor($this->params()->fromPost("content"));
                 $typeId = $fieldCheck->checkInput($this->params()->fromPost("type"));
+                $top = $fieldCheck->checkBoolean($this->params()->fromPost("top"));
                 
-                $articleId = $articleModel->addArticle($title, $content, $typeId);
+                $articleId = $articleModel->addArticle($title, $content, $typeId, $top);
 
                 // 圖檔上傳
                 try {
@@ -180,8 +181,9 @@ class ArticleController extends AbstractActionController
                 $content = $fieldCheck->checkEditor($this->params()->fromPost("content"));
                 $typeId = $fieldCheck->checkInput($this->params()->fromPost("type"));
                 $visible = $fieldCheck->checkBoolean($this->params()->fromPost("visible"));
+                $top = $fieldCheck->checkBoolean($this->params()->fromPost("top"));
 
-                $articleModel->updateArticleById($id, $title, $content, $typeId, $visible);
+                $articleModel->updateArticleById($id, $title, $content, $typeId, $visible, $top);
                 
                 // 圖檔上傳
                 try {
@@ -251,6 +253,7 @@ class ArticleController extends AbstractActionController
             "typeId" => $article["type_id"],
             "id" => $id,
             "visible" => $article["visible"],
+            "top" => $article["top"],
             "token" => $fieldCheck->createToken("tamkang-im"),
             "resetCookie" => $resetCookie,
         ));
@@ -270,6 +273,7 @@ class ArticleController extends AbstractActionController
         $currentPage = $fieldCheck->checkPage($this->params()->fromQuery("page"));
         $term = null;
         $visible = null;
+        $top = null;
         
         try {
             $term = $fieldCheck->checkInput($this->params()->fromQuery("term"));
@@ -300,7 +304,7 @@ class ArticleController extends AbstractActionController
             "articleList" => $articleList[1],
             "paginator" => Paginator::factory($currentPage, $onePageDisplay, $articleList[0]),
             "term" => $term,
-            "visible" => $visible,
+            "visible" => $visible
         ));
     }
     

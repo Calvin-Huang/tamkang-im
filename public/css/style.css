@@ -764,6 +764,23 @@ input[type=checkbox].css-checkbox:checked + label.css-label {
 	padding-bottom: 19px;
 }
 
+.top .article-view-btn {
+	color: #ABCDFB;
+}
+
+.article.top:hover .article-view-btn {
+	color: #5375A3;
+}
+
+.top .article-body h4 {
+	color: #5375A3;
+}
+
+.top .label {
+	font-weight: normal;
+	font-size: 50%;
+}
+
 @media (max-width: 767px) {
 	
 	.article .article-view-btn {
@@ -864,6 +881,10 @@ body .modal {
 body #modal-delete {
 	width: 400px;
 	margin-left: -200px;
+}
+
+.unvisible {
+	display: none;
 }
 
 @media (max-width: 767px) {

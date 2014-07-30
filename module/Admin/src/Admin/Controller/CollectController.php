@@ -126,6 +126,7 @@ class CollectController extends AbstractActionController
         }
         
         $viewModel->setVariable("introduces", $introduces);
+        $viewModel->setVariable("types", $collectModel->listNotExistsIntroduceType());
         return $viewModel;
     }
     

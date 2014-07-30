@@ -1,8 +1,10 @@
 <div class="btn-toolbar">
+    <?php if (count($this->types) > 0) :?>
     <a class="btn btn-primary" id="add-article" data-toggle="modal" href="<?php echo $this->url("admin/default", array(
         "controller" => "advance",
         "action" => "add",
     )); ?>" data-target="#modal-add">新增介紹</a>
+    <?php endif; ?>
     <label class="alert pull-right">
         <button type="button" class="close" data-dismiss="alert">&times;</button>
         各種類介紹只能新增一篇
