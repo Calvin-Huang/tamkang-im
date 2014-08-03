@@ -232,7 +232,7 @@ return array(
                 'action' => 'index',
                 'pages' => array(
                     array(
-                        'label' => '<i class="fa fa-language fa-fw"></i> English verson',
+                        'label' => '<i class="fa fa-language fa-fw"></i> English Version',
                         'route' => 'en_US/default',
                         'controller' => 'index',
                         'action' => 'index'
