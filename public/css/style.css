@@ -212,6 +212,7 @@ a.small-brand.navbar-brand label {
 	font-weight: normal;
 	font-size: 30px;
 	vertical-align: middle;
+	padding-top: 6px;
 	margin: 0;
 	cursor: pointer;
 	opacity: 0;
@@ -235,21 +236,28 @@ a.small-brand.navbar-brand span {
 
 a.small-brand.navbar-brand img {
 	display: inline-block;
-	height: 40px;
-	padding-bottom: 7px;
-	margin-top: 9px;
+	height: 34px;
+	width: 34px;
+	
+	padding: 0;
+	margin-top: 8px;
 	opacity: 1;
 	
-	transition: all 0.3s;
-	-o-transition: all 0.3s;
-	-moz-transition: all 0.3s;
-	-webkit-transition: all 0.3s;
+	transition: all 0.1s;
+	-o-transition: all 0.1s;
+	-moz-transition: all 0.1s;
+	-webkit-transition: all 0.1s;
+}
+
+#logo img {
+	opacity: 1;
 }
 
 .navbar.full-size a.small-brand.navbar-brand img {
-	height: 120px;
-	padding-top: 6px;
-	padding-bottom: 29px;
+	height: 86px;
+	width: 86px;
+	padding: 0;
+	margin-top: 14px;
 	opacity: 0;
 }
 
@@ -276,10 +284,10 @@ a.big-brand {
 	padding-right: 0;
 	margin-left: 33px;
 	
-	transition: padding 0.3s;
-	-o-transition: padding 0.3s;
-	-moz-transition: padding 0.3s;
-	-webkit-transition: padding 0.3s;
+	transition: all 0.3s;
+	-o-transition: all 0.3s;
+	-moz-transition: all 0.3s;
+	-webkit-transition: all 0.3s;
 }
 
 .navbar.full-size ul.navbar-nav li a {
@@ -560,6 +568,48 @@ a.big-brand {
 	background-repeat: no-repeat;
 	background-position: center;
 	display:inline-block;
+}
+
+.easter-egg img {
+	-webkit-animation: easter-egg 0.15s linear 10;
+	animation: easter-egg 0.15s linear 10;
+	opacity: 1 !important;
+}
+
+@-webkit-keyframes easter-egg {
+	0% {
+		transform: rotate(0deg);
+	}
+
+	25% {
+		transform: roatate(15deg);
+	}
+
+	50% {
+		transform: rotate(0deg);
+	}
+
+	75% {
+		transform: rotate(-15deg);
+	}
+}
+
+@keyframes easter-egg {
+	0% {
+		transform: rotate(0deg);
+	}
+
+	25% {
+		transform: roatate(15deg);
+	}
+
+	50% {
+		transform: rotate(0deg);
+	}
+
+	75% {
+		transform: rotate(-15deg);
+	}
 }
 
 .bs-docs-sidenav {
@@ -998,4 +1048,8 @@ body #modal-delete {
 
 @media (min-width: 1200px) {
 	
+}
+
+.easter-egg-preload {
+	display: none;
 }

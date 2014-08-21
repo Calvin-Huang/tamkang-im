@@ -159,21 +159,21 @@
         <script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
         <script src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
         <?php echo $this->headScript()->appendFile($this->basePath() . '/js/outdatedBrowser.min.js', 'text/javascript'); ?>
-        <script type="text/javascript">
-        $( document ).ready(function() {
+        <?php echo $this->headScript()->appendFile($this->basePath() . "/js/konami.js", "text/javascript"); ?>
+        <script>
+            $('.carousel').carousel();
+            initOffcanvas();
+
             outdatedBrowser({
                 bgColor: '#3f3f3f',
                 color: '#e3e3e3',
                 
             });
+            
             $('#btnClose').on('click', function(){
                 $('#outdated').remove();
             });
-        });
-        </script>
-        <script>
-            $('.carousel').carousel();
-            initOffcanvas();
+            
             $(window).on('scroll', function(){
                 if ($(window).scrollTop() <= 80) {
                     navbarFullsize();

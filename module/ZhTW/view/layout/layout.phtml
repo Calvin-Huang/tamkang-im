@@ -17,7 +17,7 @@
     </head>
     <body class="font">
         <!-- header start -->
-        <div class="navbar navbar-inverse navbar-fixed-top main-nav full-size">
+        <div id="brand" class="navbar navbar-inverse navbar-fixed-top main-nav full-size">
             <div class="container">
                 <div class="navbar-header">
                     <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
@@ -152,33 +152,65 @@
         </div>
         <!-- outdate browser handle end -->
         
+        <!-- preload easter egg images -->
+        <div class="easter-egg-preload">
+            <img src="/images/easter-egg-gargoyle-small.png">
+            <img src="/images/easter-egg-gargoyle-big.png">
+        </div>
+
         <?php echo $this->inlineScript() ?>
         <!-- Scripts -->
         <script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
         <script src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
         <?php echo $this->headScript()->appendFile($this->basePath() . '/js/outdatedBrowser.min.js', 'text/javascript'); ?>
-        <script type="text/javascript">
-        $( document ).ready(function() {
+        <?php echo $this->headScript()->appendFile($this->basePath() . "/js/konami.js", "text/javascript"); ?>
+        <script>
+            $('.carousel').carousel();
+            initOffcanvas();
+
             outdatedBrowser({
                 bgColor: '#3f3f3f',
                 color: '#e3e3e3',
                 
             });
+            
             $('#btnClose').on('click', function(){
                 $('#outdated').remove();
             });
-        });
-        </script>
-        <script>
-            $('.carousel').carousel();
-            initOffcanvas();
+            
             $(window).on('scroll', function(){
-                if ($(window).scrollTop() <= 80) {
+                if (isAtTopPosition()) {
                     navbarFullsize();
                 } else {
                     navbarSmallsize();
                 }
             });
+
+            var easterEgg = new Konami();
+            easterEgg.code = function() {
+                var brandBlock = $('#brand');
+                brandBlock.find('.small-brand').addClass('easter-egg').find('img').attr('src', '/images/easter-egg-gargoyle-small.png');
+                brandBlock.find('.big-brand img').attr('src', '/images/easter-egg-gargoyle-big.png');
+
+                // when user is not at top position (brand element contain full-size class), let the brand extend to full-size
+                // and set count down after 5 seconds to remove full-size, if after 5 seconds user is not at top.
+                if (!isAtTopPosition()) {
+                    navbarFullsize();
+
+                    setTimeout(function(){
+                        if (!isAtTopPosition()) {
+                            navbarSmallsize();
+                            brandBlock.find('.small-brand').removeClass('easter-egg');
+                        }      
+                    }, 5000);
+                }
+            };
+            easterEgg.load();
+
+            function isAtTopPosition() {
+                return $(window).scrollTop() <= 80;
+            }
+            
             function navbarFullsize() {
                 $('.navbar').addClass('full-size');
                 $('.small-brand').removeClass('active');
@@ -195,7 +227,6 @@
                     $('.row-offcanvas').toggleClass('active');
                 });
             };
-                        
         </script>
     </body>
 </html>
