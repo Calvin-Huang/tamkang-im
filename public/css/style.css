@@ -571,8 +571,8 @@ a.big-brand {
 }
 
 .easter-egg img {
-	-webkit-animation: easter-egg 0.15s linear 10;
-	animation: easter-egg 0.15s linear 10;
+	-webkit-animation: easter-egg 0.1s linear 10;
+	animation: easter-egg 0.1s linear 10;
 	opacity: 1 !important;
 }
 
