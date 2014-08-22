@@ -189,7 +189,7 @@
             var easterEgg = new Konami();
             easterEgg.code = function() {
                 var brandBlock = $('#brand');
-                brandBlock.find('.small-brand').addClass('easter-egg').find('img').attr('src', '/images/easter-egg-gargoyle-small.png');
+                brandBlock.find('.small-brand')removeClass('easter-egg').addClass('easter-egg').find('img').attr('src', '/images/easter-egg-gargoyle-small.png');
                 brandBlock.find('.big-brand img').attr('src', '/images/easter-egg-gargoyle-big.png');
 
                 // when user is not at top position (brand element contain full-size class), let the brand extend to full-size
@@ -201,7 +201,6 @@
                         if (!isAtTopPosition()) {
                             navbarSmallsize();
                         }
-                        brandBlock.find('.small-brand').removeClass('easter-egg');
                         
                     }, 5000);
                 }
