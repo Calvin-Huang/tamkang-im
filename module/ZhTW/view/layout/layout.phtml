@@ -189,7 +189,6 @@
             var easterEgg = new Konami();
             easterEgg.code = function() {
                 var brandBlock = $('#brand');
-                brandBlock.find('.small-brand').removeClass('easter-egg')
                 brandBlock.find('.small-brand').addClass('easter-egg').find('img').attr('src', '/images/easter-egg-gargoyle-small.png');
                 brandBlock.find('.big-brand img').attr('src', '/images/easter-egg-gargoyle-big.png');
 
@@ -202,9 +201,12 @@
                         if (!isAtTopPosition()) {
                             navbarSmallsize();
                         }
-                        
                     }, 5000);
                 }
+
+                setTimeout(function(){
+                    brandBlock.find('.small-brand').removeClass('easter-egg');
+                }, 3000);
             };
             easterEgg.load();
 
