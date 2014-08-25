@@ -1041,7 +1041,7 @@ body #modal-delete {
 
 @media (min-width: 992px) and (max-width: 1199px) {
 	.navbar ul.nav.navbar-nav li a {
-		margin-left: 15px;
+		margin-left: 10px;
 	}
 	
 	.navbar.main-nav ul.navbar-nav li a.dropdown-toggle {
