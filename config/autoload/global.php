@@ -226,19 +226,23 @@ return array(
                 'action' => 'index'
             ),
             array(
-                'label' => '<i class="fa fa-globe"></i>',
-                'route' => 'en_US/default',
-                'controller' => 'index',
-                'action' => 'index',
-                'pages' => array(
-                    array(
-                        'label' => '<i class="fa fa-language fa-fw"></i> English Version',
-                        'route' => 'en_US/default',
-                        'controller' => 'index',
-                        'action' => 'index'
-                    )
-                )
+                'label' => 'English',
+                'uri' => 'http://163.13.200.22/en_index.html'
             ),
+            // array(
+            //     'label' => '<i class="fa fa-globe"></i>',
+            //     'route' => 'en_US/default',
+            //     'controller' => 'index',
+            //     'action' => 'index',
+            //     'pages' => array(
+            //         array(
+            //             'label' => '<i class="fa fa-language fa-fw"></i> English Version',
+            //             'route' => 'en_US/default',
+            //             'controller' => 'index',
+            //             'action' => 'index'
+            //         )
+            //     )
+            // ),
         ),
         'en_us' => array(
             // And finally, here is where we define our page hierarchy
