@@ -136,7 +136,7 @@ class AdvanceController extends AbstractActionController
         $headScript = $this->getServiceLocator()->get("viewhelpermanager")->get("HeadScript");
         $headScript->appendFile($basePath->__invoke() . "/js/jquery-ui-1.10.3.custom.min.js");
         $headScript->appendFile($basePath->__invoke() . "/js/append-type-field.js");
-        $headScript->appendFile($basePath->__invoke() . "/js/type-sort.js");
+        $headScript->appendFile($basePath->__invoke() . "/js/type-form.js");
         
         $viewModel = new ViewModel();
         $advanceModel = new AdvanceModel();
@@ -144,13 +144,7 @@ class AdvanceController extends AbstractActionController
         $isSuccess = false;
         
         if ($this->getRequest()->isPost()) {
-            $fieldCheck = new FieldCheck();
-            $types = $fieldCheck->checkArray($this->params()->fromPost("type"));
-            $languages = $fieldCheck->checkArray($this->params()->fromPost("language"));
-            
-            if ($advanceModel->setIntroduceType($types, $languages)) {
-                $isSuccess = true;
-            }
+            $isSuccess = $advanceModel->updateTypeAll($this->params()->fromPost());
         }
         
         $viewModel->setVariable("types", $advanceModel->listIntroduceType());

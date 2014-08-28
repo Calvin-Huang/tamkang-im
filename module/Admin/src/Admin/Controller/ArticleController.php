@@ -85,7 +85,8 @@ class ArticleController extends AbstractActionController
     {
         $basePath = $this->getServiceLocator()->get("viewhelpermanager")->get("BasePath");
         $headScript = $this->getServiceLocator()->get("viewhelpermanager")->get("HeadScript");
-        $headScript->appendFile($basePath->__invoke() . "/js/append-type-field.js");
+        $headScript->appendFile($basePath->__invoke() . "/js/jquery-ui-1.10.3.custom.min.js");
+        $headScript->appendFile($basePath->__invoke() . "/js/type-form.js");
         
         $articleModel = new ArticleModel();
         $language = new Language();
@@ -93,18 +94,13 @@ class ArticleController extends AbstractActionController
         $isSuccess = false;
         
         if ($this->getRequest()->isPost()) {
-            $fieldCheck = new FieldCheck();
-            $types = $fieldCheck->checkArray($this->params()->fromPost("type"));
-            $languages = $fieldCheck->checkArray($this->params()->fromPost("language"));
-            
-            if ($articleModel->setArticletype($types, $languages)) {
-                $isSuccess = true;
-            }
+            $isSuccess = $articleModel->updateTypeAll($this->params()->fromPost());
         }
-        
-        $viewModel->setVariable("articletypeList", $articleModel->listType());
+
+        $viewModel->setVariable("types", $articleModel->listType());
         $viewModel->setVariable("languageList", $language->listLanguage());
-        $viewModel->setVariable("saveSuccess", $isSuccess);
+        $viewModel->setVariable("isSuccess", $isSuccess);
+
         return $viewModel;
     }
     

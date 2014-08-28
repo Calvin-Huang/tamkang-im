@@ -23,6 +23,37 @@ class CollectModel
         return $sqlConnection->executeQuery($query, $param);
     }
     
+    public function addType($params)
+    {
+        if (isset($params["name"]) && $params["name"] != "") {
+            $sqlConnection = new SqlConnection();
+            $query = "INSERT INTO `collect_type`(`type_name`, `language_id`, `sort`) VALUES (?, ?, ?)";
+            $conditions[] = $params["name"];
+            $conditions[] = $params["language"];
+            $conditions[] = $this->getLastSortFromType() + 1;
+
+            return $sqlConnection->executeQuery($query, $conditions);
+        } else {
+            return false;
+        }
+    }
+
+    public function deleteTypeById($id)
+    {
+        $sqlConnection = new SqlConnection();
+
+        $query = "UPDATE `collect_type` SET `sort` = `sort` - 1 WHERE `sort` > ?";
+        $conditions[] = $this->getSortFromTypeById($id);
+        $sqlConnection->executeQuery($query, $conditions);
+
+        $conditions = array();
+
+        $query = "DELETE FROM `collect_type` WHERE `id` = ?";
+        $conditions[] = $id;
+
+        return $sqlConnection->executeQuery($query, $conditions);
+    }
+
     public function deleteIntroduceById($id)
     {
         $sqlConnection = new SqlConnection();
@@ -34,14 +65,35 @@ class CollectModel
         return $sqlConnection->executeQuery($query, $param);
     }
     
-    public function deleteIntroduceType()
+    public  function exists($id)
     {
         $sqlConnection = new SqlConnection();
-        $query = "DELETE FROM `collect_type`";
-        
-        return $sqlConnection->executeQuery($query);
+        $query = "SELECT `id` FROM `collect_type` WHERE `id` = ?";
+        $param[] = $id;
+
+        return $sqlConnection->executeQuery($query, $param, true) != null;
     }
-    
+
+    public function getSortFromTypeById($id)
+    {
+        $sqlConnection = new SqlConnection();
+        $query = "SELECT `sort` FROM `collect_type` WHERE `id` = ?";
+        $conditions[] = $id;
+
+        $result = $sqlConnection->executeQuery($query, $conditions, true);
+
+        return $result["sort"];
+    }
+
+    public function getLastSortFromType()
+    {
+        $sqlConnection = new SqlConnection();
+        $query = "SELECT `sort` FROM `collect_type` ORDER BY `sort` DESC LIMIT 1";
+        $result = $sqlConnection->executeQuery($query, null, true);
+
+        return (int)$result["sort"];
+    }
+
     public function getIntroduceById($id)
     {
         $sqlConnection = new SqlConnection();
@@ -67,13 +119,13 @@ class CollectModel
         
         return $sqlConnection->executeQuery($query, $param, true);
     }
-    
+
     public function listIntroduce()
     {
         $sqlConnection = new SqlConnection();
         
-        $query = "SELECT C.`id`, C.`type_id`, CT.`type_name`, C.`content` FROM `collect` AS C ";
-        $query.= "JOIN `collect_type` AS CT ON C.`type_id` = CT.`id`";
+        $query = "SELECT C.`id`, C.`type_id`, CT.`type_name`, CT.`sort`, C.`content` FROM `collect` AS C ";
+        $query.= "JOIN `collect_type` AS CT ON C.`type_id` = CT.`id` ORDER BY CT.`sort` ";
         
         return $sqlConnection->executeQuery($query);
     }
@@ -83,11 +135,12 @@ class CollectModel
         $sqlConnection = new SqlConnection();
         $param = array();
         
-        $query = "SELECT `id`, `type_name`, `language_id` FROM `collect_type` ";
+        $query = "SELECT `id`, `type_name`, `language_id`, `sort` FROM `collect_type` ";
         if ($languageId != null) {
             $param[] = $languageId;            
             $query.= "WHERE `language_id` = ?";
         }
+        $query .= " ORDER BY `sort`";
         
         return $sqlConnection->executeQuery($query, $param);
     }
@@ -102,6 +155,37 @@ class CollectModel
         return $sqlConnection->executeQuery($query);
     }
     
+    public function updateTypeAll($params)
+    {
+        $sqlConnection = new SqlConnection();
+        foreach ($params["type"] as $k => $v) {
+            if ($this->exists($v["id"])) {
+                if ($v["_delete"]) {
+                    $this->deleteTypeById($v["id"]);
+                } else {
+                    $this->updateType($v);
+                }
+            } else {
+                $this->addType($v);
+            }
+        }
+
+        return true;
+    }
+
+    public function updateType($params)
+    {
+        $sqlConnection = new SqlConnection();
+        $query = "UPDATE `collect_type` SET `type_name` = ?, `language_id` = ?, `sort` = ?  WHERE `id` = ?";
+
+        $conditions[] = $params["name"];
+        $conditions[] = $params["language"];
+        $conditions[] = $params["sort"];
+        $conditions[] = $params["id"];
+
+        return $sqlConnection->executeQuery($query, $conditions, true);
+    }
+
     public function setIntroduceById($id, $typeId, $content)
     {
         $sqlConnection = new SqlConnection();
@@ -114,30 +198,5 @@ class CollectModel
         $query.= "WHERE `id` = ?";
         
         return $sqlConnection->executeQuery($query, $param);
-    }
-    
-    public function setIntroduceType($types, $languages)
-    {
-        // 把所有的種類清除，重新設定自動增號之後insert
-        $this->deleteIntroduceType();
-        
-        $sqlConnection = new SqlConnection();
-        $query = "ALTER TABLE `collect_type` AUTO_INCREMENT = 1";
-        $sqlConnection->executeQuery($query);
-        
-        $query = "INSERT INTO `collect_type` (`type_name`, `language_id`) VALUES (?, ?)";
-        
-        // 紀錄種類
-        foreach ($types as $i => $type) {
-            if (isset($type) && $type != "") {
-                $param = array();
-                
-                $param[] = $type;
-                $param[] = $languages[$i];
-                $sqlConnection->executeQuery($query, $param);
-            }
-        }
-        
-        return true;
     }
 }

@@ -135,8 +135,7 @@ class CollectController extends AbstractActionController
         $basePath = $this->getServiceLocator()->get("viewhelpermanager")->get("BasePath");
         $headScript = $this->getServiceLocator()->get("viewhelpermanager")->get("HeadScript");
         $headScript->appendFile($basePath->__invoke() . "/js/jquery-ui-1.10.3.custom.min.js");
-        $headScript->appendFile($basePath->__invoke() . "/js/append-type-field.js");
-        $headScript->appendFile($basePath->__invoke() . "/js/type-sort.js");
+        $headScript->appendFile($basePath->__invoke() . "/js/type-form.js");
         
         $viewModel = new ViewModel();
         $collectModel = new CollectModel();
@@ -144,13 +143,7 @@ class CollectController extends AbstractActionController
         $isSuccess = false;
         
         if ($this->getRequest()->isPost()) {
-            $fieldCheck = new FieldCheck();
-            $types = $fieldCheck->checkArray($this->params()->fromPost("type"));
-            $languages = $fieldCheck->checkArray($this->params()->fromPost("language"));
-            
-            if ($collectModel->setIntroduceType($types, $languages)) {
-                $isSuccess = true;
-            }
+            $isSuccess = $collectModel->updateTypeAll($this->params()->fromPost());
         }
         
         $viewModel->setVariable("types", $collectModel->listIntroduceType());

@@ -136,7 +136,7 @@ class AdmissionController extends AbstractActionController
         $headScript = $this->getServiceLocator()->get("viewhelpermanager")->get("HeadScript");
         $headScript->appendFile($basePath->__invoke() . "/js/jquery-ui-1.10.3.custom.min.js");
         $headScript->appendFile($basePath->__invoke() . "/js/append-type-field.js");
-        $headScript->appendFile($basePath->__invoke() . "/js/type-sort.js");
+        $headScript->appendFile($basePath->__invoke() . "/js/type-form.js");
         $this->getServiceLocator()->get("navigation/admin")->findOneById("admission-manage")->setActive(true);
         
         $viewModel = new ViewModel();
@@ -145,13 +145,7 @@ class AdmissionController extends AbstractActionController
         $isSuccess = false;
         
         if ($this->getRequest()->isPost()) {
-            $fieldCheck = new FieldCheck();
-            $types = $fieldCheck->checkArray($this->params()->fromPost("type"));
-            $languages = $fieldCheck->checkArray($this->params()->fromPost("language"));
-            
-            if ($admissionModel->setIntroduceType($types, $languages)) {
-                $isSuccess = true;
-            }
+            $isSuccess = $admissionModel->updateTypeAll($this->params()->fromPost());
         }
         
         $viewModel->setVariable("types", $admissionModel->listIntroduceType());

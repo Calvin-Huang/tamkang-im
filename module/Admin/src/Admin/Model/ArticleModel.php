@@ -58,6 +58,38 @@ class ArticleModel extends PageHelper
         return $sqlConnection->executeQuery($query, $param);
     }
     
+    public function addType($params)
+    {
+        if (isset($params["name"]) && $params["name"] != "") {
+            $sqlConnection = new SqlConnection();
+            $query = "INSERT INTO `article_type`(`type_name`, `language_id`, `sort`) VALUES (?, ?, ?)";
+            $conditions[] = $params["name"];
+            $conditions[] = $params["language"];
+            $conditions[] = $this->getLastSortFromType() + 1;
+
+            return $sqlConnection->executeQuery($query, $conditions);
+        } else {
+            return false;
+        }
+    }
+
+    public function deleteTypeById($id)
+    {
+        $sqlConnection = new SqlConnection();
+
+        $query = "UPDATE `article_type` SET `sort` = `sort` - 1 WHERE `sort` > ?";
+        $conditions[] = $this->getSortFromTypeById($id);
+
+        $sqlConnection->executeQuery($query, $conditions);
+
+        $conditions = array();
+
+        $query = "DELETE FROM `article_type` WHERE `id` = ?";
+        $conditions[] = $id;
+
+        return $sqlConnection->executeQuery($query, $conditions);
+    }
+
     public function deleteArticleById($id)
     {
         $sqlConnection = new SqlConnection();
@@ -121,6 +153,35 @@ class ArticleModel extends PageHelper
         return $sqlConnection->executeQuery($query, $param);
     }
     
+    public  function exists($id)
+    {
+        $sqlConnection = new SqlConnection();
+        $query = "SELECT `id` FROM `article_type` WHERE `id` = ?";
+        $param[] = $id;
+
+        return $sqlConnection->executeQuery($query, $param, true) != null;
+    }
+
+    public function getSortFromTypeById($id)
+    {
+        $sqlConnection = new SqlConnection();
+        $query = "SELECT `sort` FROM `article_type` WHERE `id` = ?";
+        $conditions[] = $id;
+
+        $result = $sqlConnection->executeQuery($query, $conditions, true);
+
+        return $result["sort"];
+    }
+
+    public function getLastSortFromType()
+    {
+        $sqlConnection = new SqlConnection();
+        $query = "SELECT `sort` FROM `article_type` ORDER BY `sort` DESC LIMIT 1";
+        $result = $sqlConnection->executeQuery($query, null, true);
+
+        return (int)$result["sort"];
+    }
+
     public function getArticleById($id)
     {
         $sqlConnection = new SqlConnection();
@@ -213,9 +274,9 @@ class ArticleModel extends PageHelper
         $sqlConnection = new SqlConnection();
         $param = array();
         
-        $query = "SELECT AT.`id`, AT.`type_name`, L.`language`, AT.`language_id` FROM `article_type` AT ";
+        $query = "SELECT AT.`id`, AT.`type_name`, L.`language`, AT.`language_id`, AT.`sort` FROM `article_type` AT ";
         $query.= "LEFT JOIN `language` L ON (AT.`language_id` = L.`id`) ";
-        $query.= "ORDER BY AT.`id`";
+        $query.= "ORDER BY AT.`sort`";
         return $sqlConnection->executeQuery($query);
     }
     
@@ -297,5 +358,36 @@ class ArticleModel extends PageHelper
         $query.= "WHERE `id` = ?";
 
         return $sqlConnection->executeQuery($query, $param);
+    }
+
+    public function updateTypeAll($params)
+    {
+        $sqlConnection = new SqlConnection();
+        foreach ($params["type"] as $k => $v) {
+            if ($this->exists($v["id"])) {
+                if ($v["_delete"]) {
+                    $this->deleteTypeById($v["id"]);
+                } else {
+                    $this->updateType($v);
+                }
+            } else {
+                $this->addType($v);
+            }
+        }
+
+        return true;
+    }
+
+    public function updateType($params)
+    {
+        $sqlConnection = new SqlConnection();
+        $query = "UPDATE `article_type` SET `type_name` = ?, `language_id` = ?, `sort` = ?  WHERE `id` = ?";
+
+        $conditions[] = $params["name"];
+        $conditions[] = $params["language"];
+        $conditions[] = $params["sort"];
+        $conditions[] = $params["id"];
+
+        return $sqlConnection->executeQuery($query, $conditions, true);
     }
 }
