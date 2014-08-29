@@ -101,7 +101,7 @@ class ArticleModel extends PageHelper
         $param = array();
     
         $param[] = $languageId;
-        $query = "SELECT `id`, `type_name` FROM `article_type` WHERE `language_id` = ?";
+        $query = "SELECT `id`, `type_name` FROM `article_type` WHERE `language_id` = ? ORDER BY `sort`";
         return $sqlConnection->executeQuery($query, $param);
     }
 }
