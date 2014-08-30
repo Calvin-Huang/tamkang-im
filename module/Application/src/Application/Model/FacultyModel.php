@@ -105,7 +105,7 @@ class FacultyModel extends PageHelper
         $sqlConnection = new SqlConnection();
         $param = array();
         
-        $query = "SELECT U.`name`, TN.`title_name`, TN.`en_US`, U.`avatar`, U.`email`, T.`id`, T.`lab_location` FROM `teacher` T ";
+        $query = "SELECT U.`name`, TN.`title_name`, TN.`en_US`, U.`avatar`, U.`email`, T.`id`, T.`lab_location`, T.`personalsite_url`, T.`personalsite_text`, T.`labsite_url`, T.`labsite_text` FROM `teacher` T ";
         $query.= "INNER JOIN `user` U ON U.`id` = T.`user_id` ";
         $query.= "INNER JOIN `teacher_title` TN ON TN.`id` = T.`title_id` ";
         
