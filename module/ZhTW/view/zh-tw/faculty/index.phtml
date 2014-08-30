@@ -58,8 +58,8 @@
                                 <table class="table">
                                     <?php if (count($faculty["other_title"]) > 0) : ?>
                                         <tr>
-                                            <td>兼任職稱</td>
-                                            <td>
+                                            <td class="col-xs-5">兼任職稱</td>
+                                            <td class="col-xs-7">
                                             <?php foreach ($faculty["other_title"] as $i => $otherTitle) : ?>
                                                 <p><?php echo htmlentities($otherTitle["title_name"], ENT_QUOTES, "UTF-8"); ?></p>
                                             <?php endforeach;?>
@@ -68,23 +68,23 @@
                                     <?php endif; ?>
                                     <?php if (isset($faculty["teach_class"]) && $faculty["teach_class"] != "") : ?>
                                         <tr>
-                                            <td>指導班級</td>
-                                            <td><?php echo htmlentities($faculty["teach_class"], ENT_QUOTES, "UTF-8"); ?></td>
+                                            <td class="col-xs-5">指導班級</td>
+                                            <td class="col-xs-7"><?php echo htmlentities($faculty["teach_class"], ENT_QUOTES, "UTF-8"); ?></td>
                                         </tr>
                                     <?php endif; ?>
                                     <tr>
-                                        <td>電子信箱</td>
+                                        <td class="col-xs-5">電子信箱</td>
                                         <td><?php echo htmlentities($faculty["email"], ENT_QUOTES, "UTF-8"); ?></td>
                                     </tr>
                                     <?php if (isset($faculty["lab_location"]) && $faculty["lab_location"] != "") : ?>
                                         <tr>
-                                            <td>研究室位置</td>
-                                            <td><?php echo htmlentities($faculty["lab_location"], ENT_QUOTES, "UTF-8"); ?></td>
+                                            <td class="col-xs-5">研究室位置</td>
+                                            <td class="col-xs-7"><?php echo htmlentities($faculty["lab_location"], ENT_QUOTES, "UTF-8"); ?></td>
                                         </tr>
                                     <?php endif; ?>
                                     <tr>
-                                        <td>研究室網頁</td>
-                                        <td>
+                                        <td class="col-xs-5">研究室網頁</td>
+                                        <td class="col-xs-7">
                                             <?php if (isset($faculty["labsite_url"]) && $faculty["labsite_url"] != "") : ?>
                                                 <a href="<?php echo htmlentities($faculty["labsite_url"], ENT_QUOTES, "UTF-8"); ?>" target="_blank">
                                                     <?php echo htmlentities($faculty["labsite_text"], ENT_QUOTES, "UTF-8"); ?>
@@ -95,8 +95,8 @@
                                         </td>
                                     </tr>
                                     <tr>
-                                        <td>個人網頁</td>
-                                        <td>
+                                        <td class="col-xs-5">個人網頁</td>
+                                        <td class="col-xs-7">
                                             <?php if (isset($faculty["personalsite_url"]) && $faculty["personalsite_url"] != "") : ?>
                                             <a href="<?php echo htmlentities($faculty["personalsite_url"], ENT_QUOTES, "UTF-8"); ?>" target="_blank">
                                                 <?php echo htmlentities($faculty["personalsite_text"], ENT_QUOTES, "UTF-8"); ?>
@@ -107,10 +107,10 @@
                                         </td>
                                     </tr>
                                     <tr>
-                                        <td>
+                                        <td class="col-xs-5">
                                             教師歷程系統
                                         </td>
-                                        <td>
+                                        <td class="col-xs-7">
                                             <a href="http://teacher.tku.edu.tw/?kwd=<?php echo urlencode($faculty["name"]); ?>" target="_blank">
                                                 前往教師評鑑系統
                                             </a>
