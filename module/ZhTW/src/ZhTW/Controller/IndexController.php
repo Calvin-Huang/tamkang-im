@@ -14,6 +14,9 @@ use Zend\View\Model\ViewModel;
 use Application\Model\ArticleModel;
 use Application\Model\IndexSlideModel;
 use Application\Model\Language;
+use Application\Model\IconModel;
+use Application\Model\LinkModel;
+use Application\Model\LinkTypeModel;
 use Zend\View\Model\JsonModel;
 use Tool\Check\FieldCheck;
 
@@ -24,6 +27,9 @@ class IndexController extends AbstractActionController
         $viewModel = new ViewModel();
         $articleModel = new ArticleModel();
         $indexSlideModel = new IndexSlideModel();
+        $linkTypeModel = new LinkTypeModel();
+        $linkModel = new LinkModel();
+        $iconModel = new IconModel();
         $languageModel = new Language();
         $fieldCheck = new FieldCheck();
         
@@ -34,6 +40,7 @@ class IndexController extends AbstractActionController
         $downloads = array();
         $slides = array();
         $slides = $indexSlideModel->listIndexSlide();
+
         
         foreach ($articleArray[1] as $i => $article) {
             $articleTitle = strip_tags($article["title"]);
@@ -56,7 +63,7 @@ class IndexController extends AbstractActionController
             );
         }
         
-        for ($i = 0; $i < count($slides); $i++) {
+        for ($i = 0; $i < count($slides) && isset($slides[$i]["content"]); $i++) {
             $slides[$i]["content"] = str_replace("\n", "<br/>", $slides[$i]["content"]);
         }
         
@@ -70,8 +77,20 @@ class IndexController extends AbstractActionController
             $headScript->appendFile($basePath->__invoke() . "/js/infinity-scroll.js");
         }
         
+        // combine link_type, link, icon to one array
+        $linkTypes = $linkTypeModel->all();
+        foreach ($linkTypes as $i => $linkType) {
+
+            // step 1. find all links under linkTypes
+            $linkTypes[$i]["links"] = $linkModel->findByLinkTypeId($linkType["id"]);
+
+            // step 2. add icon name to linkTypes
+            $linkTypes[$i]["icon"] = $iconModel->find($linkType["icon_id"]);;
+        }
+
         $viewModel->setVariable("articles", $articles);
         $viewModel->setVariable("slides", $slides);
+        $viewModel->setVariable("linkTypes", $linkTypes);
         
         return $viewModel;
     }

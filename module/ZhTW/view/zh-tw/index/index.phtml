@@ -43,78 +43,22 @@
             </a>
         </div>
         <div class="col-sm-3 col-xs-6 sidebar-offcanvas">
+            <?php foreach($this->linkTypes as $i => $linkType): ?>
             <h4 class="page-header">
-                <i class="fa fa-users fa-fw"></i>
-                學生自治組織
+                <i class="fa <?php echo $linkType["icon"]["name"] ?> fa-fw"></i>
+                <?php echo $linkType["name"] ?>
             </h4>
             <ul class="nav nav-list bs-docs-sidenav">
+                <?php foreach($linkType["links"] as $j => $link): ?>
                 <li>
-                    <a href="http://imna.im.tku.edu.tw/" target="_blank">
-                        網路策進協會
+                    <a href="<?php echo $link["url"] ?>" target="_blank">
+                        <?php echo $link["name"] ?>
                         <i class="fa fa-chevron-right pull-right"></i>
                     </a>
                 </li>
-                <li>
-                    <a href="http://consult.im.tku.edu.tw/" target="_blank">
-                        資訊顧問室
-                        <i class="fa fa-chevron-right pull-right"></i>
-                    </a>
-                </li>
-                <li>
-                    <a href="https://www.facebook.com/TKUB310" target="_blank">
-                        大學部實驗室
-                        <i class="fa fa-chevron-right pull-right"></i>
-                    </a>
-                </li>
+                <?php endforeach; ?>
             </ul>
-            <h4 class="page-header">
-                <i class="fa fa-bookmark fa-fw"></i>
-                系所姐妹校
-            </h4>
-            <ul class="nav nav-list bs-docs-sidenav">
-                <li>
-                    <a href="http://dsv.su.se/en/" target="_blank">
-                        瑞典斯德哥爾摩 資訊與系統科學系
-                        <i class="fa fa-chevron-right pull-right"></i>
-                    </a>
-                </li>
-                <li>
-                    <a href="http://w3.tku.edu.tw/sister/index.asp#main" target="_blank">
-                        國際姊妹校專區
-                        <i class="fa fa-chevron-right pull-right"></i>
-                    </a>
-                </li>
-            </ul>
-            <h4 class="page-header">
-                <i class="fa fa-book fa-fw"></i>
-                研討會
-            </h4>
-            <ul class="nav nav-list bs-docs-sidenav">
-                <li>
-                    <a href="http://163.13.200.22/cscimpa2014/" target="_blank">
-                        CSCIMPA 2014
-                        <i class="fa fa-chevron-right pull-right"></i>
-                    </a>
-                </li>
-                <li>
-                    <a href="http://163.13.200.22/cscim2012/index_tc.html" target="_blank">
-                        CSCIM 2012
-                        <i class="fa fa-chevron-right pull-right"></i>
-                    </a>
-                </li>
-                <li>
-                    <a href="http://163.13.200.22/cscim/index_tc.html" target="_blank">
-                        CSCIM 2011
-                        <i class="fa fa-chevron-right pull-right"></i>
-                    </a>
-                </li>
-                <li>
-                    <a href="http://jim.im.tku.edu.tw/" targar="_blank">
-                        資訊管理展望期刊
-                        <i class="fa fa-chevron-right pull-right"></i>
-                    </a>
-                </li>
-            </ul>
+            <?php endforeach; ?>
         </div>
         <div class="col-sm-9 col-xs-12">
             <h4 class="page-header articles-header">

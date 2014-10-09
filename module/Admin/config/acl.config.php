@@ -26,6 +26,9 @@ return array(
             'Admin\Controller\TeacherProfile',
             'Admin\Controller\Profile',
             'Admin\Controller\Admission',
+            'Admin\Controller\Links',
+            'Admin\Controller\LinkTypes',
+            'Admin\Controller\Icons'
         ),
         'allow' => array(
             // role
@@ -45,6 +48,8 @@ return array(
                 'Admin\Controller\Advance' => null,
                 'Admin\Controller\Admission' => null,
                 'Admin\Controller\Teacher' => null,
+                'Admin\Controller\Links' => null,
+                'Admin\Controller\LinkTypes' => null
             ),
             'teacher' => array(
                 'Admin\Controller\Profile' => null,
@@ -53,6 +58,7 @@ return array(
             'administrator' => array(
                 'Admin\Controller\Profile' => null,
                 'Admin\Controller\User' => null,
+                'Admin\Controller\Icons' => null
             )
         )
     )

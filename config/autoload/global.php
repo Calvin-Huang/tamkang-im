@@ -27,6 +27,13 @@ return array(
                 'resource' => 'Admin\Controller\Profile',
             ),
             array(
+                'id' => 'icons-manage',
+                'label' => 'icon管理',
+                'route' => 'admin/default',
+                'controller' => 'icons',
+                'resource' => 'Admin\Controller\Icons'
+            ),
+            array(
                 'id' => 'user-manage',
                 'label' => '使用者管理',
                 'route' => 'admin/default',
@@ -80,11 +87,25 @@ return array(
                 )
             ),
             array(
-                'id' => 'slide-manage',
-                'label' => 'slide管理',
+                'id' => 'home-page-manage',
+                'label' => '首頁管理',
                 'route' => 'admin/default',
-                'controller' => 'index-slide',
-                'resource' => 'Admin\Controller\IndexSlide'
+                'controller' => 'link-types',
+                'resource' => 'Admin\Controller\IndexSlide',
+                'pages' => array(
+                    'slide' => array(
+                        'label' => '輪播管理',
+                        'route' => 'admin/default',
+                        'controller' => 'index-slide',
+                        'resource' => 'Admin\Controller\IndexSlide'
+                    ),
+                    'index' => array(
+                        'label' => '首頁連結管理',
+                        'route' => 'admin/default',
+                        'controller' => 'link-types',
+                        'resource' => 'Admin\Controller\IndexSlide'
+                    )
+                )
             ),
             array(
                 'id' => 'collect-manage',

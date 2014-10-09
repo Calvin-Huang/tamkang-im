@@ -1,0 +1,47 @@
+<div class="row">
+    <div class="span12">
+        <div class="btn-toolbar">
+            <a href="<?php echo $this->url("admin/default", array(
+                "controller" => "icons",
+                "action" => "new"
+            )); ?>" class="btn btn-primary">新增icon</a>
+        </div>
+    </div>
+</div>
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th></th>
+            <th>名稱</th>
+            <th>icon</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        <?php foreach($this->icons as $i => $icon): ?>
+        <tr>
+            <td><?php echo $icon["id"] ?></td>
+            <td><?php echo $icon["name"] ?></td>
+            <td><i class="fa <?php echo $icon["name"] ?>"></i></td>
+            <td>
+                <a href="<?php echo $this->url("admin/default", array(
+                    "controller" => "icons",
+                    "action" => "edit"
+                ), array(
+                    "query" => array(
+                        "id" => $icon["id"]
+                    )
+                )); ?>" class="btn btn-default">修改</a>
+                <a href="<?php echo $this->url("admin/default", array(
+                    "controller" => "icons",
+                    "action" => "delete"
+                ), array(
+                    "query" => array(
+                        "id" => $icon["id"]
+                    )
+                )) ?>" class="btn btn-danger">刪除</a>
+            </td>
+        </tr>
+        <?php endforeach; ?>
+    </tbody>
+</table>

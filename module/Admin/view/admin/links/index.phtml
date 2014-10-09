@@ -1,0 +1,60 @@
+<div class="row">
+    <div class="span12">
+        <div class="btn-toolbar">
+            <a href="<?php echo $this->url("admin/default", array(
+                "controller" => "link-types",
+                "action" => "index"
+            )); ?>" class="btn btn-default">
+                <i class="fa fa-chevron-left"></i>
+                回到類別列表
+            </a>
+            <a href="<?php echo $this->url("admin/default", array(
+                "controller" => "links",
+                "action" => "new"
+            ), array(
+                "query" => array(
+                    "link_type_id" => $this->linkTypeId
+                )
+            )) ?>" class="btn btn-primary">新增連結</a>
+        </div>
+    </div>
+</div>
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th></th>
+            <th>名稱</th>
+            <th>Url</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        <?php foreach($this->links as $i => $link) : ?>
+        <tr>
+            <td><?php echo $link["id"] ?></td>
+            <td><?php echo $link["name"] ?></td>
+            <td>
+                <a href="<?php echo $link["url"] ?>"><?php echo $link["url"] ?></a>
+            </td>
+            <td>
+                <a href="<?php echo $this->url("admin/default", array(
+                    "controller" => "links",
+                    "action" => "edit"
+                ), array(
+                    "query" => array(
+                        "id" => $link["id"]
+                    )
+                )); ?>" class="btn btn-default">修改</a>
+                <a href="<?php echo $this->url("admin/default", array(
+                    "controller" => "links",
+                    "action" => "destroy"
+                ), array(
+                    "query" => array(
+                        "id" => $link["id"]
+                    )
+                )); ?>" class="btn btn-danger">刪除</a>
+            </td>
+        </tr>
+        <?php endforeach; ?>
+    </tbody>
+</table>

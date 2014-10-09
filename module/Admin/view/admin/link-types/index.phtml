@@ -1,0 +1,83 @@
+<form class="form-horizontal" method="post" action="<?php echo $this->url("admin/default", array("controller" => "link-types", "action" => "update")); ?>">
+    <div class="btn-toolbar">
+        <button type="submit" class="btn btn-danger">儲存介紹類別</button>
+        <a class="btn" href="<?php echo $this->url("admin/default", array("controller" => "admission", "action" => "index")); ?>">取消</a>
+    </div>
+    <?php if ($this->status) :?>
+    <div class="alert alert-success">
+        <button type="button" class="close" data-dismiss="alert">&times;</button>
+        <i class="icon-ok"></i>&nbsp;<strong>儲存成功</strong>
+    </div>
+    <?php else: ?>
+    <div class="alert alert-warning">
+        <button type="button" class="close" data-dismiss="alert">&times;</button>
+        按住滑鼠左鍵拖曳可以進行排序
+    </div>
+    <?php endif; ?>
+    <div id="type-sort">
+        <?php foreach ($this->types as $i => $type) : ?>
+        <div class="control-group">
+            <button type="button" class="close pull-left" data-dismiss="delete">&times;</button>
+            <label class="control-label" for="data-index-<?php echo $i + 1; ?>">分類<?php echo $i + 1; ?></label>
+            <div class="controls controls-row">
+                <input type="text" class="field span3" id="data-index-<?php echo $i + 1; ?>" name="type[<?php echo $i ?>][name]" value="<?php echo $type["name"]; ?>" />
+                <select class="span2" name="type[<?php echo $i ?>][language]">
+                    <?php foreach ($this->languageList as $j => $language) : ?>
+                        <option value="<?php echo $language["id"]; ?>"<?php echo ($language["id"] == $type["language_id"]) ? " selected" : ""; ?>><?php echo $language["language"]; ?></option>
+                    <?php endforeach; ?>
+                </select>
+
+                <div class="span1">
+                    <select class="selectpicker span1" name="type[<?php echo $i ?>][icon_id]">
+                        <?php foreach ($this->icons as $j => $icon) : ?>
+                            <option value="<?php echo $icon["id"]; ?>"<?php echo ($icon["id"] == $type["icon_id"]) ? " selected" : ""; ?> data-content="<i class='fa <?php echo $icon["name"]; ?>'></i>">
+                                <?php echo $icon["name"]; ?>
+                            </option>
+                        <?php endforeach; ?>
+                    </select>
+                </div>
+
+                <input type="hidden" name="type[<?php echo $i ?>][id]" value="<?php echo $type["id"] ?>" />
+                <input class="delete" type="hidden" name="type[<?php echo $i ?>][_delete]" value="0" />
+                <input class="sort" type="hidden" name="type[<?php echo $i ?>][sort]" value="<?php echo $type["sort"] ?>" />
+
+                <div class="span4">
+                    <a class="btn btn-default" href="<?php echo $this->url("admin/default", array(
+                        "controller" => "links",
+                        "action" => "index"
+                    ), array(
+                        "query" => array(
+                            "link_type_id" => $type["id"]
+                        )
+                    )); ?>">查看這個類別底下的連結</a>
+                </div>
+            </div>
+        </div>
+        <?php endforeach; ?>
+    </div>
+    <div class="control-group">
+        <label class="control-label">分類</label>
+        <div class="controls controls-row">
+            <input type="text" class="field span3" name="type[<?php echo count($this->types); ?>][name]" value="" />
+            <select class="span2" name="type[<?php  echo count($this->types); ?>][language]">
+                <?php foreach ($this->languageList as $i => $language) : ?>
+                    <option value="<?php echo $language["id"]; ?>"><?php echo $language["language"]; ?></option>
+                <?php endforeach; ?>
+            </select>
+
+            <div class="span1">
+                <select class="selectpicker span1" name="type[<?php echo count($this->types) ?>][icon_id]">
+                    <?php foreach ($this->icons as $j => $icon) : ?>
+                        <option value="<?php echo $icon["id"]; ?>" data-content="<i class='fa <?php echo $icon["name"]; ?>'></i>">
+                            <?php echo $icon["name"]; ?>
+                        </option>
+                    <?php endforeach; ?>
+                </select>
+            </div>
+
+            <input type="hidden" name="type[<?php echo count($this->types) ?>][id]" value="" />
+            <input class="delete" type="hidden" name="type[<?php echo count($this->types) ?>][_delete]" value="0" />
+            <input class="sort" type="hidden" name="type[<?php echo count($this->types) ?>][sort]" value="<?php echo count($this->types) ?>" />
+        </div>
+    </div>
+</form>

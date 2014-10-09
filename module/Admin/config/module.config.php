@@ -76,6 +76,9 @@ return array(
             'Admin\Controller\Profile' => 'Admin\Controller\ProfileController',
             'Admin\Controller\TeacherProfile' => 'Admin\Controller\TeacherProfileController',
             'Admin\Controller\Admission' => 'Admin\Controller\AdmissionController',
+            'Admin\Controller\Links' => 'Admin\Controller\LinksController',
+            'Admin\Controller\LinkTypes' => 'Admin\Controller\LinkTypesController',
+            'Admin\Controller\Icons' => 'Admin\Controller\IconsController'
         ),
     ),
     'view_manager' => array(

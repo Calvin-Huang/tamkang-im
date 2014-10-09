@@ -20,4 +20,6 @@
             $(this).find('.sort').val($(this).find('.sort').val() - 1);
         });
     });
+
+    $('.selectpicker').selectpicker();
 })();

@@ -1,0 +1,18 @@
+<form action="<?php echo $this->url("admin/default", array(
+	"controller" => "icons",
+	"action" => ($this->icon == null)? "create" : "update"
+)); ?>" class="form" method="post">
+<div class="form-group">
+	<label for="name">icon名稱</label>
+	<div class="controls">
+		<input id="name" name="name" type="text" class="form-control" value="<?php echo $this->icon["name"] ?>" />
+	</div>
+</div>
+
+<input name="id" type="hidden" value="<?php echo $this->icon["id"] ?>" />
+
+<div class="form-actions">
+	<a href="" class="btn btn-default">取消</a>
+	<button class="btn btn-primary" type="submit">儲存</button>
+</div>
+</form>
