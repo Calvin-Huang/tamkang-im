@@ -22,7 +22,14 @@
 
         <div class="form-actions">
             <div class="btn-toolbar">
-                <a href="" class="btn btn-default">取消</a>
+                <a href="<?php echo $this->url("admin/default", array(
+                    "controller" => "links",
+                    "action" => "index"
+                ), array(
+                    "query" => array(
+                        "link_type_id" => $this->link["link_type_id"]
+                    )
+                )); ?>" class="btn btn-default">取消</a>
                 <button type="submit" class="btn btn-primary">
                     儲存
                 </button>
