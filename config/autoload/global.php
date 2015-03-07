@@ -248,7 +248,7 @@ return array(
             ),
             array(
                 'label' => 'English',
-                'uri' => 'http://163.13.200.22/en_index.html'
+                'uri' => 'http://163.13.201.126/en_index.html'
             ),
             // array(
             //     'label' => '<i class="fa fa-globe"></i>',
