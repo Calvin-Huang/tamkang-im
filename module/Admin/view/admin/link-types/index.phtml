@@ -1,7 +1,6 @@
 <form class="form-horizontal" method="post" action="<?php echo $this->url("admin/default", array("controller" => "link-types", "action" => "update")); ?>">
     <div class="btn-toolbar">
         <button type="submit" class="btn btn-danger">儲存介紹類別</button>
-        <a class="btn" href="<?php echo $this->url("admin/default", array("controller" => "admission", "action" => "index")); ?>">取消</a>
     </div>
     <?php if ($this->status) :?>
     <div class="alert alert-success">
