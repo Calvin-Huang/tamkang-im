@@ -20,7 +20,7 @@
                 "shasum": ""
             },
             "require": {
-                "php": ">=5.3.3",
+                "php": ">=5.3.3 <7.0",
                 "zendframework/zend-debug": "2.*",
                 "zendframework/zend-eventmanager": "2.*",
                 "zendframework/zend-mvc": "2.*",
@@ -81,7 +81,7 @@
                 "shasum": ""
             },
             "require": {
-                "php": ">=5.3.3"
+                "php": ">=5.3.3 <7.0"
             },
             "replace": {
                 "zendframework/zend-authentication": "self.version",
@@ -193,7 +193,7 @@
         "zendframework/zend-developer-tools": 20
     },
     "platform": {
-        "php": ">=5.3.3"
+        "php": ">=5.3.3 <7.0"
     },
     "platform-dev": [
 
